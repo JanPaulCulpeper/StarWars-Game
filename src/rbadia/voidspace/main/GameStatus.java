@@ -7,6 +7,7 @@ public class GameStatus {
 	private boolean gameOver = false;
 	private boolean gameWon = false;
 	
+	
 	// status variables
 	private boolean newMegaMan;
 	private boolean newBoss;
@@ -14,6 +15,7 @@ public class GameStatus {
 	private boolean newAsteroid2;
 	private boolean newBigAsteroid;
 	private long asteroidsDestroyed = 0;
+
 
 	private int livesLeft;
 	private int level = 1;

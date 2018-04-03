@@ -264,6 +264,13 @@ public class LevelLogic {
 		g2d.drawString(shopGameStr, strX, strY);
 		
 		fm = g2d.getFontMetrics();
+		String muteGameStr = "Press <M> to mute music.";
+		strWidth = fm.stringWidth(muteGameStr);
+		strX = (levelState.getWidth() - strWidth)/2 - 55;
+		strY = strY + 16;
+		g2d.drawString(muteGameStr, strX, strY);
+		
+		fm = g2d.getFontMetrics();
 		String skipGameStr = "Press <N> to skip level. (for testing purposes)";
 		strWidth = fm.stringWidth(skipGameStr);
 		strX = (levelState.getWidth() - strWidth)/2  - 60;

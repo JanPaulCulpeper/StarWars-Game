@@ -338,23 +338,67 @@ public class Level1State extends LevelState {
 		}
 	}
 
+//	protected void drawMegaMan() {
+//		//draw one of three possible MegaMan poses according to situation
+//		Graphics2D g2d = getGraphics2D();
+//		GameStatus status = getGameStatus();
+//		if(!status.isNewMegaMan()){
+//			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true))){
+//				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
+//			}
+//		}
+//
+//		if((Fire() == true || Fire2()== true) && (Gravity()==false)){
+//			getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
+//		}
+//
+//		if((Gravity()==false) && (Fire()==false) && (Fire2()==false)){
+//			getGraphicsManager().drawMegaMan(megaMan, g2d, this);
+//		}
+//	}
 	protected void drawMegaMan() {
-		//draw one of three possible MegaMan poses according to situation
+		
 		Graphics2D g2d = getGraphics2D();
-		GameStatus status = getGameStatus();
-		if(!status.isNewMegaMan()){
-			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true))){
+		//GameStatus status = getGameStatus();
+		
+		//Fall 
+		if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true)) 
+					&& (getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased()==false))
+			{
 				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
 			}
+		//Megaman Fire Right
+		if((Fire() == true || Fire2() == true) && (Gravity() == false) && ((getInputHandler().wasLeftReleased() == false) && getInputHandler().isLeftPressed() == false))
+		{
+			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
 		}
-
-		if((Fire() == true || Fire2()== true) && (Gravity()==false)){
-			getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
+		//Megaman fire left
+		if((Fire() == true || Fire2() == true) && (Gravity() == false) && (getInputHandler().wasLeftReleased() || getInputHandler().isLeftPressed()))
+		{
+			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
 		}
-
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false)){
+		//Draw Megaman
+		if((Gravity()==false) && ((Fire()==false) && (Fire2()==false)) && (getInputHandler().isStill()) && ((getInputHandler().wasRightReleased())
+				|| !(getInputHandler().wasLeftReleased())))
+		{
 			getGraphicsManager().drawMegaMan(megaMan, g2d, this);
 		}
+		//Megaman look left
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (getInputHandler().isStill()) && (getInputHandler().wasLeftReleased()))
+		{
+			((GraphicsManager) getGraphicsManager()).drawMegaLookLeft(megaMan, g2d, this);
+		}
+		//Megaman run right
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isRightPressed()) 
+		{
+			((GraphicsManager)getGraphicsManager()).drawMegaRunR(megaMan, g2d, this);
+		}
+		//Megaman run left
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isLeftPressed()) 
+		{
+			((GraphicsManager)getGraphicsManager()).drawMegaRunL(megaMan, g2d, this);
+		}
+		
 	}
 
 	protected void drawPlatforms() {

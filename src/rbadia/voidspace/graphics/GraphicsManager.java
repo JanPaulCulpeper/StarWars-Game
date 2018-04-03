@@ -34,6 +34,10 @@ public class GraphicsManager {
 	private BufferedImage asteroidExplosionImg;
 	private BufferedImage megaManExplosionImg;
 	private BufferedImage bigAsteroidExplosionImg;
+	private BufferedImage megamanLeft;
+	private BufferedImage megamanRight;
+	private BufferedImage megamanFireLeft;
+	private BufferedImage megamanLookLeft;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -44,6 +48,10 @@ public class GraphicsManager {
 			this.megaManImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaMan3.png"));
 			this.megaFallRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFallRight.png"));
 			this.megaFireRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireRight.png"));
+			this.megamanLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaRunLeft.gif"));
+			this.megamanRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaRunRight.gif"));
+			this.megamanFireLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireLeft.png"));
+			this.megamanLookLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaLookLeft.png"));
 			this.floorImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFloor.png"));
 			this.platformImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/platform3.png"));
 			this.asteroidImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroid.png"));
@@ -76,6 +84,18 @@ public class GraphicsManager {
 
 	public void drawMegaFireR (MegaMan megaMan, Graphics2D g2d, ImageObserver observer){
 		g2d.drawImage(megaFireRImg, megaMan.x, megaMan.y, observer);	
+	}
+	public void drawMegaRunL (MegaMan megaMan, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(megamanLeft, megaMan.x, megaMan.y, observer);	
+	}
+	public void drawMegaRunR (MegaMan megaMan, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(megamanRight, megaMan.x, megaMan.y, observer);	
+	}
+	public void drawMegaFireLeft (MegaMan megaMan, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(megamanFireLeft, megaMan.x, megaMan.y, observer);	
+	}
+	public void drawMegaLookLeft (MegaMan megaMan, Graphics2D g2d, ImageObserver observer){
+		g2d.drawImage(megamanLookLeft, megaMan.x, megaMan.y, observer);	
 	}
 
 	public void drawFloor (Floor floor, Graphics2D g2d, ImageObserver observer, int i){

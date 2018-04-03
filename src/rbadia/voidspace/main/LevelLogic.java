@@ -262,6 +262,13 @@ public class LevelLogic {
 		strX = (LevelState.SCREEN_WIDTH - strWidth)/2;
 		strY = strY + 16;
 		g2d.drawString(shopGameStr, strX, strY);
+		
+		fm = g2d.getFontMetrics();
+		String skipGameStr = "Press <N> to skip level. (for testing purposes)";
+		strWidth = fm.stringWidth(skipGameStr);
+		strX = (levelState.getWidth() - strWidth)/2  - 60;
+		strY = strY + 16;
+		g2d.drawString(skipGameStr, strX, strY);
 
 		fm = g2d.getFontMetrics();
 		String exitGameStr = "Press <Esc> to Exit the Game.";

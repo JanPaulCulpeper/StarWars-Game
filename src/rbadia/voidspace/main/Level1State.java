@@ -396,7 +396,9 @@ public class Level1State extends LevelState {
 
 	@Override
 	public boolean isLevelWon() {
+		if(getInputHandler().isNPressed()) return true; 
 		return levelAsteroidsDestroyed >= 3;
+		
 	}
 
 	protected boolean Gravity(){

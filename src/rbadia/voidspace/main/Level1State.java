@@ -37,6 +37,7 @@ public class Level1State extends LevelState {
 	protected MegaMan megaMan;
 	protected Asteroid asteroid;
 	protected List<Bullet> bullets;
+	protected List<Bullet> leftBullets;
 	protected List<BigBullet> bigBullets;
 	protected Floor[] floor;	
 	protected int numPlatforms=8;
@@ -57,6 +58,8 @@ public class Level1State extends LevelState {
 	protected Font bigFont;
 	protected Font biggestFont;
 
+	
+	
 	protected int levelAsteroidsDestroyed = 0;
 
 	// Constructors
@@ -87,6 +90,9 @@ public class Level1State extends LevelState {
 	public Asteroid getAsteroid() 				{ return asteroid; 		}
 	public List<Bullet> getBullets() 			{ return bullets; 		}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
+	public List<Bullet> getLeftBullets(){
+		return leftBullets;
+	}
 
 	// Level state methods
 	// The method associated with the current level state will be called 
@@ -102,6 +108,7 @@ public class Level1State extends LevelState {
 		// init game variables
 		bullets = new ArrayList<Bullet>();
 		bigBullets = new ArrayList<BigBullet>();
+		leftBullets = new ArrayList<Bullet>();
 		//numPlatforms = new Platform[5];
 
 		GameStatus status = this.getGameStatus();
@@ -298,6 +305,8 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
+		//draws bullets to left
+
 	}
 
 	protected void drawBullets() {
@@ -306,12 +315,22 @@ public class Level1State extends LevelState {
 			Bullet bullet = bullets.get(i);
 			getGraphicsManager().drawBullet(bullet, g2d, this);
 
-			boolean remove =   this.moveBullet(bullet);
+			boolean remove =   this.moveBullet(bullet, bullet);
 			if(remove){
 				bullets.remove(i);
 				i--;
 			}
 		}
+        for(int i=0; i<leftBullets.size(); i++){
+            Bullet leftBullet = leftBullets.get(i); 
+            getGraphicsManager().drawBullet(leftBullet, g2d, this);
+
+            boolean remove = this.moveBullet(leftBullet, leftBullet);
+            if(remove){
+                leftBullets.remove(i);
+                i--;
+            }
+        }
 	}
 
 	protected void drawAsteroid() {
@@ -338,28 +357,10 @@ public class Level1State extends LevelState {
 		}
 	}
 
-//	protected void drawMegaMan() {
-//		//draw one of three possible MegaMan poses according to situation
-//		Graphics2D g2d = getGraphics2D();
-//		GameStatus status = getGameStatus();
-//		if(!status.isNewMegaMan()){
-//			if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true))){
-//				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
-//			}
-//		}
-//
-//		if((Fire() == true || Fire2()== true) && (Gravity()==false)){
-//			getGraphicsManager().drawMegaFireR(megaMan, g2d, this);
-//		}
-//
-//		if((Gravity()==false) && (Fire()==false) && (Fire2()==false)){
-//			getGraphicsManager().drawMegaMan(megaMan, g2d, this);
-//		}
-//	}
+
 	protected void drawMegaMan() {
 		
 		Graphics2D g2d = getGraphics2D();
-		//GameStatus status = getGameStatus();
 		
 		//Fall 
 		if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true)) 
@@ -371,11 +372,13 @@ public class Level1State extends LevelState {
 		if((Fire() == true || Fire2() == true) && (Gravity() == false) && ((getInputHandler().wasLeftReleased() == false) && getInputHandler().isLeftPressed() == false))
 		{
 			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
+			System.out.println("shooted");
 		}
 		//Megaman fire left
-		if((Fire() == true || Fire2() == true) && (Gravity() == false) && (getInputHandler().wasLeftReleased() || getInputHandler().isLeftPressed()))
+		if((Fire() == true || Fire2() == true) && (Gravity() == false) && (getInputHandler().wasLeftReleased() && getInputHandler().isLeftPressed()))
 		{
 			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
+			System.out.println("shooted");
 		}
 		//Draw Megaman
 		if((Gravity()==false) && ((Fire()==false) && (Fire2()==false)) && (getInputHandler().isStill()) && ((getInputHandler().wasRightReleased())
@@ -399,6 +402,18 @@ public class Level1State extends LevelState {
 			((GraphicsManager)getGraphicsManager()).drawMegaRunL(megaMan, g2d, this);
 		}
 		
+	}
+	//megaman fires left
+	protected boolean FireLeft() {
+		MegaMan megaman = this.getMegaMan();
+		List<Bullet> leftBullets = this.getLeftBullets();
+		for(int i = 0 ; i < leftBullets.size() ; i++) {
+			Bullet leftBullet = leftBullets.get(i);
+			if((leftBullet.getX() <= megaman.getX() + megaman.getWidth() + 60) && (leftBullet.getX() >= megaman.getX() - 60)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected void drawPlatforms() {
@@ -523,10 +538,22 @@ public class Level1State extends LevelState {
 	 * Fire a bullet from life.
 	 */
 	public void fireBullet(){
+		if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
 		Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
 				megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
 		bullets.add(bullet);
 		this.getSoundManager().playBulletSound();
+			}
+	
+		else {
+			int xPos = megaMan.x;
+			int yPos = megaMan.y + megaMan.width/2 - Bullet.HEIGHT + 2;
+			Bullet leftBullet = new Bullet(xPos, yPos);
+			leftBullet.setSpeed(-12);
+			leftBullets.add(leftBullet);
+			this.getSoundManager().playBulletSound();
+		
+		}
 	}
 
 	/**
@@ -546,15 +573,28 @@ public class Level1State extends LevelState {
 	 * @param bullet the bullet to move
 	 * @return if the bullet should be removed from screen
 	 */
-	public boolean moveBullet(Bullet bullet){
-		if(bullet.getY() - bullet.getSpeed() >= 0){
-			bullet.translate(bullet.getSpeed(), 0);
-			return false;
-		}
-		else{
-			return true;
-		}
-	}
+	public boolean moveBullet(Bullet leftBullets , Bullet bullet ){
+
+        if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
+            if(bullet.getY() - bullet.getSpeed() >= 0){
+                bullet.translate(bullet.getSpeed(), 0);
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        else { //LeftBullet
+            if(bullet.getY() - bullet.getSpeed() >= 0){
+                leftBullets.translate(leftBullets.getSpeed(), 0);
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    }
 
 	/** Move a "Power Shot" bullet once fired.
 	 * @param bigBullet the bullet to move

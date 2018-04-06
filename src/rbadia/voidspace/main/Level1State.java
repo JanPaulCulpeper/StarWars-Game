@@ -368,40 +368,41 @@ public class Level1State extends LevelState {
 					&& (getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased()==false))
 			{
 				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
-			}
-		//Megaman Fire Right
-		if((Fire() == true || Fire2() == true) && (Gravity() == false) && ((getInputHandler().wasLeftReleased() == false) && getInputHandler().isLeftPressed() == false))
-		{
-			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
-		}					
-		//Megaman fire left
-		if((FireLeft() == true ) && (Gravity() == false) && (getInputHandler().wasLeftReleased() || getInputHandler().isLeftPressed()))
-		{
-			
-			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
-		}
+			}		
 		//Draw Megaman
 		if((Gravity()==false) && ((Fire()==false) && (Fire2()==false)) && (getInputHandler().isStill()) && ((getInputHandler().wasRightReleased())
 				|| !(getInputHandler().wasLeftReleased())))
 		{
 			getGraphicsManager().drawMegaMan(megaMan, g2d, this);
 		}
-		//Megaman look left
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (getInputHandler().isStill()) && (getInputHandler().wasLeftReleased()))
+		//Megaman Fire Right
+		if((Fire() == true || Fire2() == true) && (Gravity() == false) &&(FireLeft() == false) && ((getInputHandler().wasLeftReleased() == false) && getInputHandler().isLeftPressed() == false))
 		{
-			((GraphicsManager) getGraphicsManager()).drawMegaLookLeft(megaMan, g2d, this);
-		}
+			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
+		}	
 		//Megaman run right
 		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isRightPressed()) 
 		{
 			((GraphicsManager)getGraphicsManager()).drawMegaRunR(megaMan, g2d, this);
+		}
+		//Megaman fire left
+		if((FireLeft() == true ) && (Gravity() == false) && (getInputHandler().wasLeftReleased() || getInputHandler().isLeftPressed()))
+		{
+			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
+		}
+		else {
+		//Megaman look left
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (getInputHandler().isStill()) && (getInputHandler().wasLeftReleased()))
+		{
+			((GraphicsManager) getGraphicsManager()).drawMegaLookLeft(megaMan, g2d, this);
 		}
 		//Megaman run left
 		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isLeftPressed()) 
 		{
 			((GraphicsManager)getGraphicsManager()).drawMegaRunL(megaMan, g2d, this);
 		}
-		
+
+		}
 	}
 	
 	//megaman fires left
@@ -678,13 +679,11 @@ public class Level1State extends LevelState {
 			megaMan.translate(-megaMan.getSpeed(), 0);
 		}
 	}
-
 	/**
-	 * Move the megaMan right
 	 * @param megaMan the megaMan
 	 */
 	public void moveMegaManRight(){
-		if(megaMan.getX() + megaMan.getSpeed() + megaMan.width < getWidth()){
+		if(megaMan.getX() + megaMan.getSpeed() + megaMan.width < SCREEN_WIDTH){//Colocar esta.
 			megaMan.translate(megaMan.getSpeed(), 0);
 		}
 	}

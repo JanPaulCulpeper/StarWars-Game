@@ -305,7 +305,7 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
-		//draws bullets to left
+		
 
 	}
 
@@ -321,6 +321,7 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
+		//draws bullets to left
         for(int i=0; i<leftBullets.size(); i++){
             Bullet leftBullet = leftBullets.get(i); 
             getGraphicsManager().drawBullet(leftBullet, g2d, this);
@@ -372,13 +373,12 @@ public class Level1State extends LevelState {
 		if((Fire() == true || Fire2() == true) && (Gravity() == false) && ((getInputHandler().wasLeftReleased() == false) && getInputHandler().isLeftPressed() == false))
 		{
 			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
-			System.out.println("shooted");
-		}
+		}					
 		//Megaman fire left
-		if((Fire() == true || Fire2() == true) && (Gravity() == false) && (getInputHandler().wasLeftReleased() && getInputHandler().isLeftPressed()))
+		if((FireLeft() == true ) && (Gravity() == false) && (getInputHandler().wasLeftReleased() || getInputHandler().isLeftPressed()))
 		{
+			
 			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
-			System.out.println("shooted");
 		}
 		//Draw Megaman
 		if((Gravity()==false) && ((Fire()==false) && (Fire2()==false)) && (getInputHandler().isStill()) && ((getInputHandler().wasRightReleased())
@@ -403,6 +403,7 @@ public class Level1State extends LevelState {
 		}
 		
 	}
+	
 	//megaman fires left
 	protected boolean FireLeft() {
 		MegaMan megaman = this.getMegaMan();

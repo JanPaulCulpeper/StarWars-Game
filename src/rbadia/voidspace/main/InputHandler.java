@@ -18,7 +18,7 @@ public class InputHandler implements KeyListener{
 	private boolean shiftIsPressed;
 	private boolean eIsPressed;
 	private boolean qIsPressed;
-	private boolean mIsPressed;
+	private boolean mIsPressed = false;
 	private boolean sIsPressed;
 	private boolean iIsPressed;
 	private boolean nIsPressed;
@@ -119,15 +119,19 @@ public class InputHandler implements KeyListener{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP:
 			this.upIsPressed = true;
+//			this.still = false;
 			break;
 		case KeyEvent.VK_DOWN:
 			this.downIsPressed = true;
+//			this.still = false;
 			break;
 		case KeyEvent.VK_LEFT:
 			this.leftIsPressed = true;
+			this.still = false;
 			break;
 		case KeyEvent.VK_RIGHT:
 			this.rightIsPressed = true;
+			this.still = false;
 			break;
 		case KeyEvent.VK_SPACE:
 			this.spaceIsPressed = true;
@@ -145,7 +149,7 @@ public class InputHandler implements KeyListener{
 			this.qIsPressed= true;
 			break;
 		case KeyEvent.VK_M:
-			this.mIsPressed= true;
+			this.mIsPressed = !mIsPressed;
 			break;
 		case KeyEvent.VK_S:
 			this.sIsPressed = true;
@@ -200,9 +204,9 @@ public class InputHandler implements KeyListener{
 		case KeyEvent.VK_Q:
 			this.qIsPressed = false;
 			break;
-		case KeyEvent.VK_M:
-			this.mIsPressed = false;
-			break;
+//		case KeyEvent.VK_M:
+//			this.mIsPressed = false;
+//			break;
 		case KeyEvent.VK_S:
 			this.sIsPressed = false;
 			break;

@@ -359,19 +359,29 @@ public class LevelLogic {
 
 
 	public void handleKeysDuringInitialScreen(InputHandler ih, LevelState levelState) {
+		if (ih.isMPressed()) {
+			MegaManMain.audioClip.stop();
+		}
+		else {
+			MegaManMain.audioClip.start();
+		}
+		
 		if(ih.isSpacePressed()) {
 			ih.reset();
 			levelState.setCurrentState(LevelState.GETTING_READY);	
 		}
 		if(ih.isSPressed()) {
+			ih.reset();
 			JOptionPane.showMessageDialog( null, 
 					"Item:                Price\r\n"+
 							"\r\n"+
 							"Extra Life:      1500\r\n"+ 
 							"Power Shot:  1000\r\n"+
 					"\r\n");
+			
 		}
 		if(ih.isIPressed()) {
+			ih.reset();
 			JOptionPane.showMessageDialog( null, 
 					"Power Up:     Explanation\r\n"+
 							"\r\n"+
@@ -379,11 +389,21 @@ public class LevelLogic {
 							"                           (Press E to buy, limit of one life per second.)\r\n" +
 							"Power Shot:  Activates the Power Shot which kills the asteroid in one hit\r\n"+
 					"                           (Press Q to buy, afterwards press Q to fire.)\r\n");
+			
 		}
-		ih.reset();
+//		ih.reset();
+		
+
 	}
 
 	public void handleKeysDuringPlay(InputHandler ih, LevelState levelState) {
+		
+		//stops music
+		if(ih.isMPressed())
+			MegaManMain.audioClip.stop();
+
+		else
+			MegaManMain.audioClip.start();		
 
 		GameStatus status = getLevelState().getGameStatus();
 
@@ -450,6 +470,7 @@ public class LevelLogic {
 			getLevelState().moveMegaManRight();
 		}
 	}
+	
 
 	public static void delay(long millis) {
 		try{

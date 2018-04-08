@@ -175,9 +175,11 @@ public class InputHandler implements KeyListener{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP:
 			this.upIsPressed = false;
+//			this.still = true;
 			break;
 		case KeyEvent.VK_DOWN:
 			this.downIsPressed = false;
+//			this.still = true;
 			break;
 		case KeyEvent.VK_LEFT:
 			this.reset();

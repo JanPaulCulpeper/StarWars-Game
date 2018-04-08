@@ -403,7 +403,7 @@ public class LevelLogic {
 			MegaManMain.audioClip.stop();
 
 		else
-			MegaManMain.audioClip.start();		
+			MegaManMain.audioClip.start();	
 
 		GameStatus status = getLevelState().getGameStatus();
 

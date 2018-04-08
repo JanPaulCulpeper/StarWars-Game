@@ -161,13 +161,13 @@ public class Level3State extends Level1State {
 		for(int i=0; i<n; i++){
 			this.platforms[i] = new Platform(0,0);
 			if(i<4)	{
-				platforms[i].setLocation(50 + i*50, getHeight() - 160 + i*40);
+				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 160 + i*40);
 			}
 			if(i==4) {
-				platforms[i].setLocation(50 + i*50 , getHeight() - 160 + 3*40);}
+				platforms[i].setLocation(50 + i*50 , SCREEN_HEIGHT - 160 + 3*40);}
 			if(i>4){	
 				int k=4;
-				platforms[i].setLocation(50 + i*50, getHeight() - 40 - (i-k)*40 );
+				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 40 - (i-k)*40 );
 				k=k+2;
 			}
 			

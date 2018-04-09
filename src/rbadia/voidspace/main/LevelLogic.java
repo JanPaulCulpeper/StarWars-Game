@@ -399,12 +399,15 @@ public class LevelLogic {
 	public void handleKeysDuringPlay(InputHandler ih, LevelState levelState) {
 		
 		//stops music
-		if(ih.isMPressed())
-			MegaManMain.audioClip.stop();
-
-		else
-			MegaManMain.audioClip.start();	
-
+		if(ih.isMPressed()){
+			if(MegaManMain.audioClip.isRunning())
+				MegaManMain.audioClip.stop();
+			else
+				MegaManMain.audioClip.start();
+			
+			ih.reset();
+		}
+			
 		GameStatus status = getLevelState().getGameStatus();
 
 		// fire bullet if space is pressed

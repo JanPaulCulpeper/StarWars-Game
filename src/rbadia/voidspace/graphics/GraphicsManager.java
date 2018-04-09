@@ -18,6 +18,7 @@ import rbadia.voidspace.model.Floor;
 //import rbadia.voidspace.model.BulletBoss2;
 import rbadia.voidspace.model.MegaMan;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.StormTrooper;
 
 /**
  * Manages and draws game graphics and images.
@@ -38,6 +39,8 @@ public class GraphicsManager {
 	private BufferedImage megamanRight;
 	private BufferedImage megamanFireLeft;
 	private BufferedImage megamanLookLeft;
+	private BufferedImage stormTrooperLookingRight;
+	private BufferedImage stormTrooperLookingLeft;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -58,6 +61,9 @@ public class GraphicsManager {
 			this.asteroidExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroidExplosion.png"));
 			this.bulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bullet.png"));
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
+			this.stormTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingRight.png"));
+			this.stormTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingLeft.png"));
+			
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -107,7 +113,7 @@ public class GraphicsManager {
 	
 	public void drawPlatform2 (Platform platform, Graphics2D g2d, ImageObserver observer, int i){
 		g2d.drawImage(platformImg, platform.x , platform.y, observer);	
-}
+		}
 
 	/**
 	 * Draws a bullet image to the specified graphics canvas.
@@ -162,7 +168,25 @@ public class GraphicsManager {
 	public void drawBigAsteroidExplosion(Rectangle bigAsteroidExplosion, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bigAsteroidExplosionImg, bigAsteroidExplosion.x, bigAsteroidExplosion.y, observer);
 	}
+	
+	public void drawStormTrooperLookingLeft(StormTrooper stormTrooper, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(stormTrooperLookingLeft, stormTrooper.x, stormTrooper.y, observer);
+	}
+	
+	public void drawStormTrooperLookingRight(StormTrooper stormTrooper, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(stormTrooperLookingRight, stormTrooper.x, stormTrooper.y, observer);
+	}
 
 
 
 }
+
+
+
+
+
+
+
+
+
+

@@ -113,10 +113,9 @@ public class Level3State extends Level1State {
 	}
 	
 	//Asteroid Left 
-	@Override
 	protected void drawAsteroid() {
 		Graphics2D g2d = getGraphics2D();
-		if((asteroid.getX() + asteroid.getPixelsWide() < 530)) {
+		if((asteroid.getX() + asteroid.getPixelsWide() < SCREEN_WIDTH)) {
 			asteroid.translate(asteroid.getSpeed(), asteroid.getSpeed()/2);
 			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
 		}
@@ -125,13 +124,13 @@ public class Level3State extends Level1State {
 			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
 
 				asteroid.setLocation(-asteroid.getPixelsWide(),
-						rand.nextInt(this.getHeight() - asteroid.getPixelsTall() - 32));
+						rand.nextInt(SCREEN_HEIGHT - asteroid.getPixelsTall() - 32));
 			}
 			else {
 				// draw explosion
 				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
 			}
-		}
+		}	
 	}
 	
 	//Asteroid Right
@@ -144,9 +143,8 @@ public class Level3State extends Level1State {
 		else {
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
-
-				asteroid2.setLocation(this.getWidth() - asteroid2.getPixelsWide(),
-					rand.nextInt(this.getHeight() - asteroid2.getPixelsTall() - 32));
+				asteroid2.setLocation(SCREEN_WIDTH - asteroid2.getPixelsWide(),
+					rand.nextInt(SCREEN_HEIGHT - asteroid2.getPixelsTall() - 32));
 				}	
 		else {
 			// draw explosion

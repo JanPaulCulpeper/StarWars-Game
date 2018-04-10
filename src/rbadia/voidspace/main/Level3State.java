@@ -38,8 +38,8 @@ public class Level3State extends Level1State {
 			this.originalFont = g2d.getFont();
 			this.bigFont = originalFont;
 		}
-		
 		clearScreen();
+		((GraphicsManager) getGraphicsManager()).drawDeathStar(g2d);
 		drawStars(50);
 		drawFloor();
 		drawPlatforms();
@@ -49,7 +49,9 @@ public class Level3State extends Level1State {
 		drawBullets();
 		drawBigBullets();
 		checkBullletAsteroidCollisions();
+		checkLeftBullletAsteroidCollisions();
 		checkBullletAsteroidCollisions2();
+		checkLeftBullletAsteroidCollisions2();
 		checkBigBulletAsteroidCollisions();
 		checkBigBulletAsteroidCollisions2();
 		checkMegaManAsteroidCollisions();
@@ -107,6 +109,23 @@ public class Level3State extends Level1State {
 				damage=0;
 				// remove bullet
 				bullets.remove(i);
+				break;
+			}
+		}
+	}
+	//left bullet with asteroid 2
+	protected void checkLeftBullletAsteroidCollisions2() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBullets.size(); i++){
+			Bullet bullet = leftBullets.get(i);
+			if(asteroid2.intersects(bullet)){
+				// increase asteroids destroyed count
+				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
+				removeAsteroid(asteroid2);
+				levelAsteroidsDestroyed++;
+				damage=0;
+				// remove bullet
+				leftBullets.remove(i);
 				break;
 			}
 		}

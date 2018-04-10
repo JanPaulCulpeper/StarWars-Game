@@ -15,6 +15,8 @@ public class SoundManager {
     "/rbadia/voidspace/sounds/shipExplosion.wav"));
     private AudioClip bulletSound = Applet.newAudioClip(Level1State.class.getResource(
     "/rbadia/voidspace/sounds/laser.wav"));
+    private AudioClip screamSound = Applet.newAudioClip(Level1State.class.getResource(
+    "/rbadia/voidspace/sounds/WilhelmScream.wav"));
     
     /**
      * Plays sound for bullets fired by the ship.
@@ -51,6 +53,16 @@ public class SoundManager {
     		new Thread(new Runnable(){
     			public void run() {
     				shipExplosionSound.play();
+    			}
+    		}).start();	
+    	}
+    }
+    public void playScreamSound(){
+		// play sound for scream
+    	if(SOUND_ON){
+    		new Thread(new Runnable(){
+    			public void run() {
+    				screamSound.play();
     			}
     		}).start();	
     	}

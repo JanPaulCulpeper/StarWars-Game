@@ -41,6 +41,7 @@ public class GraphicsManager {
 	private BufferedImage megamanLookLeft;
 	private BufferedImage stormTrooperLookingRight;
 	private BufferedImage stormTrooperLookingLeft;
+	private BufferedImage DeathStar;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -63,7 +64,7 @@ public class GraphicsManager {
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
 			this.stormTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingRight.png"));
 			this.stormTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingLeft.png"));
-			
+			this.DeathStar = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/DeathStar.png"));
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -175,6 +176,9 @@ public class GraphicsManager {
 	
 	public void drawStormTrooperLookingRight(StormTrooper stormTrooper, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(stormTrooperLookingRight, stormTrooper.x, stormTrooper.y, observer);
+	}
+	public void drawDeathStar(Graphics2D g2d) {
+		g2d.drawImage(DeathStar, 0,0,530,480,null);
 	}
 
 

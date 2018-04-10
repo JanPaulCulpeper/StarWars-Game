@@ -16,15 +16,11 @@ public class Level4State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 	
 	public Asteroid asteroid2 = new Asteroid(0,0);
-	public StormTrooper stormTrooper1 = new StormTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);//positioned right, looking left
-	public StormTrooper stormTrooper2 = new StormTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);//positioned left, looking right
-	private boolean trooper1LookingRight = false;
-	private boolean trooper2LookingLeft = true;
+	public StormTrooper stormTrooper1 = new StormTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);//positioned left, looking right
+	public StormTrooper stormTrooper2 = new StormTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);//positioned right, looking left
 	private long lastTrooper1BulletTime;
 	private long lastTrooper2BulletTime;
-	private boolean trooper1Dead = false;
-	private boolean trooper2Dead = false;
-	
+
 	private ArrayList<Bullet> trooper1Bullets = new ArrayList<Bullet>();
 	private ArrayList<Bullet> trooper2Bullets = new ArrayList<Bullet>();
 	
@@ -65,6 +61,7 @@ public class Level4State extends Level1State {
 		}
 		
 		clearScreen();
+		((GraphicsManager) getGraphicsManager()).drawDeathStar(g2d);
 		drawStars(50);
 		drawFloor();
 		drawPlatforms();
@@ -72,13 +69,14 @@ public class Level4State extends Level1State {
 		drawAsteroid();
 		drawBullets();
 		drawBigBullets();
-		//TODO
 		drawTrooper();
 		drawTrooper2();
 		drawTrooper1Bullets();
 		drawTrooper2Bullets();
 		this.checkBulletTrooper1Collisions();
+		this.checkLeftBulletTrooper1Collisions();
 		this.checkBulletTrooper2Collisions();
+		this.checkLeftBulletTrooper2Collisions();
 		this.checkTrooper1BulletMegamanCollisions();
 		this.checkTrooper2BulletMegamanCollisions();
 
@@ -174,8 +172,12 @@ public class Level4State extends Level1State {
 			}
 			return false;
 		}
+		private boolean trooper1LookingRight = true;
+		private boolean trooper2LookingLeft = true;
+		private boolean trooper1Dead = false;
+		private boolean trooper2Dead = false;
 		
-		//Right trooper looking left
+		//Left trooper looking right
 		protected void drawTrooper() {
 			Graphics2D g2d = getGraphics2D();
 			if(stormTrooper1 == null)
@@ -233,8 +235,9 @@ public class Level4State extends Level1State {
 			
 			
 		}
+
 		
-		//Left trooper looking right
+		//Right trooper looking left
 		protected void drawTrooper2() {
 			Graphics2D g2d = getGraphics2D();
 			if(stormTrooper2 == null)
@@ -245,7 +248,7 @@ public class Level4State extends Level1State {
 			if(!trooper2Dead)
 			{
 				if (Fall3() && Gravity3()) {
-					stormTrooper2.translate(stormTrooper2.getSpeed(), stormTrooper2.getSpeed()/2);
+					stormTrooper2.translate(-stormTrooper2.getSpeed(), stormTrooper2.getSpeed()/2);
 					
 				}
 				if(!Gravity3()) {
@@ -285,7 +288,7 @@ public class Level4State extends Level1State {
 			else
 			{
 				stormTrooper2.setLocation(1000,1000);
-				((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingRight(stormTrooper2, g2d, this);
+				((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingLeft(stormTrooper2, g2d, this);
 			}
 			
 		}
@@ -413,7 +416,7 @@ public class Level4State extends Level1State {
 				}
 			}
 		}
-		
+		//bullet de megaman con trooper left
 		public void checkBulletTrooper1Collisions()
 		{
 			for(int i = 0; i < bullets.size(); i++)
@@ -422,10 +425,43 @@ public class Level4State extends Level1State {
 				if (stormTrooper1.intersects(bullet))
 				{
 					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
-					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 3;
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					bullets.remove(i);
-					trooper1Dead = true;
-					getSoundManager().playAsteroidExplosionSound();
+					
+					if(levelAsteroidsDestroyed == 2) {
+						getSoundManager().playScreamSound();
+						trooper1Dead = true;
+					}
+//					else {
+//						trooper1Dead = false;
+////						this.drawTrooper();
+//					}
+					break;
+				}
+			}
+			
+		}
+		
+		//left bullet de megaman con trooper left
+		public void checkLeftBulletTrooper1Collisions()
+		{
+			for(int i = 0; i < leftBullets.size(); i++)
+			{
+				Bullet bullet = leftBullets.get(i);
+				if (stormTrooper1.intersects(bullet))
+				{
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
+					leftBullets.remove(i);
+					
+					if(levelAsteroidsDestroyed == 2) {
+						getSoundManager().playScreamSound();
+						trooper1Dead = true;
+					}
+//					else {
+//						trooper1Dead = false;
+////						this.drawTrooper();
+//					}
 					break;
 				}
 			}
@@ -444,6 +480,7 @@ public class Level4State extends Level1State {
 			}
 		}
 		
+		//bullet de megaman con trooper right
 		public void checkBulletTrooper2Collisions()
 		{
 			for(int i = 0; i < bullets.size(); i++)
@@ -452,13 +489,53 @@ public class Level4State extends Level1State {
 				if (stormTrooper2.intersects(bullet))
 				{
 					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
-					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 3;
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					bullets.remove(i);
-					trooper2Dead = true;
-					getSoundManager().playAsteroidExplosionSound();
+					
+					if(levelAsteroidsDestroyed == 2) {
+						getSoundManager().playScreamSound();
+						trooper2Dead = true;
+					}
+//					else {
+//						trooper2Dead = false;
+////						this.drawTrooper2();
+//					}
 					break;
 				}
 			}
+			
+		}
+		
+		//left bullet de megaman con trooper right
+		public void checkLeftBulletTrooper2Collisions()
+		{
+			for(int i = 0; i < leftBullets.size(); i++)
+			{
+				Bullet bullet = leftBullets.get(i);
+				if (stormTrooper2.intersects(bullet))
+				{
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
+					leftBullets.remove(i);
+					
+					if(levelAsteroidsDestroyed == 2) {
+						getSoundManager().playScreamSound();
+						trooper2Dead = true;
+					}
+//					else {
+//						trooper2Dead = false;
+////						this.drawTrooper2();
+//					}
+					break;
+				}
+			}
+			
+		}
+		
+		@Override
+		public boolean isLevelWon() {
+			if(getInputHandler().isNPressed()) return true; 
+			return levelAsteroidsDestroyed >= 4;
 			
 		}
 		

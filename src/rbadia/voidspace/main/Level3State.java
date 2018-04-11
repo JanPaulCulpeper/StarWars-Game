@@ -203,6 +203,10 @@ public class Level3State extends Level1State {
 		((GraphicsManager)getGraphicsManager()).drawPowerUp(powerUp, g2d, this);
 			
 		}
+//	public boolean reachedLeftEdge(Platform[] screen) {
+//		return(screen.length<=0);
+//		
+//	}
 	Random rand = new Random();
 	protected void drawPlatforms() {
 		//draw platforms
@@ -211,7 +215,7 @@ public class Level3State extends Level1State {
 		for(int i=0; i<getNumPlatforms(); i++){
 			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
 			
-			platforms[i].translate(rand.nextInt(2), 0);
+			platforms[i].translate(rand.nextInt(8), 0);
 		}
 	}
 	

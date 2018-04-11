@@ -1,6 +1,7 @@
 package rbadia.voidspace.main;
 
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.Asteroid;
@@ -189,32 +190,34 @@ public class Level3State extends Level1State {
 		}
 	}	
 }	
-	
-	@Override
-	public Platform[] newPlatforms(int n){
-		platforms = new Platform[n];
-		for(int i=0; i<n; i++){
-			this.platforms[i] = new Platform(0,0);
-			if(i<4)	{
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 160 + i*40);
-			}
-			if(i==4) {
-				platforms[i].setLocation(50 + i*50 , SCREEN_HEIGHT - 160 + 3*40);}
-			if(i>4){	
-				int k=4;
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 40 - (i-k)*40 );
-				k=k+2;
-			}
-			
+
+	Random rand = new Random();
+	protected void drawPlatforms() {
+		//draw platforms
+		Graphics2D g2d = getGraphics2D();
+		for(int i=0; i<getNumPlatforms(); i++){
+			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
+			platforms[i].translate(rand.nextInt(5), 0);
 		}
-		return platforms;
-		
+
 	}
+	
+
+	
+
 	
 	public Asteroid newAsteroid2(Level1State screen){
 		int xPos = (int) (screen.getWidth() - Asteroid.WIDTH);
 		int yPos = rand.nextInt((int)(screen.getHeight() - Asteroid.HEIGHT- 32));
 		asteroid2 = new Asteroid(xPos, yPos);
 		return asteroid2;
+	}
+	
+	
+	@Override
+	public boolean isLevelWon() {
+		if(getInputHandler().isNPressed()) return true; 
+		return levelAsteroidsDestroyed >= 5;
+		
 	}
 }

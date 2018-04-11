@@ -269,7 +269,7 @@ public class Level1State extends LevelState {
 		}
 	}
 
-	//checks right bullet asteroid collision
+	//checks right big bullet asteroid collision
 	protected void checkBigBulletAsteroidCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
@@ -284,7 +284,7 @@ public class Level1State extends LevelState {
 		}
 	}
 	
-	//checks left bullet asteroid collision
+	//checks left big bullet asteroid collision
 	protected void checkLeftBigBulletAsteroidCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBigBullets.size(); i++){

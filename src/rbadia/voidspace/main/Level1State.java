@@ -295,6 +295,7 @@ public class Level1State extends LevelState {
 				removeAsteroid(asteroid);
 				levelAsteroidsDestroyed++;
 				damage=0;
+				
 			}
 		}
 	}

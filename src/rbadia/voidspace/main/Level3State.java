@@ -86,7 +86,7 @@ public class Level3State extends Level1State {
 	}
 	protected void checkMegaManPowerUpCollision() {
 		GameStatus status = getGameStatus();
-		if(powerUp.intersects(megaMan)){
+		if(powerUp.intersects(megaMan)&& PowerUp.isVisibility()){
 			status.setLivesLeft(status.getLivesLeft() + 5);
 			PowerUp.setVisibility(false);
 //			removePowerUp(powerUp);
@@ -218,13 +218,11 @@ public class Level3State extends Level1State {
 	protected void drawPowerUp() {
 		// TODO Auto-generated method stub
 		Graphics2D g2d = getGraphics2D();
+		if(powerUp.isVisibility())
 		((GraphicsManager)getGraphicsManager()).drawPowerUp(powerUp, g2d, this);
 			
 		}
-//	public boolean reachedLeftEdge(Platform[] screen) {
-//		return(screen.length<=0);
-//		
-//	}
+
 	Random rand = new Random();
 	protected void drawPlatforms() {
 		//draw platforms
@@ -233,7 +231,7 @@ public class Level3State extends Level1State {
 		for(int i=0; i<getNumPlatforms(); i++){
 			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
 			
-			platforms[i].translate(rand.nextInt(8), 0);
+		platforms[i].translate(rand.nextInt(8), 0);
 		}
 	}
 	

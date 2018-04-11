@@ -12,7 +12,7 @@ public class PowerUp extends GameObject {
 	public static final int Y_OFFSET = 5;
 	public static final int WIDTH = 10;
 	public static final int Height = 10;
-	public static boolean visibility = false;
+	public static boolean visibility = true;
 	
 	public PowerUp(int xPos, int yPos){
 		super(xPos, yPos, PowerUp.WIDTH, PowerUp.Height);
@@ -21,12 +21,14 @@ public class PowerUp extends GameObject {
 	
 	
 	public static boolean isVisibility() {
+		
 		return visibility;
+		
 	}
 
 
-	public static boolean setVisibility(boolean b) {
-		return visibility=false;
+	public static void setVisibility(boolean b) {
+		visibility=b;
 	}
 
 

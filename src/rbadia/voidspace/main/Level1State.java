@@ -24,6 +24,7 @@ import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Floor;
 import rbadia.voidspace.model.MegaMan;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.PowerUp;
 import rbadia.voidspace.sounds.SoundManager;
 
 /**
@@ -43,6 +44,7 @@ public class Level1State extends LevelState {
 	protected Floor[] floor;	
 	protected int numPlatforms=8;
 	protected Platform[] platforms;
+	protected PowerUp powerUp;
 
 	protected int damage=0;
 	protected static final int NEW_MEGAMAN_DELAY = 500;
@@ -93,6 +95,7 @@ public class Level1State extends LevelState {
 	public List<Bullet> getLeftBullets()		{return leftBullets;	}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
 	public List<BigBullet> getLeftBigBullets()	{return leftBigBullets;	}
+	public PowerUp getPowerUp() 				{ return powerUp;		}
 	
 	
 
@@ -242,6 +245,7 @@ public class Level1State extends LevelState {
 		checkBigBulletAsteroidCollisions();
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
+//		drawPowerUp();
 
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
@@ -250,6 +254,8 @@ public class Level1State extends LevelState {
 		//update level label
 		getMainFrame().getLevelValueLabel().setText(Long.toString(status.getLevel()));
 	}
+
+	
 
 	protected void checkAsteroidFloorCollisions() {
 		for(int i=0; i<9; i++){
@@ -438,8 +444,6 @@ public class Level1State extends LevelState {
 		}
 	}
 	
-
-
 	protected void drawPlatforms() {
 		//draw platforms
 		Graphics2D g2d = getGraphics2D();

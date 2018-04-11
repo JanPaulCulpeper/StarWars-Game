@@ -8,6 +8,7 @@ import java.awt.image.ImageObserver;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
+import rbadia.voidspace.main.Level3State;
 import rbadia.voidspace.model.Asteroid;
 //import rbadia.voidspace.model.BigAsteroid;
 import rbadia.voidspace.model.BigBullet;
@@ -18,6 +19,7 @@ import rbadia.voidspace.model.Floor;
 //import rbadia.voidspace.model.BulletBoss2;
 import rbadia.voidspace.model.MegaMan;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.PowerUp;
 import rbadia.voidspace.model.StormTrooper;
 
 /**
@@ -42,6 +44,7 @@ public class GraphicsManager {
 	private BufferedImage stormTrooperLookingRight;
 	private BufferedImage stormTrooperLookingLeft;
 	private BufferedImage DeathStar;
+	private BufferedImage PowerUpImg;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -65,6 +68,7 @@ public class GraphicsManager {
 			this.stormTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingRight.png"));
 			this.stormTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingLeft.png"));
 			this.DeathStar = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/DeathStar.png"));
+			this.PowerUpImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/PowerUp.png"));
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -181,7 +185,9 @@ public class GraphicsManager {
 		g2d.drawImage(DeathStar, 0,0,530,480,null);
 	}
 
-
+	public void drawPowerUp( PowerUp powerUp, Graphics2D g2d, Level3State level3State) {
+		g2d.drawImage(PowerUpImg, powerUp.x, powerUp.y, 25, 25, null);
+	}
 
 }
 

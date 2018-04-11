@@ -1,18 +1,24 @@
 package rbadia.voidspace.main;
 
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.Asteroid;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
+import rbadia.voidspace.model.Floor;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.PowerUp;
+import rbadia.voidspace.model.StormTrooper;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level3State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 	
 	public Asteroid asteroid2 = new Asteroid(0,0);
+	public PowerUp powerUp = new PowerUp(1/SCREEN_WIDTH+10,1/SCREEN_HEIGHT+32);//positioned left, looking right
+	
 	
 	//Constructor
 	public Level3State(int level, MainFrame frame, GameStatus status, LevelLogic gameLogic, InputHandler inputHandler,
@@ -46,6 +52,7 @@ public class Level3State extends Level1State {
 		drawMegaMan();
 		drawAsteroid();
 		drawNewAsteroid();
+		drawPowerUp();
 		drawBullets();
 		drawBigBullets();
 		checkBullletAsteroidCollisions();
@@ -58,6 +65,7 @@ public class Level3State extends Level1State {
 		checkMegaManAsteroidCollisions2();
 		checkAsteroidFloorCollisions();
 		checkAsteroidFloorCollisions2();
+		checkMegaManPowerUpCollision();
 		
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
@@ -73,6 +81,15 @@ public class Level3State extends Level1State {
 				removeAsteroid(asteroid2);
 
 			}
+		}
+	}
+	protected void checkMegaManPowerUpCollision() {
+		GameStatus status = getGameStatus();
+		if(powerUp.intersects(megaMan)){
+			status.setLivesLeft(status.getLivesLeft() + 5);
+			PowerUp.setVisibility(false);
+//			removePowerUp(powerUp);
+			
 		}
 	}
 	
@@ -172,26 +189,7 @@ public class Level3State extends Level1State {
 	}	
 }	
 	
-	@Override
-	public Platform[] newPlatforms(int n){
-		platforms = new Platform[n];
-		for(int i=0; i<n; i++){
-			this.platforms[i] = new Platform(0,0);
-			if(i<4)	{
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 160 + i*40);
-			}
-			if(i==4) {
-				platforms[i].setLocation(50 + i*50 , SCREEN_HEIGHT - 160 + 3*40);}
-			if(i>4){	
-				int k=4;
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 40 - (i-k)*40 );
-				k=k+2;
-			}
-			
-		}
-		return platforms;
-		
-	}
+	
 	
 	public Asteroid newAsteroid2(Level1State screen){
 		int xPos = (int) (screen.getWidth() - Asteroid.WIDTH);
@@ -199,4 +197,23 @@ public class Level3State extends Level1State {
 		asteroid2 = new Asteroid(xPos, yPos);
 		return asteroid2;
 	}
+	protected void drawPowerUp() {
+		// TODO Auto-generated method stub
+		Graphics2D g2d = getGraphics2D();
+		((GraphicsManager)getGraphicsManager()).drawPowerUp(powerUp, g2d, this);
+			
+		}
+	Random rand = new Random();
+	protected void drawPlatforms() {
+		//draw platforms
+
+		Graphics2D g2d = getGraphics2D();
+		for(int i=0; i<getNumPlatforms(); i++){
+			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
+			
+			platforms[i].translate(rand.nextInt(2), 0);
+		}
+	}
+	
+
 }

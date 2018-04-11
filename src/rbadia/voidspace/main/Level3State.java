@@ -54,6 +54,7 @@ public class Level3State extends Level1State {
 		checkLeftBullletAsteroidCollisions2();
 		checkBigBulletAsteroidCollisions();
 		checkBigBulletAsteroidCollisions2();
+		checkLeftBigBulletAsteroidCollisions2();
 		checkMegaManAsteroidCollisions();
 		checkMegaManAsteroidCollisions2();
 		checkAsteroidFloorCollisions();
@@ -84,6 +85,7 @@ public class Level3State extends Level1State {
 		}
 	}
 	
+	//right big bullet colision with asteroid 2
 	protected void checkBigBulletAsteroidCollisions2() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
@@ -92,11 +94,27 @@ public class Level3State extends Level1State {
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
 				removeAsteroid(asteroid2);
+				levelAsteroidsDestroyed++;
 				damage=0;
 			}
 		}
 	}
 	
+	//left big bullet bullet colision with asteroid 2
+	protected void checkLeftBigBulletAsteroidCollisions2() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBigBullets.size(); i++){
+			BigBullet bigBullet = leftBigBullets.get(i);
+			if(asteroid2.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
+				removeAsteroid(asteroid2);
+				levelAsteroidsDestroyed++;
+				damage=0;
+			}
+		}
+	}
+	//check right bullet asteroid 2 collision
 	protected void checkBullletAsteroidCollisions2() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bullets.size(); i++){

@@ -73,12 +73,16 @@ public class Level4State extends Level1State {
 		drawTrooper2();
 		drawTrooper1Bullets();
 		drawTrooper2Bullets();
-		this.checkBulletTrooper1Collisions();
-		this.checkLeftBulletTrooper1Collisions();
-		this.checkBulletTrooper2Collisions();
-		this.checkLeftBulletTrooper2Collisions();
-		this.checkTrooper1BulletMegamanCollisions();
-		this.checkTrooper2BulletMegamanCollisions();
+		checkBulletTrooper1Collisions();
+		checkLeftBulletTrooper1Collisions();
+		checkBulletTrooper2Collisions();
+		checkLeftBulletTrooper2Collisions();
+		checkTrooper1BulletMegamanCollisions();
+		checkTrooper2BulletMegamanCollisions();
+		checkBigBulletTrooper1Collision();
+		checkBigBulletTrooper2Collision();
+		checkLeftBigBulletTrooper1Collision();
+		checkLeftBigBulletTrooper2Collision();
 
 		
 		// update asteroids destroyed (score) label  
@@ -432,10 +436,6 @@ public class Level4State extends Level1State {
 						getSoundManager().playScreamSound();
 						trooper1Dead = true;
 					}
-//					else {
-//						trooper1Dead = false;
-////						this.drawTrooper();
-//					}
 					break;
 				}
 			}
@@ -458,10 +458,6 @@ public class Level4State extends Level1State {
 						getSoundManager().playScreamSound();
 						trooper1Dead = true;
 					}
-//					else {
-//						trooper1Dead = false;
-////						this.drawTrooper();
-//					}
 					break;
 				}
 			}
@@ -489,6 +485,7 @@ public class Level4State extends Level1State {
 				if (stormTrooper2.intersects(bullet))
 				{
 					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					bullets.remove(i);
 					
@@ -496,10 +493,7 @@ public class Level4State extends Level1State {
 						getSoundManager().playScreamSound();
 						trooper2Dead = true;
 					}
-//					else {
-//						trooper2Dead = false;
-////						this.drawTrooper2();
-//					}
+
 					break;
 				}
 			}
@@ -515,6 +509,7 @@ public class Level4State extends Level1State {
 				if (stormTrooper2.intersects(bullet))
 				{
 					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					leftBullets.remove(i);
 					
@@ -522,20 +517,90 @@ public class Level4State extends Level1State {
 						getSoundManager().playScreamSound();
 						trooper2Dead = true;
 					}
-//					else {
-//						trooper2Dead = false;
-////						this.drawTrooper2();
-//					}
 					break;
 				}
 			}
 			
 		}
 		
+		//Check Right big bullet with trooper 1 collision
+		public void checkBigBulletTrooper1Collision() {
+			GameStatus status = getGameStatus();
+			for(int i=0; i<bigBullets.size(); i++){
+				BigBullet bigBullet = bigBullets.get(i);
+				if(stormTrooper1.intersects(bigBullet)){
+					// increase asteroids destroyed count
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					trooper1Dead = true;
+					getSoundManager().playScreamSound();
+					bigBullets.remove(i);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+					damage=0;
+				}
+			}
+		}
+		
+		//check right big bullet with trooper 2 collision
+		public void checkBigBulletTrooper2Collision(){
+			GameStatus status = getGameStatus();
+			for(int i=0; i<bigBullets.size(); i++){
+				BigBullet bigBullet = bigBullets.get(i);
+				if(stormTrooper2.intersects(bigBullet)){
+					// increase asteroids destroyed count
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					trooper2Dead = true;
+					getSoundManager().playScreamSound();
+					bigBullets.remove(i);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+					damage=0;
+				}
+			}
+		}
+		
+		//check left big bullet with trooper 1 collision
+		public void checkLeftBigBulletTrooper1Collision() {
+			GameStatus status = getGameStatus();
+			for(int i=0; i<leftBigBullets.size(); i++){
+				BigBullet bigBullet = leftBigBullets.get(i);
+				if(stormTrooper1.intersects(bigBullet)){
+					// increase asteroids destroyed count
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					trooper1Dead = true;
+					getSoundManager().playScreamSound();
+					leftBigBullets.remove(i);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+					damage=0;
+				}
+			}
+		}
+		
+		//checck left big bullet with trooper 2 collision
+		public void checkLeftBigBulletTrooper2Collision() {
+			GameStatus status = getGameStatus();
+			for(int i=0; i<leftBigBullets.size(); i++){
+				BigBullet bigBullet = leftBigBullets.get(i);
+				if(stormTrooper2.intersects(bigBullet)){
+					// increase asteroids destroyed count
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					trooper2Dead = true;
+					getSoundManager().playScreamSound();
+					leftBigBullets.remove(i);
+					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+					damage=0;
+				}
+			}
+		}
+		
 		@Override
 		public boolean isLevelWon() {
 			if(getInputHandler().isNPressed()) return true; 
 			return levelAsteroidsDestroyed >= 4;
+			
+		}
+		
+		
+		@Override
+		public void drawAsteroid() {
 			
 		}
 		

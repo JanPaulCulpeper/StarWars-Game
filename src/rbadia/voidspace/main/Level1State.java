@@ -243,6 +243,7 @@ public class Level1State extends LevelState {
 		checkBullletAsteroidCollisions();
 		checkLeftBullletAsteroidCollisions();
 		checkBigBulletAsteroidCollisions();
+		checkLeftBigBulletAsteroidCollisions();
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
 //		drawPowerUp();
@@ -274,6 +275,7 @@ public class Level1State extends LevelState {
 		}
 	}
 
+	//checks right bullet asteroid collision
 	protected void checkBigBulletAsteroidCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
@@ -282,7 +284,24 @@ public class Level1State extends LevelState {
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
 				removeAsteroid(asteroid);
+				levelAsteroidsDestroyed++;
 				damage=0;
+			}
+		}
+	}
+	
+	//checks left bullet asteroid collision
+	protected void checkLeftBigBulletAsteroidCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBigBullets.size(); i++){
+			BigBullet bigBullet = leftBigBullets.get(i);
+			if(asteroid.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
+				removeAsteroid(asteroid);
+				levelAsteroidsDestroyed++;
+				damage=0;
+				
 			}
 		}
 	}
@@ -420,7 +439,7 @@ public class Level1State extends LevelState {
 			((GraphicsManager) getGraphicsManager()).drawMegaFireR(megaMan, g2d, this);
 		}	
 		//Megaman run right
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isRightPressed()) 
+		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (FireLeft() == false) && (LeftFire2() == false) && getInputHandler().isRightPressed()) 
 		{
 			((GraphicsManager)getGraphicsManager()).drawMegaRunR(megaMan, g2d, this);
 		}

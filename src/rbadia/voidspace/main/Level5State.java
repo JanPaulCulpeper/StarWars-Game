@@ -56,7 +56,6 @@ public class Level5State extends Level1State {
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
-		drawTheBoss();
 		drawAsteroid();
 		drawBullets();
 		drawBigBullets();
@@ -66,8 +65,12 @@ public class Level5State extends Level1State {
 		checkLeftBigBulletAsteroidCollisions();
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
-		moveBossUp();
+		//Boss code
 		//TODO rememebr to add all collision and draw methods
+		drawTheBoss();
+		drawBossBullet();
+		moveBossUp();
+			
 		
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
@@ -104,6 +107,7 @@ public class Level5State extends Level1State {
 		//suma el levelAsteroidDestroyed
 	}
 	//TODO collision de player bullets con boss
+	
 	//TODO collision de boss bullets con player
 	
 	
@@ -174,6 +178,11 @@ public class Level5State extends Level1State {
 		Graphics2D g2d = getGraphics2D();
 		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
 		
+		long currentTime = System.currentTimeMillis();
+		if((currentTime - lastBossBulletTime) > 1000/2){
+			lastBossBulletTime = currentTime;
+			fireBossBullet();
+		}
 	}
 	
 	
@@ -191,6 +200,40 @@ public class Level5State extends Level1State {
 	//TODO
 	//fire boss bullet
 	//draw boss bullet
+	//move bullet
+	//Change Bulleet to BossBullet
+	public void fireBossBullet() {
+		
+		Bullet bullet = new Bullet(boss.x + boss.width - Bullet.WIDTH/2, boss.y + boss.width/2 - Bullet.HEIGHT + 2);
+		bullet.setSpeed(-bullet.getSpeed());
+		this.bossBullets.add(bullet);
+		//TODO change sound
+		this.getSoundManager().playBulletSound();
+	}
+	
+	public boolean moveBossBullet(Bullet bullet) {
+		if(bullet.getX() - bullet.getSpeed() <= SCREEN_WIDTH && bullet.getX() > 0) {
+			bullet.translate(bullet.getSpeed(), 0);
+			return false;
+		}
+		//remove bullet if out of frame
+		return true;
+	}
+	
+	public void drawBossBullet() {
+		Graphics2D g2d = getGraphics2D();
+		for(int i = 0; i<bossBullets.size(); i++) {
+			Bullet bullet = bossBullets.get(i);
+			//TODO change image
+			getGraphicsManager().drawBullet(bullet, g2d, this);
+			
+			boolean remove = this.moveBossBullet(bullet);
+			if(remove) {
+				bossBullets.remove(i);
+			i--;
+			}
+		}
+	}
 	
 	@Override
 	public boolean isLevelWon() {

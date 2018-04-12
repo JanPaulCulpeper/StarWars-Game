@@ -371,7 +371,7 @@ public class Level4State extends Level1State {
 		public void fireTrooper2Bullet()
 		{	
 			Bullet bullet = new Bullet(stormTrooper2.x + stormTrooper2.width - Bullet.WIDTH/2, 
-					stormTrooper2.y + stormTrooper2.width/2 - Bullet.HEIGHT + 2);;
+					stormTrooper2.y + stormTrooper2.width/2 - Bullet.HEIGHT + 2);
 			if(this.trooper2LookingLeft)
 			{
 				bullet.setSpeed(-bullet.getSpeed());

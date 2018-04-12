@@ -16,8 +16,8 @@ public class Level4State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 	
 	public Asteroid asteroid2 = new Asteroid(0,0);
-	public StormTrooper stormTrooper1 = new StormTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);//positioned left, looking right
-	public StormTrooper stormTrooper2 = new StormTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);//positioned right, looking left
+	public StormTrooper stormTrooper1 = new StormTrooper(50, 100);//positioned left, looking right
+	public StormTrooper stormTrooper2 = new StormTrooper(400,100);//positioned right, looking left
 	private long lastTrooper1BulletTime;
 	private long lastTrooper2BulletTime;
 
@@ -232,7 +232,7 @@ public class Level4State extends Level1State {
 			else
 			{
 				stormTrooper1.setLocation(1000,1000);
-				((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingRight(stormTrooper2, g2d, this);
+		//		((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingRight(stormTrooper2, g2d, this);
 			}
 
 			
@@ -292,7 +292,7 @@ public class Level4State extends Level1State {
 			else
 			{
 				stormTrooper2.setLocation(1000,1000);
-				((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingLeft(stormTrooper2, g2d, this);
+	//			((GraphicsManager)getGraphicsManager()).drawStormTrooperLookingLeft(stormTrooper2, g2d, this);
 			}
 			
 		}

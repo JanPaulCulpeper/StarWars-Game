@@ -1,14 +1,24 @@
 package rbadia.voidspace.main;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.BigBullet;
+import rbadia.voidspace.model.Boss;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Platform;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level5State extends Level1State {
+	
+	public Boss boss = new Boss(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2);
+	private long lastBossBulletTime;
+	private ArrayList<Bullet> bossBullets = new ArrayList<Bullet>();
+	
+	public Boss getBoss(){
+		return boss;
+	}
 
 	public Level5State(int level, MainFrame frame, GameStatus status, LevelLogic gameLogic, InputHandler inputHandler,
 			GraphicsManager graphicsMan, SoundManager soundMan) {
@@ -45,6 +55,7 @@ public class Level5State extends Level1State {
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
+		drawTheBoss();
 		drawAsteroid();
 		drawBullets();
 		drawBigBullets();
@@ -54,6 +65,8 @@ public class Level5State extends Level1State {
 		checkLeftBigBulletAsteroidCollisions();
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
+		moveBossUp();
+//		moveBossDown();
 		//TODO rememebr to add all collision and draw methods
 		
 		// update asteroids destroyed (score) label  
@@ -155,13 +168,55 @@ public class Level5State extends Level1State {
 			}
 		}
 	}
-	
 	//TODO boss
+	
+	private boolean bossDown = true;
+	private boolean bossDead = false;
+	//draw boss
+	protected void drawTheBoss(){
+		Graphics2D g2d = getGraphics2D();
+		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
+		
+
+		
+		if(boss.getY() + boss.getPixelsTall() > SCREEN_HEIGHT){
+			boss.setSpeed(-boss.getSpeed());
+			this.bossDown = false;
+			//System.out.println(" used ");
+			
+		}
+		else if(boss.getY() <= 0){
+			boss.setSpeed(Boss.DEFAULT_SPEED);
+			this.bossDown = true;
+			//System.out.println(" used ");
+		}
+		boss.translate(0,boss.getSpeed());
+	}
+	
+	
 	//Fall
 	//Gravity
-	//draw
 	//move? 
 		//up/down?
+//	public void moveBossDown(){
+//		for(int i=0; i<9; i++){
+//			if(boss.getY() + boss.getSpeed() + boss.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
+//				boss.translate(0, 2);
+//			}
+//		}
+//	}
+	
+	public void moveBossUp(){
+		for(int i = 0; i< 9; i++){
+			if(boss.getY() + boss.getSpeed() + boss.height >= 0){
+				boss.translate(0, -1);
+			}
+			else{
+				boss.translate(0, 1);
+			}
+
+		}
+	}
 	//fire boss bullet
 	//draw boss bullet
 	
@@ -176,7 +231,7 @@ public class Level5State extends Level1State {
 	public Platform[] newPlatforms(int n){
 		platforms = new Platform[n];
 		for(int i=0; i<n; i++){
-			this.platforms[i] = new Platform(SCREEN_WIDTH/2 + 140 - i*40 , SCREEN_HEIGHT/2 + 140 - i*40);
+			this.platforms[i] = new Platform(SCREEN_WIDTH - i*50 - 100 , SCREEN_HEIGHT/2 - 140 + i*40);
 		}
 		return platforms;
 

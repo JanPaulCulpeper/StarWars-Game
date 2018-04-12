@@ -16,8 +16,13 @@ public class SoundManager {
     private AudioClip bulletSound = Applet.newAudioClip(Level1State.class.getResource(
     "/rbadia/voidspace/sounds/laser.wav"));
     private AudioClip screamSound = Applet.newAudioClip(Level1State.class.getResource(
-    "/rbadia/voidspace/sounds/WilhelmScream.wav"));
-    
+    "/rbadia/voidspace/sounds/WilhelmScream.wav"));  
+    private AudioClip  BigBullet= Applet.newAudioClip(Level1State.class.getResource(
+    	    "/rbadia/voidspace/sounds/BigBullet.wav"));
+    private AudioClip  xwing= Applet.newAudioClip(Level1State.class.getResource(
+    "/rbadia/voidspace/sounds/xwing.wav"));
+    private AudioClip Loser = Applet.newAudioClip(Level1State.class.getResource(
+    "/rbadia/voidspace/sounds/failed_me.mp3"));
     /**
      * Plays sound for bullets fired by the ship.
      */

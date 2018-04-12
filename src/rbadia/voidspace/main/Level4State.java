@@ -428,7 +428,7 @@ public class Level4State extends Level1State {
 				Bullet bullet = bullets.get(i);
 				if (stormTrooper1.intersects(bullet))
 				{
-					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 200);
 					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					bullets.remove(i);
@@ -451,7 +451,7 @@ public class Level4State extends Level1State {
 				Bullet bullet = leftBullets.get(i);
 				if (stormTrooper1.intersects(bullet))
 				{
-					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 200);
 					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					leftBullets.remove(i);
@@ -486,7 +486,7 @@ public class Level4State extends Level1State {
 				Bullet bullet = bullets.get(i);
 				if (stormTrooper2.intersects(bullet))
 				{
-					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 200);
 					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					bullets.remove(i);
@@ -510,7 +510,7 @@ public class Level4State extends Level1State {
 				Bullet bullet = leftBullets.get(i);
 				if (stormTrooper2.intersects(bullet))
 				{
-					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+					getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 200);
 					getSoundManager().playScreamSound();
 					levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
 					leftBullets.remove(i);
@@ -532,7 +532,7 @@ public class Level4State extends Level1State {
 				BigBullet bigBullet = bigBullets.get(i);
 				if(stormTrooper1.intersects(bigBullet)){
 					// increase asteroids destroyed count
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 400);
 					trooper1Dead = true;
 					getSoundManager().playScreamSound();
 					bigBullets.remove(i);
@@ -549,7 +549,7 @@ public class Level4State extends Level1State {
 				BigBullet bigBullet = bigBullets.get(i);
 				if(stormTrooper2.intersects(bigBullet)){
 					// increase asteroids destroyed count
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 400);
 					trooper2Dead = true;
 					getSoundManager().playScreamSound();
 					bigBullets.remove(i);
@@ -566,7 +566,7 @@ public class Level4State extends Level1State {
 				BigBullet bigBullet = leftBigBullets.get(i);
 				if(stormTrooper1.intersects(bigBullet)){
 					// increase asteroids destroyed count
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 400);
 					trooper1Dead = true;
 					getSoundManager().playScreamSound();
 					leftBigBullets.remove(i);
@@ -583,7 +583,7 @@ public class Level4State extends Level1State {
 				BigBullet bigBullet = leftBigBullets.get(i);
 				if(stormTrooper2.intersects(bigBullet)){
 					// increase asteroids destroyed count
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 500);
+					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 400);
 					trooper2Dead = true;
 					getSoundManager().playScreamSound();
 					leftBigBullets.remove(i);

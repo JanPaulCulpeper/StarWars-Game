@@ -15,7 +15,8 @@ public class Level5State extends Level1State {
 	public Boss boss = new Boss(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2);
 	private long lastBossBulletTime;
 	private ArrayList<Bullet> bossBullets = new ArrayList<Bullet>();
-	private int direction = 1;
+	private int directionY = 1;
+	private int directionX = 1;
 	
 	public Boss getBoss(){
 		return boss;
@@ -69,7 +70,13 @@ public class Level5State extends Level1State {
 		//TODO rememebr to add all collision and draw methods
 		drawTheBoss();
 		drawBossBullet();
-		moveBossUp();
+		moveBossY();
+//		moveBossX();
+		checkBulletToBossCollision();
+		checkBigBulletToBossCollition();
+		checkBossBulletToPlayerCollision();
+		checkPlayerBossCollision();
+
 			
 		
 		// update asteroids destroyed (score) label  
@@ -102,13 +109,51 @@ public class Level5State extends Level1State {
 		}	
 	}
 	
-	public void checkBulletBossCollision(){
-		//TODO
-		//suma el levelAsteroidDestroyed
-	}
 	//TODO collision de player bullets con boss
 	
 	//TODO collision de boss bullets con player
+	
+	//TODO boss player collisison
+	public void checkBulletToBossCollision(){
+		for (int i = 0; i < bullets.size(); i++) {
+			
+			Bullet bullet = bullets.get(i);
+			if(boss.intersects(bullet)) {
+				getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+				//TODO Han hit sound
+				levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
+				bullets.remove(i);
+			}
+		}
+	}
+	public void checkBigBulletToBossCollition() {
+		for (int i = 0; i < bigBullets.size(); i++) {
+			BigBullet bigBullet = bigBullets.get(i);
+			if(boss.intersects(bigBullet)) {
+				getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+				//TODO Han sound
+				bigBullets.remove(i);
+				levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+			}
+		}
+		
+	}
+	public void checkBossBulletToPlayerCollision() {
+		for (int i = 0; i < bossBullets.size(); i++) {
+			Bullet bullet = bossBullets.get(i);
+			if(megaMan.intersects(bullet)) {
+				getGameStatus().setLivesLeft(getGameStatus().getLivesLeft() - 1);
+				bossBullets.remove(i);
+			}
+			
+		}
+	}
+	public void checkPlayerBossCollision() {
+		if(boss.intersects(megaMan)) {
+			getGameStatus().setLivesLeft(getGameStatus().getLivesLeft() - 1);
+		}
+	}
+
 	
 	
 	//checks right big bullet asteroid collision
@@ -179,7 +224,7 @@ public class Level5State extends Level1State {
 		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
 		
 		long currentTime = System.currentTimeMillis();
-		if((currentTime - lastBossBulletTime) > 1000/2){
+		if((currentTime - lastBossBulletTime) > 1000/3){
 			lastBossBulletTime = currentTime;
 			fireBossBullet();
 		}
@@ -187,21 +232,28 @@ public class Level5State extends Level1State {
 	
 	
 	//move
-	public void moveBossUp(){
+	public void moveBossY(){
 		if (boss.getY() + boss.height >= SCREEN_HEIGHT) {
-			direction = -1;
+			directionY = -1;
 		}
-		else if (boss.getY() <= 0) {
-			direction = 1;
+		else if (boss.getY() + 20 <= 0) {
+			directionY = 1;
 		}
-		boss.translate(0, 3*direction);
+		boss.translate(0, 3*directionY);
 			
 	}
-	//TODO
-	//fire boss bullet
-	//draw boss bullet
-	//move bullet
-	//Change Bulleet to BossBullet
+	
+	//hacer que dispare a amos lados para usar este metodo
+//	public void moveBossX() {
+//		if(boss.getX() + boss.width >= SCREEN_WIDTH) {
+//			directionX = -1;
+//		}
+//		else if(boss.getX() <=0) {
+//			directionX = 1;
+//		}
+//		boss.translate(2*directionX, 0);
+//	}
+//	
 	public void fireBossBullet() {
 		
 		Bullet bullet = new Bullet(boss.x + boss.width - Bullet.WIDTH/2, boss.y + boss.width/2 - Bullet.HEIGHT + 2);

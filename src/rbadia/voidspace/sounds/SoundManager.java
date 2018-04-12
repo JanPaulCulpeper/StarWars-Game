@@ -13,8 +13,8 @@ public class SoundManager {
 
     private AudioClip shipExplosionSound = Applet.newAudioClip(Level1State.class.getResource(
     "/rbadia/voidspace/sounds/shipExplosion.wav"));
-    private AudioClip bulletSound = Applet.newAudioClip(Level1State.class.getResource(
-    "/rbadia/voidspace/sounds/laser.wav"));
+    private AudioClip ForceSound = Applet.newAudioClip(Level1State.class.getResource(
+    "/rbadia/voidspace/sounds/ForceSound.wav"));
     private AudioClip screamSound = Applet.newAudioClip(Level1State.class.getResource(
     "/rbadia/voidspace/sounds/WilhelmScream.wav"));  
     private AudioClip  BigBullet= Applet.newAudioClip(Level1State.class.getResource(
@@ -30,7 +30,7 @@ public class SoundManager {
     	if(SOUND_ON){
     		new Thread(new Runnable(){
     			public void run() {
-    				bulletSound.play();
+    				ForceSound.play();
     			}
     		}).start();
     	}

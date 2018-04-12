@@ -66,8 +66,6 @@ public class Level5State extends Level1State {
 		checkLeftBigBulletAsteroidCollisions();
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
-		//Boss code
-		//TODO rememebr to add all collision and draw methods
 		drawTheBoss();
 		drawBossBullet();
 		moveBossY();
@@ -108,12 +106,6 @@ public class Level5State extends Level1State {
 			}
 		}	
 	}
-	
-	//TODO collision de player bullets con boss
-	
-	//TODO collision de boss bullets con player
-	
-	//TODO boss player collisison
 	public void checkBulletToBossCollision(){
 		for (int i = 0; i < bullets.size(); i++) {
 			

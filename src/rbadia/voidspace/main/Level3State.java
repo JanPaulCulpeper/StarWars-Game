@@ -7,7 +7,6 @@ import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.Asteroid;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
-import rbadia.voidspace.model.Platform;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level3State extends Level1State {

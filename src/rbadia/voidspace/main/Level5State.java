@@ -215,15 +215,16 @@ public class Level5State extends Level1State {
 		Graphics2D g2d = getGraphics2D();
 		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
 		
+		//bullet frequancy
 		long currentTime = System.currentTimeMillis();
-		if((currentTime - lastBossBulletTime) > 1000/3){
+		if((currentTime - lastBossBulletTime) > 1000/2){
 			lastBossBulletTime = currentTime;
 			fireBossBullet();
 		}
 	}
 	
 	
-	//move
+	//move boss
 	public void moveBossY(){
 		if (boss.getY() + boss.height >= SCREEN_HEIGHT) {
 			directionY = -1;

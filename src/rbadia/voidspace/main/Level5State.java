@@ -15,6 +15,7 @@ public class Level5State extends Level1State {
 	public Boss boss = new Boss(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2);
 	private long lastBossBulletTime;
 	private ArrayList<Bullet> bossBullets = new ArrayList<Bullet>();
+	private int direction = 1;
 	
 	public Boss getBoss(){
 		return boss;
@@ -66,7 +67,6 @@ public class Level5State extends Level1State {
 		checkMegaManAsteroidCollisions();
 		checkAsteroidFloorCollisions();
 		moveBossUp();
-//		moveBossDown();
 		//TODO rememebr to add all collision and draw methods
 		
 		// update asteroids destroyed (score) label  
@@ -168,55 +168,27 @@ public class Level5State extends Level1State {
 			}
 		}
 	}
-	//TODO boss
 	
-	private boolean bossDown = true;
-	private boolean bossDead = false;
 	//draw boss
 	protected void drawTheBoss(){
 		Graphics2D g2d = getGraphics2D();
 		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
 		
-
-		
-		if(boss.getY() + boss.getPixelsTall() > SCREEN_HEIGHT){
-			boss.setSpeed(-boss.getSpeed());
-			this.bossDown = false;
-			//System.out.println(" used ");
-			
-		}
-		else if(boss.getY() <= 0){
-			boss.setSpeed(Boss.DEFAULT_SPEED);
-			this.bossDown = true;
-			//System.out.println(" used ");
-		}
-		boss.translate(0,boss.getSpeed());
 	}
 	
 	
-	//Fall
-	//Gravity
-	//move? 
-		//up/down?
-//	public void moveBossDown(){
-//		for(int i=0; i<9; i++){
-//			if(boss.getY() + boss.getSpeed() + boss.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
-//				boss.translate(0, 2);
-//			}
-//		}
-//	}
-	
+	//move
 	public void moveBossUp(){
-		for(int i = 0; i< 9; i++){
-			if(boss.getY() + boss.getSpeed() + boss.height >= 0){
-				boss.translate(0, -1);
-			}
-			else{
-				boss.translate(0, 1);
-			}
-
+		if (boss.getY() + boss.height >= SCREEN_HEIGHT) {
+			direction = -1;
 		}
+		else if (boss.getY() <= 0) {
+			direction = 1;
+		}
+		boss.translate(0, 3*direction);
+			
 	}
+	//TODO
 	//fire boss bullet
 	//draw boss bullet
 	

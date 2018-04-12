@@ -190,16 +190,22 @@ public class Level3State extends Level1State {
 		}
 	}	
 }	
-
+	private int direction = 1;
 	Random rand = new Random();
 	protected void drawPlatforms() {
 		//draw platforms
 		Graphics2D g2d = getGraphics2D();
 		for(int i=0; i<getNumPlatforms(); i++){
 			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
-			platforms[i].translate(rand.nextInt(5), 0);
+			
+			if(platforms[i].getX() + platforms[i].width >= SCREEN_WIDTH) {
+				direction = -1;
+			}
+			else if(platforms[i].getX() <= 0) {
+				direction = 1;
+			}
+			platforms[i].translate(direction*rand.nextInt(5), 0);
 		}
-
 	}
 	
 

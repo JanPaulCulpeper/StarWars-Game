@@ -20,4 +20,6 @@ public class Platform extends Rectangle {
 	public Platform(int xPos, int yPos) {
 		super(xPos, yPos, WIDTH, HEIGHT);
 	}
+
+
 }

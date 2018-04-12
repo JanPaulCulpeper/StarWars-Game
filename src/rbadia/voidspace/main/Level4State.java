@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import rbadia.voidspace.graphics.GraphicsManager;
-import rbadia.voidspace.model.Asteroid;
+import rbadia.voidspace.model.XWing;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Floor;
@@ -15,7 +15,7 @@ import rbadia.voidspace.sounds.SoundManager;
 public class Level4State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 	
-	public Asteroid asteroid2 = new Asteroid(0,0);
+	public XWing asteroid2 = new XWing(0,0);
 	public StormTrooper stormTrooper1 = new StormTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);//positioned left, looking right
 	public StormTrooper stormTrooper2 = new StormTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);//positioned right, looking left
 	private long lastTrooper1BulletTime;
@@ -66,13 +66,13 @@ public class Level4State extends Level1State {
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
-		drawAsteroid();
+		drawXWingRight();
 		drawBullets();
 		drawBigBullets();
 		drawTrooper();
 		drawTrooper2();
-		drawTrooper1Bullets();
-		drawTrooper2Bullets();
+		drawRebel1Bullets();
+		drawRebel2Bullets();
 		checkBulletTrooper1Collisions();
 		checkLeftBulletTrooper1Collisions();
 		checkBulletTrooper2Collisions();
@@ -286,7 +286,7 @@ public class Level4State extends Level1State {
 				long currentTime = System.currentTimeMillis();
 				if((currentTime - lastTrooper2BulletTime) > 1000/2){
 					lastTrooper2BulletTime = currentTime;
-					fireTrooper2Bullet();
+					fireRebel2Bullet();
 				}
 			}
 			else
@@ -350,12 +350,12 @@ public class Level4State extends Level1State {
 			return true;
 		}
 		
-		public void drawTrooper1Bullets()
+		public void drawRebel1Bullets()
 		{
 			Graphics2D g2d = getGraphics2D();
 			for(int i=0; i<trooper1Bullets.size(); i++){
 				Bullet bullet = trooper1Bullets.get(i);
-				getGraphicsManager().drawBullet(bullet, g2d, this);
+				getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
 
 				boolean remove = this.moveTrooper1Bullet(bullet);
 				if(remove){
@@ -368,7 +368,7 @@ public class Level4State extends Level1State {
 		
 		
 		
-		public void fireTrooper2Bullet()
+		public void fireRebel2Bullet()
 		{	
 			Bullet bullet = new Bullet(stormTrooper2.x + stormTrooper2.width - Bullet.WIDTH/2, 
 					stormTrooper2.y + stormTrooper2.width/2 - Bullet.HEIGHT + 2);;
@@ -393,12 +393,12 @@ public class Level4State extends Level1State {
 			return true;
 		}
 		
-		public void drawTrooper2Bullets()
+		public void drawRebel2Bullets()
 		{
 			Graphics2D g2d = getGraphics2D();
 			for(int i=0; i<trooper2Bullets.size(); i++){
 				Bullet bullet = trooper2Bullets.get(i);
-				getGraphicsManager().drawBullet(bullet, g2d, this);
+				getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
 
 				boolean remove = this.moveTrooper2Bullet(bullet);
 				if(remove){
@@ -602,7 +602,7 @@ public class Level4State extends Level1State {
 		
 		
 		@Override
-		public void drawAsteroid() {
+		public void drawXWingRight() {
 			
 		}
 		

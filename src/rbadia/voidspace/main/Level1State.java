@@ -18,7 +18,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import rbadia.voidspace.graphics.GraphicsManager;
-import rbadia.voidspace.model.Asteroid;
+import rbadia.voidspace.model.XWing;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Floor;
@@ -36,7 +36,7 @@ public class Level1State extends LevelState {
 	//protected GraphicsManager graphicsManager;
 	protected BufferedImage backBuffer;
 	protected MegaMan megaMan;
-	protected Asteroid asteroid;
+	protected XWing xWing;
 	protected List<Bullet> bullets;
 	protected List<Bullet> leftBullets;
 	protected List<BigBullet> bigBullets;
@@ -53,7 +53,7 @@ public class Level1State extends LevelState {
 	protected long lastAsteroidTime;
 	protected long lastLifeTime;
 
-	protected Rectangle asteroidExplosion;
+	protected Rectangle xWingExplosion;
 
 	protected Random rand;
 
@@ -90,7 +90,7 @@ public class Level1State extends LevelState {
 	public Floor[] getFloor()					{ return floor; 		}
 	public int getNumPlatforms()				{ return numPlatforms; 	}
 	public Platform[] getPlatforms()			{ return platforms; 	}
-	public Asteroid getAsteroid() 				{ return asteroid; 		}
+	public XWing getAsteroid() 				{ return xWing; 		}
 	public List<Bullet> getBullets() 			{ return bullets; 		}
 	public List<Bullet> getLeftBullets()		{return leftBullets;	}
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
@@ -237,7 +237,7 @@ public class Level1State extends LevelState {
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
-		drawAsteroid();
+		drawXWingRight();
 		drawBullets();
 		drawBigBullets();
 		checkBullletAsteroidCollisions();
@@ -260,8 +260,8 @@ public class Level1State extends LevelState {
 
 	protected void checkAsteroidFloorCollisions() {
 		for(int i=0; i<9; i++){
-			if(asteroid.intersects(floor[i])){
-				removeAsteroid(asteroid);
+			if(xWing.intersects(floor[i])){
+				removeAsteroid(xWing);
 
 			}
 		}
@@ -269,9 +269,9 @@ public class Level1State extends LevelState {
 
 	protected void checkMegaManAsteroidCollisions() {
 		GameStatus status = getGameStatus();
-		if(asteroid.intersects(megaMan)){
+		if(xWing.intersects(megaMan)){
 			status.setLivesLeft(status.getLivesLeft() - 1);
-			removeAsteroid(asteroid);
+			removeAsteroid(xWing);
 		}
 	}
 
@@ -280,10 +280,10 @@ public class Level1State extends LevelState {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
 			BigBullet bigBullet = bigBullets.get(i);
-			if(asteroid.intersects(bigBullet)){
+			if(xWing.intersects(bigBullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+				removeAsteroid(xWing);
 				levelAsteroidsDestroyed++;
 				damage=0;
 			}
@@ -295,10 +295,10 @@ public class Level1State extends LevelState {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBigBullets.size(); i++){
 			BigBullet bigBullet = leftBigBullets.get(i);
-			if(asteroid.intersects(bigBullet)){
+			if(xWing.intersects(bigBullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+				removeAsteroid(xWing);
 				levelAsteroidsDestroyed++;
 				damage=0;
 				
@@ -311,10 +311,10 @@ public class Level1State extends LevelState {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
-			if(asteroid.intersects(bullet)){
+			if(xWing.intersects(bullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+				removeAsteroid(xWing);
 				levelAsteroidsDestroyed++;
 				damage=0;
 				// remove bullet
@@ -328,10 +328,10 @@ public class Level1State extends LevelState {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBullets.size(); i++){
 			Bullet bullet = leftBullets.get(i);
-			if(asteroid.intersects(bullet)){
+			if(xWing.intersects(bullet)){
 				// increase asteroids destroyed count
 				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+				removeAsteroid(xWing);
 				levelAsteroidsDestroyed++;
 				damage=0;
 				// remove bullet
@@ -392,12 +392,12 @@ public class Level1State extends LevelState {
         }
 	}
 
-	protected void drawAsteroid() {
+	protected void drawXWingRight() {
 		Graphics2D g2d = getGraphics2D();
 		GameStatus status = getGameStatus();
-		if((asteroid.getX() + asteroid.getWidth() >  0)){
-			asteroid.translate(-asteroid.getSpeed(), 0);
-			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
+		if((xWing.getX() + xWing.getWidth() >  0)){
+			xWing.translate(-xWing.getSpeed(), 0);
+			getGraphicsManager().drawXWingLeft(xWing, g2d, this);	
 		}
 		else {
 			long currentTime = System.currentTimeMillis();
@@ -405,13 +405,13 @@ public class Level1State extends LevelState {
 				// draw a new asteroid
 				lastAsteroidTime = currentTime;
 				status.setNewAsteroid(false);
-				asteroid.setLocation((int) (SCREEN_WIDTH - asteroid.getPixelsWide()),
-						(rand.nextInt((int) (SCREEN_HEIGHT - asteroid.getPixelsTall() - 32))));
+				xWing.setLocation((int) (SCREEN_WIDTH - xWing.getPixelsWide()),
+						(rand.nextInt((int) (SCREEN_HEIGHT - xWing.getPixelsTall() - 32))));
 			}
 
 			else{
 				// draw explosion
-				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+				getGraphicsManager().drawXWingExplosion(xWingExplosion, g2d, this);
 			}
 		}
 	}
@@ -593,9 +593,9 @@ public class Level1State extends LevelState {
 		return true;
 	}
 
-	public void removeAsteroid(Asteroid asteroid){
+	public void removeAsteroid(XWing asteroid){
 		// "remove" asteroid
-		asteroidExplosion = new Rectangle(
+		xWingExplosion = new Rectangle(
 				asteroid.x,
 				asteroid.y,
 				asteroid.getPixelsWide(),
@@ -727,19 +727,19 @@ public class Level1State extends LevelState {
 		platforms = new Platform[n];
 		for(int i=0; i<n; i++){
 			this.platforms[i] = new Platform(0 , SCREEN_HEIGHT/2 + 140 - i*40);
+		
 		}
 		return platforms;
-
 	}
 
 	/**
 	 * Create a new asteroid.
 	 */
-	public Asteroid newAsteroid(Level1State screen){
-		int xPos = (int) (SCREEN_WIDTH - Asteroid.WIDTH);
-		int yPos = rand.nextInt((int)(SCREEN_HEIGHT - Asteroid.HEIGHT- 32));
-		asteroid = new Asteroid(xPos, yPos);
-		return asteroid;
+	public XWing newAsteroid(Level1State screen){
+		int xPos = (int) (SCREEN_WIDTH - XWing.WIDTH);
+		int yPos = rand.nextInt((int)(SCREEN_HEIGHT - XWing.HEIGHT- 32));
+		xWing = new XWing(xPos, yPos);
+		return xWing;
 	}
 
 	/**

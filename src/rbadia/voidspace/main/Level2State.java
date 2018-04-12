@@ -29,22 +29,22 @@ public class Level2State extends Level1State {
 	}
 
 	@Override
-	protected void drawAsteroid() {
+	protected void drawXWingRight() {
 		Graphics2D g2d = getGraphics2D();
-		if((asteroid.getX() + asteroid.getPixelsWide() >  0)) {
-			asteroid.translate(-asteroid.getSpeed(), asteroid.getSpeed()/2);
-			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
+		if((xWing.getX() + xWing.getPixelsWide() >  0)) {
+			xWing.translate(-xWing.getSpeed(), xWing.getSpeed()/2);
+			getGraphicsManager().drawXWingLeft(xWing, g2d, this);	
 		}
 		else {
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
 
-				asteroid.setLocation(SCREEN_WIDTH - asteroid.getPixelsWide(),
-						rand.nextInt(SCREEN_HEIGHT - asteroid.getPixelsTall() - 32));
+				xWing.setLocation(SCREEN_WIDTH - xWing.getPixelsWide(),
+						rand.nextInt(SCREEN_HEIGHT - xWing.getPixelsTall() - 32));
 			}
 			else {
 				// draw explosion
-				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+				getGraphicsManager().drawXWingExplosion(xWingExplosion, g2d, this);
 			}
 		}	
 	}

@@ -7,12 +7,17 @@ public class Platform extends Rectangle {
 
 	private static final int WIDTH = 44;
 	private static final int HEIGHT = 4;
+	private int direction=1;
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
 
 	public Platform(int xPos, int yPos) {
 		super(xPos, yPos, WIDTH, HEIGHT);
 	}
-	
-
-
-
 }

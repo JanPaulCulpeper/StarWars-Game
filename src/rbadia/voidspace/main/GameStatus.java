@@ -11,10 +11,10 @@ public class GameStatus {
 	// status variables
 	private boolean newMegaMan;
 	private boolean newBoss;
-	private boolean newAsteroid;
-	private boolean newAsteroid2;
+	private boolean newXWing;
+	private boolean newXWing2;
 	private boolean newBigAsteroid;
-	private long asteroidsDestroyed = 0;
+	private long xWingsDestroyed = 0;
 
 
 	private int livesLeft;
@@ -76,20 +76,20 @@ public class GameStatus {
 	 * Indicates if a new asteroid should be created/drawn.
 	 * @return if a new asteroid should be created/drawn
 	 */
-	public synchronized boolean isNewAsteroid() {
-		return newAsteroid;
+	public synchronized boolean isNewXWing() {
+		return newXWing;
 	}
 
-	public synchronized void setNewAsteroid(boolean newAsteroid) {
-		this.newAsteroid = newAsteroid;
+	public synchronized void setNewXWing(boolean newXWing) {
+		this.newXWing = newXWing;
 	}
 	
-	public synchronized boolean isNewAsteroid2() {
-		return newAsteroid2;
+	public synchronized boolean isNewXWing2() {
+		return newXWing2;
 	}
 	
-	public synchronized void setNewAsteroid2(boolean newAsteroid2) {
-		this.newAsteroid2 = newAsteroid2;
+	public synchronized void setNewXWing2(boolean newxWing2) {
+		this.newXWing2 = newxWing2;
 	}
 	
 	/**
@@ -108,12 +108,12 @@ public class GameStatus {
 	 * Returns the number of asteroid destroyed. 
 	 * @return the number of asteroid destroyed
 	 */
-	public synchronized long getAsteroidsDestroyed() {
-		return asteroidsDestroyed;
+	public synchronized long getXWingDestroyed() {
+		return xWingsDestroyed;
 	}
 
-	public synchronized void setAsteroidsDestroyed(long asteroidsDestroyed) {
-		this.asteroidsDestroyed = asteroidsDestroyed;
+	public synchronized void setXWingsDestroyed(long xWingsDestroyed) {
+		this.xWingsDestroyed = xWingsDestroyed;
 	}
 
 	/**

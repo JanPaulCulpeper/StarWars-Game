@@ -9,7 +9,7 @@ import rbadia.voidspace.sounds.SoundManager;
 /**
  * Level very similar to LevelState1.  
  * Platforms arranged in triangular form. 
- * Asteroids travel at 225 degree angle
+ * XWingss travel at 225 degree angle
  */
 public class Level2State extends Level1State {
 
@@ -30,22 +30,22 @@ public class Level2State extends Level1State {
 	}
 
 	@Override
-	protected void drawAsteroid() {
+	protected void drawXWingLeft() {
 		Graphics2D g2d = getGraphics2D();
-		if((asteroid.getX() + asteroid.getPixelsWide() >  0)) {
-			asteroid.translate(-(asteroid.getSpeed() - 2)*rand.nextInt(5), ((asteroid.getSpeed()/2) - 1)*rand.nextInt(5));
-			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
+		if((xWing.getX() + xWing.getPixelsWide() >  0)) {
+			xWing.translate(-(xWing.getSpeed() - 2)*rand.nextInt(5), ((xWing.getSpeed()/2) - 1)*rand.nextInt(5));
+			getGraphicsManager().drawXWingLeft(xWing, g2d, this);	
 		}
 		else {
 			long currentTime = System.currentTimeMillis();
-			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
+			if((currentTime - lastXWingTime) > NEW_XWING_DELAY){
 
-				asteroid.setLocation(SCREEN_WIDTH - asteroid.getPixelsWide(),
-						rand.nextInt(SCREEN_HEIGHT - asteroid.getPixelsTall() - 32));
+				xWing.setLocation(SCREEN_WIDTH - xWing.getPixelsWide(),
+						rand.nextInt(SCREEN_HEIGHT - xWing.getPixelsTall() - 32));
 			}
 			else {
 				// draw explosion
-				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+				getGraphicsManager().drawXWingExplosion(xWingExplosion, g2d, this);
 			}
 		}	
 	}
@@ -69,7 +69,6 @@ public class Level2State extends Level1State {
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
-		return levelAsteroidsDestroyed >= 4;
-		
+		return levelXWingDestroyed >= 4;
 	}
 }

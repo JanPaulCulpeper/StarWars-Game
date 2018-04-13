@@ -8,7 +8,8 @@ import java.awt.image.ImageObserver;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-import rbadia.voidspace.model.Asteroid;
+import rbadia.voidspace.main.Level3State;
+import rbadia.voidspace.model.XWing;
 //import rbadia.voidspace.model.BigAsteroid;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Boss;
@@ -18,7 +19,8 @@ import rbadia.voidspace.model.Floor;
 //import rbadia.voidspace.model.BulletBoss2;
 import rbadia.voidspace.model.MegaMan;
 import rbadia.voidspace.model.Platform;
-import rbadia.voidspace.model.StormTrooper;
+import rbadia.voidspace.model.PowerUp;
+import rbadia.voidspace.model.RebelTrooper;
 
 /**
  * Manages and draws game graphics and images.
@@ -30,19 +32,22 @@ public class GraphicsManager {
 	private BufferedImage floorImg;
 	private BufferedImage platformImg;
 	private BufferedImage bulletImg;
+	private BufferedImage RebelsbulletImg;
 	private BufferedImage bigBulletImg;
-	private BufferedImage asteroidImg;
-	private BufferedImage asteroidExplosionImg;
+	private BufferedImage xWingLeftImg;
+	private BufferedImage xWingRightImg;
+	private BufferedImage xWingExplosionImg;
 	private BufferedImage megaManExplosionImg;
 	private BufferedImage bigAsteroidExplosionImg;
 	private BufferedImage megamanLeft;
 	private BufferedImage megamanRight;
 	private BufferedImage megamanFireLeft;
 	private BufferedImage megamanLookLeft;
-	private BufferedImage stormTrooperLookingRight;
-	private BufferedImage stormTrooperLookingLeft;
+	private BufferedImage rebelTrooperLookingRight;
+	private BufferedImage rebelTrooperLookingLeft;
 	private BufferedImage DeathStar;
 	private BufferedImage BossImg;
+	private BufferedImage PowerUpImg;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -50,23 +55,27 @@ public class GraphicsManager {
 	public GraphicsManager(){
 		// load images
 		try {
-			this.megaManImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaMan3.png"));
-			this.megaFallRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFallRight.png"));
-			this.megaFireRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireRight.png"));
-			this.megamanLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaRunLeft.gif"));
-			this.megamanRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaRunRight.gif"));
-			this.megamanFireLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFireLeft.png"));
-			this.megamanLookLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaLookLeft.png"));
+			this.megaManImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Vader.png"));
+			this.megaFallRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderFall.png"));
+			this.megaFireRImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderFireRight.png"));
+			this.megamanLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderRunLeft.png"));
+			this.megamanRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderRunRight.png"));
+			this.megamanFireLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderFireLeft.png"));
+			this.megamanLookLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/VaderLookLeft.png"));
 			this.floorImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaFloor.png"));
 			this.platformImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/platform3.png"));
-			this.asteroidImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroid.png"));
-			this.asteroidExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroidExplosion.png"));
-			this.bulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bullet.png"));
-			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
-			this.stormTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingRight.png"));
-			this.stormTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/stormtrooperLookingLeft.png"));
+			this.xWingLeftImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/xWingLeft.png"));
+			this.xWingRightImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/xWingRight.png"));
+			this.xWingExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroidExplosion.png"));
+			this.bulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/lightBlue.png"));
+			this.RebelsbulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
+			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BlueBullet.png"));
+			this.rebelTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelRight.png"));
+			this.rebelTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelLeft.png"));
 			this.DeathStar = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/DeathStar.png"));
 			this.BossImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/rsz_1solocrop.png"));
+			this.PowerUpImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/PowerUp.png"));
+
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
@@ -127,6 +136,9 @@ public class GraphicsManager {
 	public void drawBullet(Bullet bullet, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bulletImg, bullet.x, bullet.y, observer);
 	}
+	public void drawRebelsbulletImg(Bullet bullet, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(RebelsbulletImg, bullet.x, bullet.y, observer);
+	}
 
 	/**
 	 * Draws a bullet image to the specified graphics canvas.
@@ -137,16 +149,20 @@ public class GraphicsManager {
 	public void drawBigBullet(BigBullet bigBullet, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bigBulletImg, bigBullet.x, bigBullet.y, observer);
 	}
-
+	
 	/**
-	 * Draws an asteroid image to the specified graphics canvas.
-	 * @param asteroid the asteroid to draw
+	 * Draws an x-wing image to the specified graphics canvas.
+	 * @param xWing the x-wing to draw
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
-	public void drawAsteroid(Asteroid asteroid, Graphics2D g2d, ImageObserver observer) {
-		g2d.drawImage(asteroidImg, asteroid.x, asteroid.y, observer);
+	public void drawXWingLeft(XWing xWing, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(xWingLeftImg, xWing.x, xWing.y, observer);
 	}
+	public void drawXWingRight(XWing xWing, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(xWingRightImg, xWing.x, xWing.y, observer);
+	}
+
 
 	/**
 	 * Draws a MegaMan explosion image to the specified graphics canvas.
@@ -159,25 +175,25 @@ public class GraphicsManager {
 	}
 
 	/**
-	 * Draws an asteroid explosion image to the specified graphics canvas.
-	 * @param asteroidExplosion the bounding rectangle of the explosion
+	 * Draws an x-wing explosion image to the specified graphics canvas.
+	 * @param xWingExplosion the bounding rectangle of the explosion
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
-	public void drawAsteroidExplosion(Rectangle asteroidExplosion, Graphics2D g2d, ImageObserver observer) {
-		g2d.drawImage(asteroidExplosionImg, asteroidExplosion.x, asteroidExplosion.y, observer);
+	public void drawXWingExplosion(Rectangle xWingExplosion, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(xWingExplosionImg, xWingExplosion.x, xWingExplosion.y, observer);
 	}
 
 	public void drawBigAsteroidExplosion(Rectangle bigAsteroidExplosion, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bigAsteroidExplosionImg, bigAsteroidExplosion.x, bigAsteroidExplosion.y, observer);
 	}
 	
-	public void drawStormTrooperLookingLeft(StormTrooper stormTrooper, Graphics2D g2d, ImageObserver observer) {
-		g2d.drawImage(stormTrooperLookingLeft, stormTrooper.x, stormTrooper.y, observer);
+	public void drawRebelTrooperLookingLeft(RebelTrooper rebelTrooper, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(rebelTrooperLookingLeft, rebelTrooper.x, rebelTrooper.y, observer);
 	}
 	
-	public void drawStormTrooperLookingRight(StormTrooper stormTrooper, Graphics2D g2d, ImageObserver observer) {
-		g2d.drawImage(stormTrooperLookingRight, stormTrooper.x, stormTrooper.y, observer);
+	public void drawRebelTrooperLookingRight(RebelTrooper rebelTrooper, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(rebelTrooperLookingRight, rebelTrooper.x, rebelTrooper.y, observer);
 	}
 	public void drawBoss(Boss boss, Graphics2D g2d, ImageObserver observer){
 		g2d.drawImage(BossImg, boss.x, boss.y, observer);
@@ -185,7 +201,9 @@ public class GraphicsManager {
 	public void drawDeathStar(Graphics2D g2d) {
 		g2d.drawImage(DeathStar, 0,0,530,480,null);
 	}
-
+	public void drawPowerUp( PowerUp powerUp, Graphics2D g2d, Level3State level3State) {
+		g2d.drawImage(PowerUpImg, powerUp.x, powerUp.y, 25, 25, null);
+	}
 }
 
 

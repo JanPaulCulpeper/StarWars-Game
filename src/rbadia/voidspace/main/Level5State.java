@@ -57,15 +57,15 @@ public class Level5State extends Level1State {
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
-		drawAsteroid();
+		drawXWingLeft();
 		drawBullets();
 		drawBigBullets();
-		checkBullletAsteroidCollisions();
-		checkLeftBullletAsteroidCollisions();
-		checkBigBulletAsteroidCollisions();
-		checkLeftBigBulletAsteroidCollisions();
-		checkMegaManAsteroidCollisions();
-		checkAsteroidFloorCollisions();
+		checkBullletXWingCollisions();
+		checkLeftBullletXWingCollisions();
+		checkBigBulletXWingCollisions();
+		checkLeftBigBulletXWingCollisions();
+		checkMegaManXWingCollisions();
+		checkXWingFloorCollisions();
 		drawTheBoss();
 		drawBossBullet();
 		moveBossY();
@@ -78,7 +78,7 @@ public class Level5State extends Level1State {
 			
 		
 		// update asteroids destroyed (score) label  
-		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getAsteroidsDestroyed()));
+		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
 		// update lives left label
 		getMainFrame().getLivesValueLabel().setText(Integer.toString(status.getLivesLeft()));
 		//update level label
@@ -87,22 +87,22 @@ public class Level5State extends Level1State {
 	}
 	
 	@Override
-	protected void drawAsteroid() {
+	protected void drawXWingLeft() {
 		Graphics2D g2d = getGraphics2D();
-		if((asteroid.getX() + asteroid.getPixelsWide() >  0)) {
-			asteroid.translate(-asteroid.getSpeed(), asteroid.getSpeed()/2);
-			getGraphicsManager().drawAsteroid(asteroid, g2d, this);	
+		if((xWing.getX() + xWing.getPixelsWide() >  0)) {
+			xWing.translate(-xWing.getSpeed(), xWing.getSpeed()/2);
+			getGraphicsManager().drawXWingLeft(xWing, g2d, this);	
 		}
 		else {
 			long currentTime = System.currentTimeMillis();
-			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
+			if((currentTime - lastXWingTime) > NEW_XWING_DELAY){
 
-				asteroid.setLocation(SCREEN_WIDTH - asteroid.getPixelsWide(),
-						rand.nextInt(SCREEN_HEIGHT - asteroid.getPixelsTall() - 32));
+				xWing.setLocation(SCREEN_WIDTH - xWing.getPixelsWide(),
+						rand.nextInt(SCREEN_HEIGHT - xWing.getPixelsTall() - 32));
 			}
 			else {
 				// draw explosion
-				getGraphicsManager().drawAsteroidExplosion(asteroidExplosion, g2d, this);
+				getGraphicsManager().drawXWingExplosion(xWing, g2d, this);
 			}
 		}	
 	}
@@ -111,9 +111,9 @@ public class Level5State extends Level1State {
 			
 			Bullet bullet = bullets.get(i);
 			if(boss.intersects(bullet)) {
-				getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han hit sound
-				levelAsteroidsDestroyed = levelAsteroidsDestroyed + 1;
+				levelXWingDestroyed = levelXWingDestroyed + 1;
 				bullets.remove(i);
 			}
 		}
@@ -122,10 +122,10 @@ public class Level5State extends Level1State {
 		for (int i = 0; i < bigBullets.size(); i++) {
 			BigBullet bigBullet = bigBullets.get(i);
 			if(boss.intersects(bigBullet)) {
-				getGameStatus().setAsteroidsDestroyed(getGameStatus().getAsteroidsDestroyed() + 500);
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han sound
 				bigBullets.remove(i);
-				levelAsteroidsDestroyed = levelAsteroidsDestroyed + 2;
+				levelXWingDestroyed = levelXWingDestroyed + 2;
 			}
 		}
 		
@@ -150,13 +150,13 @@ public class Level5State extends Level1State {
 	
 	//checks right big bullet asteroid collision
 	@Override
-	protected void checkBigBulletAsteroidCollisions() {
+	protected void checkBigBulletXWingCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
 			BigBullet bigBullet = bigBullets.get(i);
-			if(asteroid.intersects(bigBullet)){
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+			if(xWing.intersects(bigBullet)){
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
 				damage=0;
 			}
 		}
@@ -164,13 +164,13 @@ public class Level5State extends Level1State {
 	
 	//checks left big bullet asteroid collision
 	@Override
-	protected void checkLeftBigBulletAsteroidCollisions() {
+	protected void checkLeftBigBulletXWingCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBigBullets.size(); i++){
 			BigBullet bigBullet = leftBigBullets.get(i);
-			if(asteroid.intersects(bigBullet)){
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+			if(xWing.intersects(bigBullet)){
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
 				damage=0;
 				
 			}
@@ -178,13 +178,13 @@ public class Level5State extends Level1State {
 	}
 	
 	@Override
-	protected void checkBullletAsteroidCollisions() {
+	protected void checkBullletXWingCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
-			if(asteroid.intersects(bullet)){
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+			if(xWing.intersects(bullet)){
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
 				damage=0;
 				// remove bullet
 				bullets.remove(i);
@@ -195,13 +195,13 @@ public class Level5State extends Level1State {
 	
 	//checks left bullet asteroid collision
 	@Override
-	protected void checkLeftBullletAsteroidCollisions() {
+	protected void checkLeftBullletXWingCollisions() {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBullets.size(); i++){
 			Bullet bullet = leftBullets.get(i);
-			if(asteroid.intersects(bullet)){
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() + 100);
-				removeAsteroid(asteroid);
+			if(xWing.intersects(bullet)){
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
 				damage=0;
 				// remove bullet
 				leftBullets.remove(i);
@@ -283,7 +283,7 @@ public class Level5State extends Level1State {
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
-		return levelAsteroidsDestroyed >= 20;
+		return levelXWingDestroyed >= 20;
 		
 	}
 	

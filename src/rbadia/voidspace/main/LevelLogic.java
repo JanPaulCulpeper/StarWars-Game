@@ -422,20 +422,20 @@ public class LevelLogic {
 		}
 
 		if(ih.isEPressed()){
-			if(status.getAsteroidsDestroyed()>= 1500){
+			if(status.getXWingDestroyed()>= 1500){
 				long currentTime = System.currentTimeMillis();
 				if((currentTime - lastExchangeTime > 1000)){
 					lastExchangeTime = currentTime;
-					status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() - 1500);
+					status.setXWingsDestroyed(status.getXWingDestroyed() - 1500);
 					status.setLivesLeft(status.getLivesLeft() + 1);
 				}
 			}
 		}
 
 		if(ih.isQPressed()){
-			if(stack==0 && status.getAsteroidsDestroyed()>= 0){
+			if(stack==0 && status.getXWingDestroyed()>= 0){
 				stack++;
-				status.setAsteroidsDestroyed(status.getAsteroidsDestroyed()-0);
+				status.setXWingsDestroyed(status.getXWingDestroyed()-0);
 			}
 			else if(stack>= 1){
 				long currentTime = System.currentTimeMillis();

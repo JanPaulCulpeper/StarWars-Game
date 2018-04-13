@@ -48,6 +48,7 @@ public class MegaManMain {
 		
 		frame.addKeyListener(inputHandler);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 
 		int playAgain = 2;
 		while(playAgain != 1) {
@@ -60,6 +61,7 @@ public class MegaManMain {
 			LevelState level4State = new Level4State(4, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level5State = new Level5State(5, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState levels[] = { level1State, level2State,level3State, level4State, level5State };
+
 
 			String outcome = "CONGRATS!! YOU WON!!";
 			for (LevelState nextLevel : levels) {

@@ -1,23 +1,27 @@
 package rbadia.voidspace.main;
 
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.XWing;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
-import rbadia.voidspace.model.Floor;
-import rbadia.voidspace.model.Platform;
 import rbadia.voidspace.model.PowerUp;
-import rbadia.voidspace.model.RebelTrooper;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level3State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 
 	public XWing xWing2 = new XWing(0,0);
-	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-450,1/SCREEN_HEIGHT+200);//positioned left, looking right
+	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-450,1/SCREEN_HEIGHT+200);//positioned left & right
 	
 
 
@@ -35,6 +39,31 @@ public class Level3State extends Level1State {
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
 	}
+	
+	@Override
+	public void doGettingReady() {
+		clearScreen();
+		setCurrentState(GETTING_READY);
+		getGameLogic().drawGetReady();
+		((LevelLogic)getGameLogic()).drawLevel3Intro();
+		repaint();
+		LevelLogic.delay(5000);
+		//Changes music from "menu music" to "ingame music"
+		MegaManMain.audioClip.close();
+		MegaManMain.playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
+		try {
+			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.playingAudio);
+			MegaManMain.audioClip.open(MegaManMain.audioStream);
+			MegaManMain.audioClip.start();
+			MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch (UnsupportedAudioFileException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+	};
 
 	@Override
 	public void updateScreen(){
@@ -221,7 +250,7 @@ public class Level3State extends Level1State {
 			else if(platforms[i].getX() <= 0) {
 				direction = 1;
 			}
-			platforms[i].translate(direction*rand.nextInt(5), 0);
+			platforms[i].translate(direction*rand.nextInt(3), 0);
 		}
 	}
 
@@ -235,7 +264,7 @@ public class Level3State extends Level1State {
 		// TODO Auto-generated method stub
 		Graphics2D g2d = getGraphics2D();
 		if(powerUp.isVisibility())
-			((GraphicsManager)getGraphicsManager()).drawPowerUp(powerUp, g2d, this);
+			((GraphicsManager)getGraphicsManager()).drawPowerUp5(powerUp, g2d, this);
 
 	}
 

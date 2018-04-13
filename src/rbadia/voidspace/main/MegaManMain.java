@@ -25,7 +25,9 @@ public class MegaManMain {
 
 	public static AudioInputStream audioStream;
 	public static Clip audioClip;
-	public static File audioFile;	
+	public static File playingAudio;	
+	public static File menuAudio;	
+	
 
 	/**
 	 * @param args
@@ -39,9 +41,11 @@ public class MegaManMain {
 		GraphicsManager graphicsMan = new GraphicsManager(); // Draws all graphics for game objects
 		SoundManager soundMan = new SoundManager();			// Loads and plays all sounds during the game
 
-		audioFile = new File("audio/menuScreen.wav");
+		
+		menuAudio = new File("audio/star_wars.wav");
+		playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
 		try {
-			audioStream = AudioSystem.getAudioInputStream(audioFile);
+			audioStream = AudioSystem.getAudioInputStream(menuAudio);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
@@ -54,13 +58,15 @@ public class MegaManMain {
 		while(playAgain != 1) {
 
 			GameStatus gameStatus = new GameStatus();
-			gameStatus.setLivesLeft(900000000);// megaman lives
+			gameStatus.setLivesLeft(3);// megaman lives
 			LevelState level1State = new Level1State(1, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level2State = new Level2State(2, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level3State = new Level3State(3, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level4State = new Level4State(4, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level5State = new Level5State(5, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
-			LevelState levels[] = { level3State, level2State,level4State, level1State, level5State };
+
+			LevelState levels[] = {level5State, level2State,level3State, level4State,  level1State };
+
 
 
 			String outcome = "CONGRATS!! YOU WON!!";

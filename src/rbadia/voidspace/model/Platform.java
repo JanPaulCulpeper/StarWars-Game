@@ -5,8 +5,8 @@ import java.awt.Rectangle;
 public class Platform extends Rectangle {
 	private static final long serialVersionUID = 1L;
 
-	private static final int WIDTH = 44;
-	private static final int HEIGHT = 4;
+	private static final int WIDTH = 45;
+	private static final int HEIGHT = 15;
 	private int direction=1;
 
 	public int getDirection() {

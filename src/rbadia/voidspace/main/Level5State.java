@@ -1,22 +1,34 @@
 package rbadia.voidspace.main;
 
+
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Boss;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.PowerUp;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level5State extends Level1State {
 	
 	public Boss boss = new Boss(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2);
+	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-335,1/SCREEN_HEIGHT+236);//positioned left & right
 	private long lastBossBulletTime;
 	private ArrayList<Bullet> bossBullets = new ArrayList<Bullet>();
 	private int directionY = 1;
 	private int directionX = 1;
+	private int BOSS_HEALTH = 20;
 	
 	public Boss getBoss(){
 		return boss;
@@ -38,6 +50,30 @@ public class Level5State extends Level1State {
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
 	}
+	@Override
+	public void doGettingReady() {
+		clearScreen();
+		setCurrentState(GETTING_READY);
+		getGameLogic().drawGetReady();
+		((LevelLogic)getGameLogic()).drawLevel5Intro();
+		repaint();
+		LevelLogic.delay(15000);
+		//Changes music from "menu music" to "ingame music"
+		MegaManMain.audioClip.close();
+		MegaManMain.playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
+		try {
+			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.playingAudio);
+			MegaManMain.audioClip.open(MegaManMain.audioStream);
+			MegaManMain.audioClip.start();
+			MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch (UnsupportedAudioFileException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+	};
 	
 	@Override
 	public void updateScreen() {
@@ -59,6 +95,7 @@ public class Level5State extends Level1State {
 		drawMegaMan();
 		drawXWingLeft();
 		drawBullets();
+		drawPowerUp();
 		drawBigBullets();
 		checkBullletXWingCollisions();
 		checkLeftBullletXWingCollisions();
@@ -74,7 +111,8 @@ public class Level5State extends Level1State {
 		checkBigBulletToBossCollition();
 		checkBossBulletToPlayerCollision();
 		checkPlayerBossCollision();
-
+		checkVaderPowerUpCollision();
+		drawBox();
 			
 		
 		// update asteroids destroyed (score) label  
@@ -85,7 +123,17 @@ public class Level5State extends Level1State {
 		getMainFrame().getLevelValueLabel().setText(Long.toString(status.getLevel()));
 
 	}
-	
+	public void drawBox() {
+		Graphics2D g2d = getGraphics2D();
+		int DEFAULT_START = 300;
+		int DEFAULT_END = 100;
+		g2d.drawRect(DEFAULT_START, 10, DEFAULT_END, 20);
+		g2d.setColor(Color.RED);
+		if (BOSS_HEALTH == 20) {
+			g2d.fillRect(DEFAULT_START, 12, DEFAULT_END, 17);
+		}
+		else g2d.fillRect(DEFAULT_START + (5*(20-BOSS_HEALTH)), 12, DEFAULT_END-(5*(20-BOSS_HEALTH)), 17);
+	}
 	@Override
 	protected void drawXWingLeft() {
 		Graphics2D g2d = getGraphics2D();
@@ -113,7 +161,7 @@ public class Level5State extends Level1State {
 			if(boss.intersects(bullet)) {
 				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han hit sound
-				levelXWingDestroyed = levelXWingDestroyed + 1;
+				BOSS_HEALTH--;
 				bullets.remove(i);
 			}
 		}
@@ -125,7 +173,7 @@ public class Level5State extends Level1State {
 				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han sound
 				bigBullets.remove(i);
-				levelXWingDestroyed = levelXWingDestroyed + 2;
+				BOSS_HEALTH = BOSS_HEALTH - 2;
 			}
 		}
 		
@@ -283,7 +331,7 @@ public class Level5State extends Level1State {
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
-		return levelXWingDestroyed >= 20;
+		return BOSS_HEALTH == 0;
 		
 	}
 	
@@ -296,5 +344,20 @@ public class Level5State extends Level1State {
 		return platforms;
 
 	}
+	protected void checkVaderPowerUpCollision() {
+		GameStatus status = getGameStatus();
+		if(powerUp.intersects(megaMan)&& PowerUp.isVisibility()){
+			status.setLivesLeft(status.getLivesLeft() + 3);
+			PowerUp.setVisibility(false);
+			//			removePowerUp(powerUp);
 
+		}
+	}
+	protected void drawPowerUp() {
+		// TODO Auto-generated method stub
+		Graphics2D g2d = getGraphics2D();
+		if(powerUp.isVisibility())
+			((GraphicsManager)getGraphicsManager()).drawPowerUp3(powerUp, g2d, this);
+
+	}
 }

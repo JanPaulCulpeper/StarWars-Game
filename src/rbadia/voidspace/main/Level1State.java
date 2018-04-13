@@ -144,22 +144,27 @@ public class Level1State extends LevelState {
 
 	@Override
 	public void doInitialScreen() {
+		Graphics2D g2d = getGraphics2D();
 		setCurrentState(INITIAL_SCREEN);
 		clearScreen();
+		((GraphicsManager)getGraphicsManager()).drawMenuPicture(g2d);
 		getGameLogic().drawInitialMessage();
+		
 	};
 
 	@Override
 	public void doGettingReady() {
+		clearScreen();
 		setCurrentState(GETTING_READY);
 		getGameLogic().drawGetReady();
+		((LevelLogic)getGameLogic()).drawLevel1Intro();
 		repaint();
-		LevelLogic.delay(2000);
-		//Changes music from "menu music" to "ingame music"
+		LevelLogic.delay(15000);
+		//Changes music from "menu music" to "maingame music"
 		MegaManMain.audioClip.close();
-		MegaManMain.audioFile = new File("audio/mainGame.wav");
+		MegaManMain.playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
 		try {
-			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.audioFile);
+			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.playingAudio);
 			MegaManMain.audioClip.open(MegaManMain.audioStream);
 			MegaManMain.audioClip.start();
 			MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -194,7 +199,7 @@ public class Level1State extends LevelState {
 
 	@Override
 	public void doGameOverScreen(){
-		MegaManMain.audioClip.stop();
+//		MegaManMain.audioClip.stop();
 		setCurrentState(GAME_OVER_SCREEN);
 		getGameLogic().drawGameOver();
 		getMainFrame().getDestroyedValueLabel().setForeground(new Color(128, 0, 0));

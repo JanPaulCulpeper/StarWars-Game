@@ -144,17 +144,22 @@ public class Level1State extends LevelState {
 
 	@Override
 	public void doInitialScreen() {
+		Graphics2D g2d = getGraphics2D();
 		setCurrentState(INITIAL_SCREEN);
 		clearScreen();
+		((GraphicsManager)getGraphicsManager()).drawMenuPicture(g2d);
 		getGameLogic().drawInitialMessage();
+		
 	};
 
 	@Override
 	public void doGettingReady() {
+		clearScreen();
 		setCurrentState(GETTING_READY);
 		getGameLogic().drawGetReady();
+		((LevelLogic)getGameLogic()).drawLevel1Intro();
 		repaint();
-		LevelLogic.delay(2000);
+		LevelLogic.delay(15000);
 		//Changes music from "menu music" to "ingame music"
 		MegaManMain.audioClip.close();
 		MegaManMain.audioFile = new File("audio/mainGame.wav");

@@ -220,7 +220,7 @@ public class LevelLogic {
 			this.bigFont = originalFont;
 		}
 
-		String gameTitleStr = "MegaMAN !!!";
+		String gameTitleStr = "VADER:\r\n ";
 
 		Font currentFont = biggestFont == null? bigFont : biggestFont;
 		float fontSize = currentFont.getSize2D();
@@ -236,17 +236,57 @@ public class LevelLogic {
 		g2d.setFont(bigFont);
 		int ascent = fm.getAscent();
 		int strX = (LevelState.SCREEN_WIDTH - strWidth)/2;
-		int strY = (LevelState.SCREEN_HEIGHT + ascent)/2 - ascent;
+		int strY = (LevelState.SCREEN_HEIGHT + ascent)/2 - 2*ascent;
 		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(gameTitleStr, strX, strY);
 
+		String gameTitleStr2 =  "a Star Wars Story";
+
+		Font currentFont2 = biggestFont == null? bigFont : biggestFont;
+		float fontSize2 = currentFont.getSize2D();
+		bigFont = currentFont2.deriveFont(fontSize2 + 1).deriveFont(Font.BOLD).deriveFont(Font.ITALIC);
+		FontMetrics fm2 = g2d.getFontMetrics(bigFont);
+		int strWidth2 = fm2.stringWidth(gameTitleStr2);
+		if(strWidth2 > LevelState.SCREEN_WIDTH - 10){
+			bigFont = currentFont2;
+			biggestFont = currentFont2;
+			fm2 = g2d.getFontMetrics(currentFont2);
+			strWidth2 = fm2.stringWidth(gameTitleStr2);
+		}
+		g2d.setFont(bigFont);
+		int ascent2 = fm2.getAscent();
+		int strX2 = (LevelState.SCREEN_WIDTH - strWidth2)/2;
+		int strY2 = (LevelState.SCREEN_HEIGHT + 3*ascent2)/2 - 2*ascent2;
+		g2d.setPaint(Color.YELLOW);
+		g2d.drawString(gameTitleStr2, strX2, strY2);
+		
+		String gameTitleStr3 =  "The untold stories of Darth Vader";
+
+		Font currentFont3 = biggestFont == null? bigFont : biggestFont;
+		float fontSize3 = currentFont.getSize2D();
+		bigFont = currentFont3.deriveFont(fontSize3 + 1).deriveFont(Font.BOLD).deriveFont(Font.ITALIC);
+		FontMetrics fm3 = g2d.getFontMetrics(bigFont);
+		int strWidth3 = fm3.stringWidth(gameTitleStr3);
+		if(strWidth3 > LevelState.SCREEN_WIDTH - 10){
+			bigFont = currentFont3;
+			biggestFont = currentFont3;
+			fm3 = g2d.getFontMetrics(currentFont3);
+			strWidth2 = fm3.stringWidth(gameTitleStr3);
+		}
+		g2d.setFont(originalFont);
+		int ascent3 = fm2.getAscent();
+		int strX3 = LevelState.SCREEN_WIDTH/3;
+		int strY3 = (LevelState.SCREEN_HEIGHT + 3*ascent3)/2 - ascent3;
+		g2d.setPaint(Color.YELLOW);
+		g2d.drawString(gameTitleStr3, strX3, strY3);
+		
 		g2d.setFont(originalFont);
 		fm = g2d.getFontMetrics();
 		String newGameStr = "Press <Space> to Start the Level";
 		strWidth = fm.stringWidth(newGameStr);
 		strX = (LevelState.SCREEN_WIDTH - strWidth)/2;
 		strY = (LevelState.SCREEN_HEIGHT + fm.getAscent())/2 + ascent + 16;
-		g2d.setPaint(Color.WHITE);
+		g2d.setPaint(Color.white);
 		g2d.drawString(newGameStr, strX, strY);
 
 		fm = g2d.getFontMetrics();
@@ -306,6 +346,126 @@ public class LevelLogic {
 		int strY = (LevelState.SCREEN_HEIGHT + ascent)/2;
 		g2d.setPaint(Color.WHITE);
 		g2d.drawString(readyStr, strX, strY);
+	}
+	protected void drawLevel1Intro() {
+		LevelState levelState = getLevelState();
+		Graphics2D g2d = levelState.getGraphics2D();
+
+		if(this.originalFont == null){
+			this.originalFont = g2d.getFont();
+			this.bigFont = originalFont;
+		}
+
+		FontMetrics fm = g2d.getFontMetrics();
+		int ascent = fm.getAscent();		
+		g2d.setFont(originalFont);
+		String firstLineStr = "The Empire is once again under attack by enemy Rebels";
+		int strX = levelState.SCREEN_WIDTH/15;
+		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
+		g2d.setPaint(Color.WHITE);
+		g2d.drawString(firstLineStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String secondLineStr = "Vader must  intervene in this battle to avoid losing control of this planet to the enemy";
+		strY = strY + 16;
+		g2d.drawString(secondLineStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String thirdLineStr = "REBEL X-WINGs INCOMING!!!";
+		strY = strY + 16;
+		g2d.drawString(thirdLineStr, strX, strY);
+	}
+	
+	protected void drawLevel2Intro() {
+		LevelState levelState = getLevelState();
+		Graphics2D g2d = levelState.getGraphics2D();
+
+		if(this.originalFont == null){
+			this.originalFont = g2d.getFont();
+			this.bigFont = originalFont;
+		}
+
+		FontMetrics fm = g2d.getFontMetrics();
+		int ascent = fm.getAscent();		
+		g2d.setFont(originalFont);
+		String firstLineStr = "More Rebel X-Wings incoming";
+		int strX = levelState.SCREEN_WIDTH/3;
+		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
+		g2d.setPaint(Color.WHITE);
+		g2d.drawString(firstLineStr, strX, strY);
+		
+	}
+	protected void drawLevel3Intro() {
+		
+		LevelState levelState = getLevelState();
+		Graphics2D g2d = levelState.getGraphics2D();
+
+		if(this.originalFont == null){
+			this.originalFont = g2d.getFont();
+			this.bigFont = originalFont;
+		}
+
+		FontMetrics fm = g2d.getFontMetrics();
+		int ascent = fm.getAscent();		
+		g2d.setFont(originalFont);
+		String firstLineStr = "'I will take them all out myself ' -Vader";
+		int strX = levelState.SCREEN_WIDTH/3;
+		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
+		g2d.setPaint(Color.WHITE);
+		g2d.drawString(firstLineStr, strX, strY);
+		
+	}
+	protected void drawLevel4Intro() {
+		LevelState levelState = getLevelState();
+		Graphics2D g2d = levelState.getGraphics2D();
+
+		if(this.originalFont == null){
+			this.originalFont = g2d.getFont();
+			this.bigFont = originalFont;
+		}
+
+		FontMetrics fm = g2d.getFontMetrics();
+		int ascent = fm.getAscent();		
+		g2d.setFont(originalFont);
+		String firstLineStr = "The Rebels have sent some troopers down";
+		int strX = levelState.SCREEN_WIDTH/3;
+		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
+		g2d.setPaint(Color.WHITE);
+		g2d.drawString(firstLineStr, strX, strY);
+		
+		fm = g2d.getFontMetrics();
+		String thirdLineStr = "Make them suf fer !";
+		strY = strY + 16;
+		g2d.drawString(thirdLineStr, strX, strY);
+		
+	}
+	protected void drawLevel5Intro() {
+		LevelState levelState = getLevelState();
+		Graphics2D g2d = levelState.getGraphics2D();
+
+		if(this.originalFont == null){
+			this.originalFont = g2d.getFont();
+			this.bigFont = originalFont;
+		}
+
+		FontMetrics fm = g2d.getFontMetrics();
+		int ascent = fm.getAscent();		
+		g2d.setFont(originalFont);
+		String firstLineStr = "They have sent their strongest reinforcement to the battlefield";
+		int strX = levelState.SCREEN_WIDTH/5;
+		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
+		g2d.setPaint(Color.WHITE);
+		g2d.drawString(firstLineStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String secondLineStr = "And more X-Wing fighters!!";
+		strY = strY + 16;
+		g2d.drawString(secondLineStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String thirdLineStr = "Who is that...?";
+		strY = strY + 16;
+		g2d.drawString(thirdLineStr, strX, strY);
 	}
 
 

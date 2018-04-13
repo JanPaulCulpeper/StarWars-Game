@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import rbadia.voidspace.main.Level3State;
+import rbadia.voidspace.main.LevelState;
 import rbadia.voidspace.model.XWing;
 //import rbadia.voidspace.model.BigAsteroid;
 import rbadia.voidspace.model.BigBullet;
@@ -48,6 +49,7 @@ public class GraphicsManager {
 	private BufferedImage DeathStar;
 	private BufferedImage BossImg;
 	private BufferedImage PowerUpImg;
+	private BufferedImage MenuImg;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -72,9 +74,10 @@ public class GraphicsManager {
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BlueBullet.png"));
 			this.rebelTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelRight.png"));
 			this.rebelTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelLeft.png"));
-			this.DeathStar = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/DeathStar.png"));
+			this.DeathStar = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/background.png"));
 			this.BossImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/rsz_1solocrop.png"));
 			this.PowerUpImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/PowerUp.png"));
+			this.MenuImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/menupicture.png"));
 
 
 		} catch (Exception e) {
@@ -199,10 +202,13 @@ public class GraphicsManager {
 		g2d.drawImage(BossImg, boss.x, boss.y, observer);
 	}
 	public void drawDeathStar(Graphics2D g2d) {
-		g2d.drawImage(DeathStar, 0,0,530,480,null);
+		g2d.drawImage(DeathStar, 0,0,LevelState.SCREEN_WIDTH,LevelState.SCREEN_HEIGHT,null);
 	}
 	public void drawPowerUp( PowerUp powerUp, Graphics2D g2d, Level3State level3State) {
 		g2d.drawImage(PowerUpImg, powerUp.x, powerUp.y, 25, 25, null);
+	}
+	public void drawMenuPicture(Graphics2D g2d) {
+		g2d.drawImage(MenuImg, 0,0,LevelState.SCREEN_WIDTH,LevelState.SCREEN_HEIGHT,null);
 	}
 }
 

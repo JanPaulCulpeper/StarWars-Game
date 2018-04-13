@@ -102,7 +102,7 @@ public class Level5State extends Level1State {
 			}
 			else {
 				// draw explosion
-				getGraphicsManager().drawXWingExplosion(xWing, g2d, this);
+				getGraphicsManager().drawXWingExplosion(xWingExplosion, g2d, this);
 			}
 		}	
 	}

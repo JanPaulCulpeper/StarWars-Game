@@ -1,5 +1,6 @@
 package rbadia.voidspace.main;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
@@ -106,7 +107,7 @@ public class Level5State extends Level1State {
 		checkBigBulletToBossCollition();
 		checkBossBulletToPlayerCollision();
 		checkPlayerBossCollision();
-
+		drawBox();
 			
 		
 		// update asteroids destroyed (score) label  
@@ -117,7 +118,17 @@ public class Level5State extends Level1State {
 		getMainFrame().getLevelValueLabel().setText(Long.toString(status.getLevel()));
 
 	}
-	
+	public void drawBox() {
+		Graphics2D g2d = getGraphics2D();
+		int DEFAULT_START = 300;
+		int DEFAULT_END = 100;
+		g2d.drawRect(DEFAULT_START, 10, DEFAULT_END, 20);
+		g2d.setColor(Color.RED);
+		if (BOSS_HEALTH == 20) {
+			g2d.fillRect(DEFAULT_START, 12, DEFAULT_END, 17);
+		}
+		else g2d.fillRect(DEFAULT_START + (5*(20-BOSS_HEALTH)), 12, DEFAULT_END-(5*(20-BOSS_HEALTH)), 17);
+	}
 	@Override
 	protected void drawXWingLeft() {
 		Graphics2D g2d = getGraphics2D();
@@ -145,7 +156,7 @@ public class Level5State extends Level1State {
 			if(boss.intersects(bullet)) {
 				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han hit sound
-				levelXWingDestroyed = levelXWingDestroyed + 1;
+				BOSS_HEALTH--;
 				bullets.remove(i);
 			}
 		}
@@ -157,7 +168,7 @@ public class Level5State extends Level1State {
 				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
 				//TODO Han sound
 				bigBullets.remove(i);
-				levelXWingDestroyed = levelXWingDestroyed + 2;
+				BOSS_HEALTH = BOSS_HEALTH - 2;
 			}
 		}
 		
@@ -315,7 +326,7 @@ public class Level5State extends Level1State {
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
-		return levelXWingDestroyed >= BOSS_HEALTH;
+		return BOSS_HEALTH == 0;
 		
 	}
 	

@@ -17,8 +17,8 @@ public class Level3State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
 
 	public XWing xWing2 = new XWing(0,0);
-	public PowerUp powerUp = new PowerUp(1/SCREEN_WIDTH+450,1/SCREEN_HEIGHT+32);//positioned left, looking right
-	private boolean plat = true;
+	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-450,1/SCREEN_HEIGHT+200);//positioned left, looking right
+	
 
 
 
@@ -80,8 +80,8 @@ public class Level3State extends Level1State {
 
 	protected void checkXWingFloorCollisions2() {
 		for(int i=0; i<9; i++){
-			if(xWing.intersects(floor[i])){
-				removeXWing(xWing);
+			if(xWing2.intersects(floor[i])){
+				removeXWing(xWing2);
 
 			}
 		}
@@ -178,7 +178,6 @@ public class Level3State extends Level1State {
 		else {
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastXWingTime) > NEW_XWING_DELAY){
-
 				xWing2.setLocation(-xWing2.getPixelsWide(),
 						rand.nextInt(SCREEN_HEIGHT - xWing2.getPixelsTall() - 32));
 			}

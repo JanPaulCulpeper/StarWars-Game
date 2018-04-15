@@ -27,7 +27,7 @@ public class MegaManMain {
 	public static Clip audioClip;
 	public static File playingAudio;	
 	public static File menuAudio;	
-	
+
 
 	/**
 	 * @param args
@@ -41,7 +41,7 @@ public class MegaManMain {
 		GraphicsManager graphicsMan = new GraphicsManager(); // Draws all graphics for game objects
 		SoundManager soundMan = new SoundManager();			// Loads and plays all sounds during the game
 
-		
+
 		menuAudio = new File("audio/star_wars.wav");
 		playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
 		try {
@@ -49,7 +49,7 @@ public class MegaManMain {
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
-		
+
 		frame.addKeyListener(inputHandler);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -65,7 +65,7 @@ public class MegaManMain {
 			LevelState level4State = new Level4State(4, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level5State = new Level5State(5, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 
-			LevelState levels[] = {level5State, level2State,level3State, level4State,  level1State };
+			LevelState levels[] = {level3State, level2State,level4State, level1State,  level5State };
 
 
 
@@ -77,7 +77,7 @@ public class MegaManMain {
 				gameLogic.setLevelState(nextLevel);
 				inputHandler.setLevelState(nextLevel);
 				gameStatus.setLevel(nextLevel.getLevel());
-				
+
 				frame.setVisible(true);  // TODO verify whether this is necessary
 				startInitialMusic();
 
@@ -96,7 +96,7 @@ public class MegaManMain {
 		}
 		System.exit(0);
 	}
-	
+
 	public static void startInitialMusic() throws InterruptedException, IOException {
 		// Music 
 		// allows music to be played while playing

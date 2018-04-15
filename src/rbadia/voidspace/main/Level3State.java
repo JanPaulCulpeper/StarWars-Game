@@ -22,7 +22,7 @@ public class Level3State extends Level1State {
 
 	public XWing xWing2 = new XWing(0,0);
 	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-450,1/SCREEN_HEIGHT+200);//positioned left & right
-	
+	private boolean movePlatforms = false;
 
 
 
@@ -39,7 +39,7 @@ public class Level3State extends Level1State {
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
 	}
-	
+
 	@Override
 	public void doGettingReady() {
 		clearScreen();
@@ -98,6 +98,7 @@ public class Level3State extends Level1State {
 		checkXWingFloorCollisions();
 		checkXWingFloorCollisions2();
 		checkVaderPowerUpCollision();
+		checkVaderXWingCollisions();
 
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
@@ -120,7 +121,6 @@ public class Level3State extends Level1State {
 		if(powerUp.intersects(megaMan)&& PowerUp.isVisibility()){
 			status.setLivesLeft(status.getLivesLeft() + 5);
 			PowerUp.setVisibility(false);
-			//			removePowerUp(powerUp);
 
 		}
 	}
@@ -132,7 +132,13 @@ public class Level3State extends Level1State {
 			removeXWing(xWing);
 		}
 	}
-
+	protected void checkVaderXWingCollisions() {
+		GameStatus status = getGameStatus();
+		if(xWing2.intersects(megaMan)){
+			status.setLivesLeft(status.getLivesLeft() - 1);
+			removeXWing(xWing2);
+		}
+	}
 	//right big bullet colision with XWing 2
 	protected void checkBigBulletXWingCollisions2() {
 		GameStatus status = getGameStatus();
@@ -201,7 +207,7 @@ public class Level3State extends Level1State {
 	protected void drawXWingLeft() {
 		Graphics2D g2d = getGraphics2D();
 		if((xWing2.getX() + xWing2.getPixelsWide() < SCREEN_WIDTH)) {
-			xWing2.translate(xWing2.getSpeed(), xWing2.getSpeed()/2);
+			xWing2.translate(xWing2.getSpeed()-2, xWing2.getSpeed()/2);
 			getGraphicsManager().drawXWingRight(xWing2, g2d, this);	
 		}
 		else {
@@ -236,23 +242,31 @@ public class Level3State extends Level1State {
 			}
 		}	
 	}		
-	private int direction = 1;
-	Random rand = new Random();
-	protected void drawPlatforms() {
-		//draw platforms
-		Graphics2D g2d = getGraphics2D();
-		for(int i=0; i<getNumPlatforms(); i++){
-			getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
-			
-			if(platforms[i].getX() + platforms[i].width >= SCREEN_WIDTH) {
-				direction = -1;
+		private int direction = 1;
+		Random rand = new Random();
+		protected void drawPlatforms() {
+			//draw platforms
+			Graphics2D g2d = getGraphics2D();
+			for(int i=0; i<getNumPlatforms(); i++){
+				getGraphicsManager().drawPlatform(platforms[i], g2d, this, i);
+	
+				if(platforms[i].getX() + platforms[i].width >= SCREEN_WIDTH) {
+					direction = -1;
+				}
+				else if(platforms[i].getX() <= 0) {
+					direction = 1;
+				}
+				platforms[i].translate(direction*rand.nextInt(3), 0);
 			}
-			else if(platforms[i].getX() <= 0) {
-				direction = 1;
+			if(!Fall()&&!getInputHandler().isLeftPressed()&&!getInputHandler().isRightPressed()) {
+				if(movePlatforms) {
+					megaMan.translate(direction*rand.nextInt(3), 0);
+				}
+				else {megaMan.translate(direction*rand.nextInt(3), 0);
+				}
 			}
-			platforms[i].translate(direction*rand.nextInt(3), 0);
 		}
-	}
+
 
 	public XWing newXWingRight(Level1State screen){
 		int xPos = (int) (screen.getWidth() - XWing.WIDTH);
@@ -274,11 +288,11 @@ public class Level3State extends Level1State {
 		xWing2 = new XWing(xPos, yPos);
 		return xWing2;
 	}
-	
+
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
 		return levelXWingDestroyed >= 5;
-		
+
 	}
 }

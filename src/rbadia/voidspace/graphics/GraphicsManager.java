@@ -121,15 +121,15 @@ public class GraphicsManager {
 	}
 
 	public void drawFloor (Floor floor, Graphics2D g2d, ImageObserver observer, int i){
-			g2d.drawImage(floorImg, floor.x, floor.y, observer);				
+		g2d.drawImage(floorImg, floor.x, floor.y, observer);				
 	}
 	public void drawPlatform(Platform platform, Graphics2D g2d, ImageObserver observer, int i){
-			g2d.drawImage(platformImg, platform.x , platform.y, observer);	
+		g2d.drawImage(platformImg, platform.x , platform.y, observer);	
 	}
-	
+
 	public void drawPlatform2 (Platform platform, Graphics2D g2d, ImageObserver observer, int i){
 		g2d.drawImage(platformImg, platform.x , platform.y, observer);	
-		}
+	}
 
 	/**
 	 * Draws a bullet image to the specified graphics canvas.
@@ -153,7 +153,7 @@ public class GraphicsManager {
 	public void drawBigBullet(BigBullet bigBullet, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bigBulletImg, bigBullet.x, bigBullet.y, observer);
 	}
-	
+
 	/**
 	 * Draws an x-wing image to the specified graphics canvas.
 	 * @param xWing the x-wing to draw
@@ -191,11 +191,11 @@ public class GraphicsManager {
 	public void drawBigAsteroidExplosion(Rectangle bigAsteroidExplosion, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(bigAsteroidExplosionImg, bigAsteroidExplosion.x, bigAsteroidExplosion.y, observer);
 	}
-	
+
 	public void drawRebelTrooperLookingLeft(RebelTrooper rebelTrooper, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(rebelTrooperLookingLeft, rebelTrooper.x, rebelTrooper.y, observer);
 	}
-	
+
 	public void drawRebelTrooperLookingRight(RebelTrooper rebelTrooper, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(rebelTrooperLookingRight, rebelTrooper.x, rebelTrooper.y, observer);
 	}

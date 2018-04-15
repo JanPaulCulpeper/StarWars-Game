@@ -21,41 +21,40 @@ import rbadia.voidspace.sounds.SoundManager;
 
 public class Level4State extends Level1State {
 	private static final long serialVersionUID = 6330305833847871298L;
-	
-	
+
+
 	public RebelTrooper rebelTrooper1 = new RebelTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);//positioned left, looking right
 	public RebelTrooper rebelTrooper2 = new RebelTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);//positioned right, looking left
 	private long lastTrooper1BulletTime;
 	private long lastTrooper2BulletTime;
-
 	private ArrayList<Bullet> trooper1Bullets = new ArrayList<Bullet>();
 	private ArrayList<Bullet> trooper2Bullets = new ArrayList<Bullet>();
-	
+
 	//Getters
 	public RebelTrooper getRebelTrooper1(){
 		return rebelTrooper1;
 	}
 	public RebelTrooper getRebelTrooper2(){
 		return rebelTrooper2;
-		
+
 	}
-	
-	
-	
+
+
+
 	//Constructor
 	public Level4State(int level, MainFrame frame, GameStatus status, LevelLogic gameLogic, InputHandler inputHandler,
 			GraphicsManager graphicsMan, SoundManager soundMan) {
 		super(level, frame, status, gameLogic, inputHandler, graphicsMan, soundMan);
-		
+
 	}
-	
+
 	@Override
 	public void doStart() {	
 		super.doStart();
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
 	}
-	
+
 	@Override
 	public void doGettingReady() {
 		clearScreen();
@@ -80,7 +79,7 @@ public class Level4State extends Level1State {
 			e1.printStackTrace();
 		}
 	};
-	
+
 	@Override
 	public void updateScreen(){
 		Graphics2D g2d = getGraphics2D();
@@ -91,14 +90,13 @@ public class Level4State extends Level1State {
 			this.originalFont = g2d.getFont();
 			this.bigFont = originalFont;
 		}
-		
+
 		clearScreen();
 		((GraphicsManager) getGraphicsManager()).drawDeathStar(g2d);
 		drawStars(50);
 		drawFloor();
 		drawPlatforms();
 		drawMegaMan();
-//		drawXWingRight();
 		drawBullets();
 		drawBigBullets();
 		drawTrooper();
@@ -116,7 +114,7 @@ public class Level4State extends Level1State {
 		checkLeftBigBulletTrooper1Collision();
 		checkLeftBigBulletTrooper2Collision();
 
-		
+
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
 		// update lives left label
@@ -139,502 +137,501 @@ public class Level4State extends Level1State {
 				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 40 - (i-k)*40 );
 				k=k+2;
 			}
-			
+
 		}
 		return platforms;
 	}
-	
+
 	//Codigo de enemigos
-	
-		// fall right trooper looking left
-		public boolean Fall2(){
-			RebelTrooper trooper1 = this.getRebelTrooper1();
-			Platform[] platforms = this.getPlatforms();
-			for(int i=0; i<getNumPlatforms(); i++){
-				if((((platforms[i].getX() < trooper1.getX()) && (trooper1.getX()< platforms[i].getX() + platforms[i].getWidth()))
-						|| ((platforms[i].getX() < trooper1.getX() + trooper1.getWidth()) 
-								&& (trooper1.getX() + trooper1.getWidth()< platforms[i].getX() + platforms[i].getWidth())))
-						&& trooper1.getY() + trooper1.getHeight() == platforms[i].getY())
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-		// fall left trooper looking right
-		public boolean Fall3(){
-			RebelTrooper trooper2 = this.getRebelTrooper2();
-			Platform[] platforms = this.getPlatforms();
-			for(int i=0; i<getNumPlatforms(); i++){
-				if((((platforms[i].getX() < trooper2.getX()) && (trooper2.getX()< platforms[i].getX() + platforms[i].getWidth()))
-						|| ((platforms[i].getX() < trooper2.getX() + trooper2.getWidth()) 
-								&& (trooper2.getX() + trooper2.getWidth()< platforms[i].getX() + platforms[i].getWidth())))
-						&& trooper2.getY() + trooper2.getHeight() == platforms[i].getY()
-						){
-					return false;
-				}
-			}
-			return true;
-		}
-		//gravity trooper looking left
-		protected boolean Gravity2(){
-			RebelTrooper trooper1 = this.getRebelTrooper1();
-			Floor[] floor = this.getFloor();
 
-			for(int i=0; i<9; i++){
-				if((trooper1.getY() + trooper1.getHeight() -17 < SCREEN_HEIGHT - floor[i].getHeight()/2) 
-						&& Fall2() == true){
-
-					trooper1.translate(0 , 2);
-					return true;
-
-				}
-			}
-			return false;
-		}
-		//Gravity left looking right trooper
-		protected boolean Gravity3(){
-			RebelTrooper trooper2 = this.getRebelTrooper2();
-			Floor[] floor = this.getFloor();
-
-			for(int i=0; i<9; i++){
-				if((trooper2.getY() + trooper2.getHeight() -17 < SCREEN_HEIGHT - floor[i].getHeight()/2) 
-						&& Fall3() == true){
-
-					trooper2.translate(0 , 2);
-					return true;
-
-				}
-			}
-			return false;
-		}
-		private boolean trooper1LookingRight = true;
-		private boolean trooper2LookingLeft = true;
-		private boolean trooper1Dead = false;
-		private boolean trooper2Dead = false;
-		
-		//Left trooper looking right
-		protected void drawTrooper() {
-			Graphics2D g2d = getGraphics2D();
-			if(rebelTrooper1 == null)
+	// fall right trooper looking left
+	public boolean Fall2(){
+		RebelTrooper trooper1 = this.getRebelTrooper1();
+		Platform[] platforms = this.getPlatforms();
+		for(int i=0; i<getNumPlatforms(); i++){
+			if((((platforms[i].getX() < trooper1.getX()) && (trooper1.getX()< platforms[i].getX() + platforms[i].getWidth()))
+					|| ((platforms[i].getX() < trooper1.getX() + trooper1.getWidth()) 
+							&& (trooper1.getX() + trooper1.getWidth()< platforms[i].getX() + platforms[i].getWidth())))
+					&& trooper1.getY() + trooper1.getHeight() == platforms[i].getY())
 			{
-				rebelTrooper1 = new RebelTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);
-				((GraphicsManager) getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper1, g2d, this);
+				return false;
 			}
-			if(!trooper1Dead)
+		}
+		return true;
+	}
+	// fall left trooper looking right
+	public boolean Fall3(){
+		RebelTrooper trooper2 = this.getRebelTrooper2();
+		Platform[] platforms = this.getPlatforms();
+		for(int i=0; i<getNumPlatforms(); i++){
+			if((((platforms[i].getX() < trooper2.getX()) && (trooper2.getX()< platforms[i].getX() + platforms[i].getWidth()))
+					|| ((platforms[i].getX() < trooper2.getX() + trooper2.getWidth()) 
+							&& (trooper2.getX() + trooper2.getWidth()< platforms[i].getX() + platforms[i].getWidth())))
+					&& trooper2.getY() + trooper2.getHeight() == platforms[i].getY()
+					){
+				return false;
+			}
+		}
+		return true;
+	}
+	//gravity trooper looking left
+	protected boolean Gravity2(){
+		RebelTrooper trooper1 = this.getRebelTrooper1();
+		Floor[] floor = this.getFloor();
+
+		for(int i=0; i<9; i++){
+			if((trooper1.getY() + trooper1.getHeight() -17 < SCREEN_HEIGHT - floor[i].getHeight()/2) 
+					&& Fall2() == true){
+
+				trooper1.translate(0 , 2);
+				return true;
+
+			}
+		}
+		return false;
+	}
+	//Gravity left looking right trooper
+	protected boolean Gravity3(){
+		RebelTrooper trooper2 = this.getRebelTrooper2();
+		Floor[] floor = this.getFloor();
+
+		for(int i=0; i<9; i++){
+			if((trooper2.getY() + trooper2.getHeight() -17 < SCREEN_HEIGHT - floor[i].getHeight()/2) 
+					&& Fall3() == true){
+
+				trooper2.translate(0 , 2);
+				return true;
+
+			}
+		}
+		return false;
+	}
+	private boolean trooper1LookingRight = true;
+	private boolean trooper2LookingLeft = true;
+	private boolean trooper1Dead = false;
+	private boolean trooper2Dead = false;
+
+	//Left trooper looking right
+	protected void drawTrooper() {
+		Graphics2D g2d = getGraphics2D();
+		if(rebelTrooper1 == null)
+		{
+			rebelTrooper1 = new RebelTrooper(400, SCREEN_HEIGHT - Floor.HEIGHT);
+			((GraphicsManager) getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper1, g2d, this);
+		}
+		if(!trooper1Dead)
+		{
+			if (Fall2() && Gravity2()) {
+				rebelTrooper1.translate(-rebelTrooper1.getSpeed(), rebelTrooper1.getSpeed()/2);
+
+			}
+			if(!Gravity2()) {
+				if(rebelTrooper1.getX() + rebelTrooper1.getPixelsWide() > SCREEN_WIDTH)
+				{
+
+					rebelTrooper1.setSpeed(-rebelTrooper1.getSpeed());
+					this.trooper1LookingRight = false;
+
+
+				}
+				else if (rebelTrooper1.getX() < 0)
+				{
+					rebelTrooper1.setSpeed(RebelTrooper.DEFAULT_SPEED);
+					this.trooper1LookingRight = true;
+
+				}
+				rebelTrooper1.translate(rebelTrooper1.getSpeed(), 0);
+
+			}
+
+			if(trooper1LookingRight)
 			{
-				if (Fall2() && Gravity2()) {
-					rebelTrooper1.translate(-rebelTrooper1.getSpeed(), rebelTrooper1.getSpeed()/2);
-					
-				}
-				if(!Gravity2()) {
-					if(rebelTrooper1.getX() + rebelTrooper1.getPixelsWide() > SCREEN_WIDTH)
-					{
-						
-						rebelTrooper1.setSpeed(-rebelTrooper1.getSpeed());
-						this.trooper1LookingRight = false;
-
-						
-					}
-					else if (rebelTrooper1.getX() < 0)
-					{
-						rebelTrooper1.setSpeed(RebelTrooper.DEFAULT_SPEED);
-						this.trooper1LookingRight = true;
-
-					}
-					rebelTrooper1.translate(rebelTrooper1.getSpeed(), 0);
-					
-				}
-				
-				if(trooper1LookingRight)
-				{
-					((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(rebelTrooper1, g2d, this);
-				}
-				else
-				{
-					((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper1, g2d, this);
-				}
-				
-				long currentTime = System.currentTimeMillis();
-				if((currentTime - lastTrooper1BulletTime) > 1000/2){
-					lastTrooper1BulletTime = currentTime;
-					fireTrooper1Bullet();
-				}
+				((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(rebelTrooper1, g2d, this);
 			}
 			else
 			{
-				rebelTrooper1.setLocation(1000,1000);
-		//		((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(stormTrooper2, g2d, this);
+				((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper1, g2d, this);
 			}
 
-			
-			
-			
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastTrooper1BulletTime) > 1000/2){
+				lastTrooper1BulletTime = currentTime;
+				fireTrooper1Bullet();
+			}
+		}
+		else
+		{
+			rebelTrooper1.setLocation(1000,1000);
+			//		((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(stormTrooper2, g2d, this);
 		}
 
+
+
+
+	}
+
+
+	//Right trooper looking left
+	protected void drawTrooper2() {
 		
-		//Right trooper looking left
-		protected void drawTrooper2() {
-			Graphics2D g2d = getGraphics2D();
-			if(rebelTrooper2 == null)
-			{
-				rebelTrooper2 = new RebelTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);
-				((GraphicsManager) getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper2, g2d, this);
+		Graphics2D g2d = getGraphics2D();
+		if(rebelTrooper2 == null)
+		{
+			rebelTrooper2 = new RebelTrooper(50, SCREEN_HEIGHT - Floor.HEIGHT);
+			((GraphicsManager) getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper2, g2d, this);
+		}
+		if(!trooper2Dead)
+		{
+			if (Fall3() && Gravity3()) {
+				rebelTrooper2.translate(-rebelTrooper2.getSpeed(), rebelTrooper2.getSpeed()/2);
+
 			}
-			if(!trooper2Dead)
-			{
-				if (Fall3() && Gravity3()) {
-					rebelTrooper2.translate(-rebelTrooper2.getSpeed(), rebelTrooper2.getSpeed()/2);
-					
-				}
-				if(!Gravity3()) {
-					if(rebelTrooper2.getX() + rebelTrooper2.getPixelsWide() > SCREEN_WIDTH)
-					{
-						
-						rebelTrooper2.setSpeed(-rebelTrooper2.getSpeed());
-						this.trooper2LookingLeft = true;
-
-						
-					}
-					else if (rebelTrooper2.getX() < 0)
-					{
-						rebelTrooper2.setSpeed(RebelTrooper.DEFAULT_SPEED);
-						this.trooper2LookingLeft = false;
-
-					}
-					rebelTrooper2.translate(rebelTrooper2.getSpeed(), 0);
-					
-				}
-				
-				if(trooper2LookingLeft)
+			if(!Gravity3()) {
+				if(rebelTrooper2.getX() + rebelTrooper2.getPixelsWide() > SCREEN_WIDTH)
 				{
-					((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper2, g2d, this);
+
+					rebelTrooper2.setSpeed(-rebelTrooper2.getSpeed());
+					this.trooper2LookingLeft = true;
+
+
 				}
-				else
+				else if (rebelTrooper2.getX() < 0)
 				{
-					((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(rebelTrooper2, g2d, this);
+					rebelTrooper2.setSpeed(RebelTrooper.DEFAULT_SPEED);
+					this.trooper2LookingLeft = false;
+
 				}
-				
-				long currentTime = System.currentTimeMillis();
-				if((currentTime - lastTrooper2BulletTime) > 1000/2){
-					lastTrooper2BulletTime = currentTime;
-					fireRebel2Bullet();
-				}
-			}
-			else
-			{
-				rebelTrooper2.setLocation(1000,1000);
-	//			((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(stormTrooper2, g2d, this);
-			}
-			
-		}
-		
-		
-		public void moveTrooper1Left(){
-			if(rebelTrooper1.getX() - rebelTrooper1.getSpeed() >= 0){
-				rebelTrooper1.translate(-rebelTrooper1.getSpeed(), 0);
-			}
-		}
-		public void moveTrooper1Down(){
-			for(int i=0; i<9; i++){
-				if(rebelTrooper1.getY() + rebelTrooper1.getSpeed() + rebelTrooper1.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
-					rebelTrooper1.translate(0, 2);
-				}
-			}
-		}
-		public void moveTrooper2Right(){
-			if(rebelTrooper2.getX() + rebelTrooper2.getSpeed() + rebelTrooper2.width < SCREEN_WIDTH){
 				rebelTrooper2.translate(rebelTrooper2.getSpeed(), 0);
-			}
-		}
-		public void moveTrooper2Down(){
-			for(int i=0; i<9; i++){
-				if(rebelTrooper2.getY() + rebelTrooper2.getSpeed() + rebelTrooper2.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
-					rebelTrooper2.translate(0, 2);
-				}
-			}
-		}
-		
-		
-		
-		public void fireTrooper1Bullet()
-		{	
-			Bullet bullet = new Bullet(rebelTrooper1.x + rebelTrooper1.width - Bullet.WIDTH/2, 
-					rebelTrooper1.y + rebelTrooper1.width/2 - Bullet.HEIGHT + 2);;
-			if(!this.trooper1LookingRight)
-			{
-				bullet.setSpeed(-bullet.getSpeed());
-			}
-			this.trooper1Bullets.add(bullet);
-			this.getSoundManager().playBulletSound();
-		
-		}
-		
-		public boolean moveTrooper1Bullet(Bullet bullet)
-		{
-			if(bullet.getX() - bullet.getSpeed() <= this.getWidth() && bullet.getX() > 0)
-			{
 
-				bullet.translate(bullet.getSpeed(), 0);
-				return false;
 			}
-			//remove bullet if out of frame
-			return true;
-		}
-		
-		public void drawRebel1Bullets()
-		{
-			Graphics2D g2d = getGraphics2D();
-			for(int i=0; i<trooper1Bullets.size(); i++){
-				Bullet bullet = trooper1Bullets.get(i);
-				getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
 
-				boolean remove = this.moveTrooper1Bullet(bullet);
-				if(remove){
-					trooper1Bullets.remove(i);
-					i--;
-				}
-			}
-		}
-		
-		
-		
-		
-		public void fireRebel2Bullet()
-		{	
-			Bullet bullet = new Bullet(rebelTrooper2.x + rebelTrooper2.width - Bullet.WIDTH/2, 
-					rebelTrooper2.y + rebelTrooper2.width/2 - Bullet.HEIGHT + 2);
-			if(this.trooper2LookingLeft)
+			if(trooper2LookingLeft)
 			{
-				bullet.setSpeed(-bullet.getSpeed());
+				((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(rebelTrooper2, g2d, this);
 			}
-			this.trooper2Bullets.add(bullet);
-			this.getSoundManager().playBulletSound();
-		
-		}
-		
-		public boolean moveTrooper2Bullet(Bullet bullet)
-		{
-			if(bullet.getX() - bullet.getSpeed() <= this.getWidth() && bullet.getX() > 0)
+			else
 			{
+				((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingRight(rebelTrooper2, g2d, this);
+			}
 
-				bullet.translate(bullet.getSpeed(), 0);
-				return false;
+			long currentTime = System.currentTimeMillis();
+			if((currentTime - lastTrooper2BulletTime) > 1000/2){
+				lastTrooper2BulletTime = currentTime;
+				fireRebel2Bullet();
 			}
-			//remove bullet if out of frame
-			return true;
 		}
-		
-		public void drawRebel2Bullets()
+		else
 		{
-			Graphics2D g2d = getGraphics2D();
-			for(int i=0; i<trooper2Bullets.size(); i++){
-				Bullet bullet = trooper2Bullets.get(i);
-				getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
+			rebelTrooper2.setLocation(1000,1000);
+			//			((GraphicsManager)getGraphicsManager()).drawRebelTrooperLookingLeft(stormTrooper2, g2d, this);
+		}
 
-				boolean remove = this.moveTrooper2Bullet(bullet);
-				if(remove){
-					trooper2Bullets.remove(i);
-					i--;
-				}
+	}
+
+
+	public void moveTrooper1Left(){
+		if(rebelTrooper1.getX() - rebelTrooper1.getSpeed() >= 0){
+			rebelTrooper1.translate(-rebelTrooper1.getSpeed(), 0);
+		}
+	}
+	public void moveTrooper1Down(){
+		for(int i=0; i<9; i++){
+			if(rebelTrooper1.getY() + rebelTrooper1.getSpeed() + rebelTrooper1.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
+				rebelTrooper1.translate(0, 2);
 			}
 		}
-		
-		
-		protected void checkTrooper1BulletMegamanCollisions() {
-			GameStatus status = getGameStatus();
-			for(int i=0; i<trooper1Bullets.size(); i++){
-				Bullet bullet = trooper1Bullets.get(i);
-				if(megaMan.intersects(bullet)) {
-					status.setLivesLeft(status.getLivesLeft() - 1);
-					trooper1Bullets.remove(i);
-					break;
-				}
+	}
+	public void moveTrooper2Right(){
+		if(rebelTrooper2.getX() + rebelTrooper2.getSpeed() + rebelTrooper2.width < SCREEN_WIDTH){
+			rebelTrooper2.translate(rebelTrooper2.getSpeed(), 0);
+		}
+	}
+	public void moveTrooper2Down(){
+		for(int i=0; i<9; i++){
+			if(rebelTrooper2.getY() + rebelTrooper2.getSpeed() + rebelTrooper2.height < SCREEN_HEIGHT - floor[i].getHeight()/2){
+				rebelTrooper2.translate(0, 2);
 			}
 		}
-		//bullet de megaman con trooper left
-		public void checkBulletTrooper1Collisions()
-		{
-			for(int i = 0; i < bullets.size(); i++)
-			{
-				Bullet bullet = bullets.get(i);
-				if (rebelTrooper1.intersects(bullet))
+	}
+
+
+
+	public void fireTrooper1Bullet()
+	{	
+		Bullet bullet = new Bullet(rebelTrooper1.x + rebelTrooper1.width - Bullet.WIDTH/2, 
+				rebelTrooper1.y + rebelTrooper1.width/2 - Bullet.HEIGHT + 2);;
+				if(!this.trooper1LookingRight)
 				{
-					getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
-					getSoundManager().playScreamSound();
-					levelXWingDestroyed = levelXWingDestroyed + 1;
-					bullets.remove(i);
-					
-					if(levelXWingDestroyed == 2) {
-						getSoundManager().playScreamSound();
-						trooper1Dead = true;
-					}
-					break;
+					bullet.setSpeed(-bullet.getSpeed());
 				}
-			}
+				this.trooper1Bullets.add(bullet);
+				this.getSoundManager().playBulletSound();
+
+	}
+
+	public boolean moveTrooper1Bullet(Bullet bullet)
+	{
+		if(bullet.getX() - bullet.getSpeed() <= this.getWidth() && bullet.getX() > 0)
+		{
+
+			bullet.translate(bullet.getSpeed(), 0);
+			return false;
 			
 		}
-		
-		//left bullet de megaman con trooper left
-		public void checkLeftBulletTrooper1Collisions()
-		{
-			for(int i = 0; i < leftBullets.size(); i++)
-			{
-				Bullet bullet = leftBullets.get(i);
-				if (rebelTrooper1.intersects(bullet))
-				{
-					getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
-					getSoundManager().playScreamSound();
-					levelXWingDestroyed = levelXWingDestroyed + 1;
-					leftBullets.remove(i);
-					
-					if(levelXWingDestroyed == 2) {
-						getSoundManager().playScreamSound();
-						trooper1Dead = true;
-					}
-					break;
-				}
-			}
-			
-		}
-		
-		protected void checkTrooper2BulletMegamanCollisions() {
-			GameStatus status = getGameStatus();
-			for(int i=0; i<trooper2Bullets.size(); i++){
-				Bullet bullet = trooper2Bullets.get(i);
-				if(megaMan.intersects(bullet)) {
-					status.setLivesLeft(status.getLivesLeft() - 1);
-					trooper2Bullets.remove(i);
-					break;
-				}
-			}
-		}
-		
-		//bullet de megaman con trooper right
-		public void checkBulletTrooper2Collisions()
-		{
-			for(int i = 0; i < bullets.size(); i++)
-			{
-				Bullet bullet = bullets.get(i);
-				if (rebelTrooper2.intersects(bullet))
-				{
-					getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
-					getSoundManager().playScreamSound();
-					levelXWingDestroyed = levelXWingDestroyed + 1;
-					bullets.remove(i);
-					
-					if(levelXWingDestroyed == 2) {
-						getSoundManager().playScreamSound();
-						trooper2Dead = true;
-					}
+		//remove bullet if out of frame
+		return true;
+	}
 
-					break;
-				}
+	public void drawRebel1Bullets()
+	{
+		Graphics2D g2d = getGraphics2D();
+		for(int i=0; i<trooper1Bullets.size(); i++){
+			Bullet bullet = trooper1Bullets.get(i);
+			getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
+
+			boolean remove = this.moveTrooper1Bullet(bullet);
+			if(remove){
+				trooper1Bullets.remove(i);
+				i--;
 			}
-			
 		}
-		
-		//left bullet de megaman con trooper right
-		public void checkLeftBulletTrooper2Collisions()
+	}
+
+
+
+
+	public void fireRebel2Bullet()
+	{	
+		Bullet bullet = new Bullet(rebelTrooper2.x + rebelTrooper2.width - Bullet.WIDTH/2, 
+				rebelTrooper2.y + rebelTrooper2.width/2 - Bullet.HEIGHT + 2);
+		if(this.trooper2LookingLeft)
 		{
-			for(int i = 0; i < leftBullets.size(); i++)
-			{
-				Bullet bullet = leftBullets.get(i);
-				if (rebelTrooper2.intersects(bullet))
-				{
-					getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
-					getSoundManager().playScreamSound();
-					levelXWingDestroyed = levelXWingDestroyed + 1;
-					leftBullets.remove(i);
-					
-					if(levelXWingDestroyed == 2) {
-						getSoundManager().playScreamSound();
-						trooper2Dead = true;
-					}
-					break;
-				}
-			}
-			
+			bullet.setSpeed(-bullet.getSpeed());
 		}
-		
-		//Check Right big bullet with trooper 1 collision
-		public void checkBigBulletTrooper1Collision() {
-			GameStatus status = getGameStatus();
-			for(int i=0; i<bigBullets.size(); i++){
-				BigBullet bigBullet = bigBullets.get(i);
-				if(rebelTrooper1.intersects(bigBullet)){
-					// increase asteroids destroyed count
-					status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+		this.trooper2Bullets.add(bullet);
+		this.getSoundManager().playBulletSound();
+
+	}
+
+	public boolean moveTrooper2Bullet(Bullet bullet)
+	{
+		if(bullet.getX() - bullet.getSpeed() <= this.getWidth() && bullet.getX() > 0)
+		{
+
+			bullet.translate(bullet.getSpeed(), 0);
+			return false;
+		}
+		//remove bullet if out of frame
+		return true;
+	}
+
+	public void drawRebel2Bullets()
+	{
+		Graphics2D g2d = getGraphics2D();
+		for(int i=0; i<trooper2Bullets.size(); i++){
+			Bullet bullet = trooper2Bullets.get(i);
+			getGraphicsManager().drawRebelsbulletImg(bullet, g2d, this);
+
+			boolean remove = this.moveTrooper2Bullet(bullet);
+			if(remove){
+				trooper2Bullets.remove(i);
+				i--;
+			}
+		}
+	}
+
+
+	protected void checkTrooper1BulletMegamanCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<trooper1Bullets.size(); i++){
+			Bullet bullet = trooper1Bullets.get(i);
+			if(megaMan.intersects(bullet)) {
+				status.setLivesLeft(status.getLivesLeft() - 1);
+				trooper1Bullets.remove(i);
+				break;
+			}
+		}
+	}
+	//bullet de megaman con trooper left
+	public void checkBulletTrooper1Collisions()
+	{
+		for(int i = 0; i < bullets.size(); i++)
+		{
+			Bullet bullet = bullets.get(i);
+			if (rebelTrooper1.intersects(bullet))
+			{
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
+				getSoundManager().playScreamSound();
+				levelXWingDestroyed = levelXWingDestroyed + 1;
+				bullets.remove(i);
+
+				if(levelXWingDestroyed == 2) {
+					getSoundManager().playScreamSound();
 					trooper1Dead = true;
-					getSoundManager().playScreamSound();
-					bigBullets.remove(i);
-					levelXWingDestroyed = levelXWingDestroyed + 2;
-					damage=0;
 				}
+				break;
 			}
 		}
-		
-		//check right big bullet with trooper 2 collision
-		public void checkBigBulletTrooper2Collision(){
-			GameStatus status = getGameStatus();
-			for(int i=0; i<bigBullets.size(); i++){
-				BigBullet bigBullet = bigBullets.get(i);
-				if(rebelTrooper2.intersects(bigBullet)){
-					// increase asteroids destroyed count
-					status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
-					trooper2Dead = true;
+
+	}
+
+	//left bullet de megaman con trooper left
+	public void checkLeftBulletTrooper1Collisions()
+	{
+		for(int i = 0; i < leftBullets.size(); i++)
+		{
+			Bullet bullet = leftBullets.get(i);
+			if (rebelTrooper1.intersects(bullet))
+			{
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
+				getSoundManager().playScreamSound();
+				levelXWingDestroyed = levelXWingDestroyed + 1;
+				leftBullets.remove(i);
+
+				if(levelXWingDestroyed == 2) {
 					getSoundManager().playScreamSound();
-					bigBullets.remove(i);
-					levelXWingDestroyed = levelXWingDestroyed + 2;
-					damage=0;
-				}
-			}
-		}
-		
-		//check left big bullet with trooper 1 collision
-		public void checkLeftBigBulletTrooper1Collision() {
-			GameStatus status = getGameStatus();
-			for(int i=0; i<leftBigBullets.size(); i++){
-				BigBullet bigBullet = leftBigBullets.get(i);
-				if(rebelTrooper1.intersects(bigBullet)){
-					// increase asteroids destroyed count
-					status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
 					trooper1Dead = true;
-					getSoundManager().playScreamSound();
-					leftBigBullets.remove(i);
-					levelXWingDestroyed = levelXWingDestroyed + 2;
-					damage=0;
 				}
+				break;
 			}
 		}
-		
-		//checck left big bullet with trooper 2 collision
-		public void checkLeftBigBulletTrooper2Collision() {
-			GameStatus status = getGameStatus();
-			for(int i=0; i<leftBigBullets.size(); i++){
-				BigBullet bigBullet = leftBigBullets.get(i);
-				if(rebelTrooper2.intersects(bigBullet)){
-					// increase asteroids destroyed count
-					status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+
+	}
+
+	protected void checkTrooper2BulletMegamanCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<trooper2Bullets.size(); i++){
+			Bullet bullet = trooper2Bullets.get(i);
+			if(megaMan.intersects(bullet)) {
+				status.setLivesLeft(status.getLivesLeft() - 1);
+				trooper2Bullets.remove(i);
+				break;
+			}
+		}
+	}
+
+	//bullet de megaman con trooper right
+	public void checkBulletTrooper2Collisions()
+	{
+		for(int i = 0; i < bullets.size(); i++)
+		{
+			Bullet bullet = bullets.get(i);
+			if (rebelTrooper2.intersects(bullet))
+			{
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
+				getSoundManager().playScreamSound();
+				levelXWingDestroyed = levelXWingDestroyed + 1;
+				bullets.remove(i);
+
+				if(levelXWingDestroyed == 2) {
+					getSoundManager().playScreamSound();
 					trooper2Dead = true;
-					getSoundManager().playScreamSound();
-					leftBigBullets.remove(i);
-					levelXWingDestroyed = levelXWingDestroyed + 2;
-					damage=0;
 				}
+
+				break;
 			}
 		}
-		
-		@Override
-		public boolean isLevelWon() {
-			if(getInputHandler().isNPressed()) return true; 
-			return levelXWingDestroyed >= 4;
-			
+
+	}
+
+	//left bullet de megaman con trooper right
+	public void checkLeftBulletTrooper2Collisions()
+	{
+		for(int i = 0; i < leftBullets.size(); i++)
+		{
+			Bullet bullet = leftBullets.get(i);
+			if (rebelTrooper2.intersects(bullet))
+			{
+				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 200);
+				getSoundManager().playScreamSound();
+				levelXWingDestroyed = levelXWingDestroyed + 1;
+				leftBullets.remove(i);
+
+				if(levelXWingDestroyed == 2) {
+					getSoundManager().playScreamSound();
+					trooper2Dead = true;
+				}
+				break;
+			}
 		}
-//		@Override
-//		public void drawXWingRight() {
-//			
-//		}
+
+	}
+
+	//Check Right big bullet with trooper 1 collision
+	public void checkBigBulletTrooper1Collision() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<bigBullets.size(); i++){
+			BigBullet bigBullet = bigBullets.get(i);
+			if(rebelTrooper1.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+				trooper1Dead = true;
+				getSoundManager().playScreamSound();
+				bigBullets.remove(i);
+				levelXWingDestroyed = levelXWingDestroyed + 2;
+				damage=0;
+			}
+		}
+	}
+
+	//check right big bullet with trooper 2 collision
+	public void checkBigBulletTrooper2Collision(){
+		GameStatus status = getGameStatus();
+		for(int i=0; i<bigBullets.size(); i++){
+			BigBullet bigBullet = bigBullets.get(i);
+			if(rebelTrooper2.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+				trooper2Dead = true;
+				getSoundManager().playScreamSound();
+				bigBullets.remove(i);
+				levelXWingDestroyed = levelXWingDestroyed + 2;
+				damage=0;
+			}
+		}
+	}
+
+	//check left big bullet with trooper 1 collision
+	public void checkLeftBigBulletTrooper1Collision() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBigBullets.size(); i++){
+			BigBullet bigBullet = leftBigBullets.get(i);
+			if(rebelTrooper1.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+				trooper1Dead = true;
+				getSoundManager().playScreamSound();
+				leftBigBullets.remove(i);
+				levelXWingDestroyed = levelXWingDestroyed + 2;
+				damage=0;
+			}
+		}
+	}
+
+	//checck left big bullet with trooper 2 collision
+	public void checkLeftBigBulletTrooper2Collision() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBigBullets.size(); i++){
+			BigBullet bigBullet = leftBigBullets.get(i);
+			if(rebelTrooper2.intersects(bigBullet)){
+				// increase asteroids destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 400);
+				trooper2Dead = true;
+				getSoundManager().playScreamSound();
+				leftBigBullets.remove(i);
+				levelXWingDestroyed = levelXWingDestroyed + 2;
+				damage=0;
+			}
+		}
+	}
+
+	@Override
+	public boolean isLevelWon() {
+		if(getInputHandler().isNPressed()) return true; 
+		return levelXWingDestroyed >= 4;
+
+	}
+
 }
 
 

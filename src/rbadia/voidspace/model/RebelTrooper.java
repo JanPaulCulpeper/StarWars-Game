@@ -23,4 +23,12 @@ public class RebelTrooper extends GameObject {
 	public int getDefaultSpeed(){
 		return DEFAULT_SPEED;
 	}
+	public static void delay(long millis) {
+		try{
+			Thread.sleep(millis);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

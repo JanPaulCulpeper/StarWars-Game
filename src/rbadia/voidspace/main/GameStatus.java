@@ -6,8 +6,8 @@ package rbadia.voidspace.main;
 public class GameStatus {
 	private boolean gameOver = false;
 	private boolean gameWon = false;
-	
-	
+
+
 	// status variables
 	private boolean newMegaMan;
 	private boolean newBoss;
@@ -19,19 +19,19 @@ public class GameStatus {
 
 	private int livesLeft;
 	private int level = 1;
-	
+
 	public GameStatus(){
-		
+
 	}
-	
+
 	public synchronized boolean isGameOver() {
 		return gameOver;
 	}
-	
+
 	public synchronized void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-	
+
 	/**
 	 * Indicates if the game has and the "You Win!!!" message is displaying.
 	 * @return if the game has ended and the "You Win!!!" message is displaying.
@@ -39,11 +39,11 @@ public class GameStatus {
 	public synchronized boolean isGameWon() {
 		return gameWon;
 	}
-	
+
 	public synchronized void setGameWon(boolean gameWon) {
 		this.gameWon = gameWon;
 	}
-	
+
 	/**
 	 * Indicates if a new MegaMan should be created/drawn.
 	 * @return if a new life should be created/drawn
@@ -55,7 +55,7 @@ public class GameStatus {
 	public synchronized void setNewMegaMan(boolean newMegaMan) {
 		this.newMegaMan = newMegaMan;
 	}
-		
+
 	public synchronized boolean isNewBoss() {
 		return newBoss;
 	}
@@ -71,7 +71,7 @@ public class GameStatus {
 	public synchronized void setNewBoss2(boolean newBoss) {
 		this.newBoss = newBoss;
 	}
-	
+
 	/**
 	 * Indicates if a new asteroid should be created/drawn.
 	 * @return if a new asteroid should be created/drawn
@@ -83,15 +83,15 @@ public class GameStatus {
 	public synchronized void setNewXWing(boolean newXWing) {
 		this.newXWing = newXWing;
 	}
-	
+
 	public synchronized boolean isNewXWing2() {
 		return newXWing2;
 	}
-	
+
 	public synchronized void setNewXWing2(boolean newxWing2) {
 		this.newXWing2 = newxWing2;
 	}
-	
+
 	/**
 	 * Indicates if a new big asteroid should be created/drawn.
 	 * @return if a new big asteroid should be created/drawn

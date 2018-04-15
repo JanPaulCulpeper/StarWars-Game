@@ -67,6 +67,7 @@ public class LevelLogic {
 	/**
 	 * Actions to take when the game is over.
 	 */
+
 	public void gameOver(){
 		//getLevelState().getGameStatus().setGameStarted(false);
 		getLevelState().getGameStatus().setGameOver(true);
@@ -77,6 +78,7 @@ public class LevelLogic {
 		Timer timer = new Timer(5000, new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				getLevelState().getGameStatus().setGameOver(false);
+
 			}
 		});
 		timer.setRepeats(false);
@@ -259,7 +261,7 @@ public class LevelLogic {
 		int strY2 = (LevelState.SCREEN_HEIGHT + 3*ascent2)/2 - 2*ascent2;
 		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(gameTitleStr2, strX2, strY2);
-		
+
 		String gameTitleStr3 =  "The untold stories of Darth Vader";
 
 		Font currentFont3 = biggestFont == null? bigFont : biggestFont;
@@ -280,7 +282,7 @@ public class LevelLogic {
 		int strY3 = (LevelState.SCREEN_HEIGHT + 3*ascent3)/2 - ascent3;
 		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(gameTitleStr3, strX3, strY3);
-		
+
 		g2d.setFont(originalFont);
 		fm = g2d.getFontMetrics();
 		String newGameStr = "Press <Space> to Start the Level";
@@ -303,14 +305,14 @@ public class LevelLogic {
 		strX = (LevelState.SCREEN_WIDTH - strWidth)/2;
 		strY = strY + 16;
 		g2d.drawString(shopGameStr, strX, strY);
-		
+
 		fm = g2d.getFontMetrics();
 		String muteGameStr = "Press <M> to mute music.";
 		strWidth = fm.stringWidth(muteGameStr);
 		strX = (LevelState.SCREEN_WIDTH - strWidth)/2;
 		strY = strY + 16;
 		g2d.drawString(muteGameStr, strX, strY);
-		
+
 		fm = g2d.getFontMetrics();
 		String skipGameStr = "Press <N> to skip level. (for testing purposes)";
 		strWidth = fm.stringWidth(skipGameStr);
@@ -376,7 +378,7 @@ public class LevelLogic {
 		strY = strY + 16;
 		g2d.drawString(thirdLineStr, strX, strY);
 	}
-	
+
 	protected void drawLevel2Intro() {
 		LevelState levelState = getLevelState();
 		Graphics2D g2d = levelState.getGraphics2D();
@@ -394,10 +396,10 @@ public class LevelLogic {
 		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
 		g2d.setPaint(Color.WHITE);
 		g2d.drawString(firstLineStr, strX, strY);
-		
+
 	}
 	protected void drawLevel3Intro() {
-		
+
 		LevelState levelState = getLevelState();
 		Graphics2D g2d = levelState.getGraphics2D();
 
@@ -414,7 +416,7 @@ public class LevelLogic {
 		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
 		g2d.setPaint(Color.WHITE);
 		g2d.drawString(firstLineStr, strX, strY);
-		
+
 	}
 	protected void drawLevel4Intro() {
 		LevelState levelState = getLevelState();
@@ -433,12 +435,12 @@ public class LevelLogic {
 		int strY = levelState.SCREEN_HEIGHT/4 + ascent + 16;
 		g2d.setPaint(Color.WHITE);
 		g2d.drawString(firstLineStr, strX, strY);
-		
+
 		fm = g2d.getFontMetrics();
 		String thirdLineStr = "Make them suf fer !";
 		strY = strY + 16;
 		g2d.drawString(thirdLineStr, strX, strY);
-		
+
 	}
 	protected void drawLevel5Intro() {
 		LevelState levelState = getLevelState();
@@ -526,7 +528,7 @@ public class LevelLogic {
 		else {
 			MegaManMain.audioClip.start();
 		}
-		
+
 		if(ih.isSpacePressed()) {
 			ih.reset();
 			levelState.setCurrentState(LevelState.GETTING_READY);	
@@ -539,7 +541,7 @@ public class LevelLogic {
 							"Extra Life:      1500\r\n"+ 
 							"Power Shot:  1000\r\n"+
 					"\r\n");
-			
+
 		}
 		if(ih.isIPressed()) {
 			ih.reset();
@@ -550,25 +552,25 @@ public class LevelLogic {
 							"                           (Press E to buy, limit of one life per second.)\r\n" +
 							"Power Shot:  Activates the Power Shot which kills the asteroid in one hit\r\n"+
 					"                           (Press Q to buy, afterwards press Q to fire.)\r\n");
-			
+
 		}
-//		ih.reset();
-		
+		//		ih.reset();
+
 
 	}
 
 	public void handleKeysDuringPlay(InputHandler ih, LevelState levelState) {
-		
+
 		//stops music
 		if(ih.isMPressed()){
 			if(MegaManMain.audioClip.isRunning())
 				MegaManMain.audioClip.stop();
 			else
 				MegaManMain.audioClip.start();
-			
+
 			ih.reset();
 		}
-			
+
 		GameStatus status = getLevelState().getGameStatus();
 
 		// fire bullet if space is pressed
@@ -634,7 +636,7 @@ public class LevelLogic {
 			getLevelState().moveMegaManRight();
 		}
 	}
-	
+
 
 	public static void delay(long millis) {
 		try{

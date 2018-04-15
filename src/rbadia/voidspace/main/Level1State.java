@@ -61,8 +61,8 @@ public class Level1State extends LevelState {
 	protected Font bigFont;
 	protected Font biggestFont;
 
-	
-	
+
+
 	protected int levelXWingDestroyed = 0;
 
 	// Constructors
@@ -96,8 +96,8 @@ public class Level1State extends LevelState {
 	public List<BigBullet> getBigBullets()		{ return bigBullets;   	}
 	public List<BigBullet> getLeftBigBullets()	{return leftBigBullets;	}
 	public PowerUp getPowerUp() 				{ return powerUp;		}
-	
-	
+
+
 
 	// Level state methods
 	// The method associated with the current level state will be called 
@@ -149,7 +149,7 @@ public class Level1State extends LevelState {
 		clearScreen();
 		((GraphicsManager)getGraphicsManager()).drawMenuPicture(g2d);
 		getGameLogic().drawInitialMessage();
-		
+
 	};
 
 	@Override
@@ -199,17 +199,19 @@ public class Level1State extends LevelState {
 
 	@Override
 	public void doGameOverScreen(){
-//		MegaManMain.audioClip.stop();
+		//		MegaManMain.audioClip.stop();
 		setCurrentState(GAME_OVER_SCREEN);
 		getGameLogic().drawGameOver();
 		getMainFrame().getDestroyedValueLabel().setForeground(new Color(128, 0, 0));
 		repaint();
 		LevelLogic.delay(1500);
+
 	}
 
 	@Override
 	public void doGameOver(){
 		this.getGameStatus().setGameOver(true);
+
 	}
 
 	/**
@@ -251,7 +253,8 @@ public class Level1State extends LevelState {
 		checkLeftBigBulletXWingCollisions();
 		checkMegaManXWingCollisions();
 		checkXWingFloorCollisions();
-//		drawPowerUp();
+
+
 
 		// update xWings destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
@@ -261,7 +264,7 @@ public class Level1State extends LevelState {
 		getMainFrame().getLevelValueLabel().setText(Long.toString(status.getLevel()));
 	}
 
-	
+
 
 	protected void checkXWingFloorCollisions() {
 		for(int i=0; i<9; i++){
@@ -294,7 +297,7 @@ public class Level1State extends LevelState {
 			}
 		}
 	}
-	
+
 	//checks left big bullet xWing collision
 	protected void checkLeftBigBulletXWingCollisions() {
 		GameStatus status = getGameStatus();
@@ -306,7 +309,7 @@ public class Level1State extends LevelState {
 				removeXWing(xWing);
 				levelXWingDestroyed++;
 				damage=0;
-				
+
 			}
 		}
 	}
@@ -368,7 +371,7 @@ public class Level1State extends LevelState {
 				i--;
 			}
 		}
-		
+
 
 	}
 
@@ -385,16 +388,16 @@ public class Level1State extends LevelState {
 			}
 		}
 		//draws bullets to left
-        for(int i=0; i<leftBullets.size(); i++){
-            Bullet leftBullet = leftBullets.get(i); 
-            getGraphicsManager().drawBullet(leftBullet, g2d, this);
+		for(int i=0; i<leftBullets.size(); i++){
+			Bullet leftBullet = leftBullets.get(i); 
+			getGraphicsManager().drawBullet(leftBullet, g2d, this);
 
-            boolean remove = this.moveBullet(leftBullet, leftBullet);
-            if(remove){
-                leftBullets.remove(i);
-                i--;
-            }
-        }
+			boolean remove = this.moveBullet(leftBullet, leftBullet);
+			if(remove){
+				leftBullets.remove(i);
+				i--;
+			}
+		}
 	}
 
 	protected void drawXWingLeft() {
@@ -423,15 +426,15 @@ public class Level1State extends LevelState {
 
 
 	protected void drawMegaMan() {
-		
+
 		Graphics2D g2d = getGraphics2D();
-		
+
 		//Fall 
 		if((Gravity() == true) || ((Gravity() == true) && (Fire() == true || Fire2() == true)) 
-					&& (getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased()==false))
-			{
-				getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
-			}		
+				&& (getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased()==false))
+		{
+			getGraphicsManager().drawMegaFallR(megaMan, g2d, this);
+		}		
 		//Draw Megaman
 		if((Gravity()==false) && ((Fire()==false) && (Fire2()==false)) && (getInputHandler().isStill()) && ((getInputHandler().wasRightReleased())
 				|| !(getInputHandler().wasLeftReleased())))
@@ -454,20 +457,20 @@ public class Level1State extends LevelState {
 			((GraphicsManager)getGraphicsManager()).drawMegaFireLeft(megaMan, g2d, this);
 		}
 		else {
-		//Megaman look left
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (getInputHandler().isStill()) && (getInputHandler().wasLeftReleased()))
-		{
-			((GraphicsManager) getGraphicsManager()).drawMegaLookLeft(megaMan, g2d, this);
-		}
-		//Megaman run left
-		if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isLeftPressed()) 
-		{
-			((GraphicsManager)getGraphicsManager()).drawMegaRunL(megaMan, g2d, this);
-		}
+			//Megaman look left
+			if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && (getInputHandler().isStill()) && (getInputHandler().wasLeftReleased()))
+			{
+				((GraphicsManager) getGraphicsManager()).drawMegaLookLeft(megaMan, g2d, this);
+			}
+			//Megaman run left
+			if((Gravity()==false) && (Fire()==false) && (Fire2()==false) && getInputHandler().isLeftPressed()) 
+			{
+				((GraphicsManager)getGraphicsManager()).drawMegaRunL(megaMan, g2d, this);
+			}
 
 		}
 	}
-	
+
 	protected void drawPlatforms() {
 		//draw platforms
 		Graphics2D g2d = getGraphics2D();
@@ -509,7 +512,7 @@ public class Level1State extends LevelState {
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
 		return levelXWingDestroyed >= 3;
-		
+
 	}
 
 	protected boolean Gravity(){
@@ -567,7 +570,7 @@ public class Level1State extends LevelState {
 		}
 		return false;
 	}
-	
+
 	//Left BigBullet fire pose
 	protected boolean LeftFire2(){
 		MegaMan megaMan = this.getMegaMan();
@@ -617,12 +620,12 @@ public class Level1State extends LevelState {
 	 */
 	public void fireBullet(){
 		if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
-		Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
-				megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
-		bullets.add(bullet);
-		this.getSoundManager().playBulletSound();
-			}
-	
+			Bullet bullet = new Bullet(megaMan.x + megaMan.width - Bullet.WIDTH/2,
+					megaMan.y + megaMan.width/2 - Bullet.HEIGHT +2);
+			bullets.add(bullet);
+			this.getSoundManager().playBulletSound();
+		}
+
 		else {
 			int xPos = megaMan.x;
 			int yPos = megaMan.y + megaMan.width/2 - Bullet.HEIGHT + 2;
@@ -630,7 +633,7 @@ public class Level1State extends LevelState {
 			leftBullet.setSpeed(-12);
 			leftBullets.add(leftBullet);
 			this.getSoundManager().playBulletSound();
-		
+
 		}
 	}
 
@@ -640,7 +643,7 @@ public class Level1State extends LevelState {
 	public void fireBigBullet(){
 		if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
 			BigBullet bigBullet = new BigBullet(megaMan.x + megaMan.width - BigBullet.WIDTH/2,
-				megaMan.y + megaMan.width/2 - BigBullet.HEIGHT +2);
+					megaMan.y + megaMan.width/2 - BigBullet.HEIGHT +2);
 			bigBullets.add(bigBullet);
 			this.getSoundManager().playBulletSound();
 		}
@@ -653,8 +656,8 @@ public class Level1State extends LevelState {
 			this.getSoundManager().playBulletSound();
 		}
 
-		
-		
+
+
 	}
 
 	/**
@@ -664,26 +667,26 @@ public class Level1State extends LevelState {
 	 */
 	public boolean moveBullet(Bullet leftBullets , Bullet bullet ){
 
-        if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
-            if(bullet.getY() - bullet.getSpeed() >= 0){
-                bullet.translate(bullet.getSpeed(), 0);
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
+		if(getInputHandler().isLeftPressed() == false && getInputHandler().wasLeftReleased() == false) {
+			if(bullet.getY() - bullet.getSpeed() >= 0){
+				bullet.translate(bullet.getSpeed(), 0);
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 
-        else { //LeftBullet
-            if(bullet.getY() - bullet.getSpeed() >= 0){
-                leftBullets.translate(leftBullets.getSpeed(), 0);
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-    }
+		else { //LeftBullet
+			if(bullet.getY() - bullet.getSpeed() >= 0){
+				leftBullets.translate(leftBullets.getSpeed(), 0);
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+	}
 
 	/** Move a "Power Shot" bullet once fired.
 	 * @param bigBullet the bullet to move
@@ -732,7 +735,7 @@ public class Level1State extends LevelState {
 		platforms = new Platform[n];
 		for(int i=0; i<n; i++){
 			this.platforms[i] = new Platform(0 , SCREEN_HEIGHT/2 + 140 - i*40);
-		
+
 		}
 		return platforms;
 	}
@@ -786,7 +789,6 @@ public class Level1State extends LevelState {
 			megaMan.translate(megaMan.getSpeed(), 0);
 		}
 	}
-
 	public void speedUpMegaMan() {
 		megaMan.setSpeed(megaMan.getDefaultSpeed() * 2 +1);
 	}

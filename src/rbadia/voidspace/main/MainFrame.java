@@ -21,18 +21,18 @@ public class MainFrame extends JFrame {
 	private JPanel jContentPane = null;
 
 	private LevelState levelState = null;
-	
+
 	private JLabel destroyedLabel;
 	private JLabel destroyedValueLabel;
-	
+
 	private JLabel levelLabel;
 	private JLabel levelValueLabel;
 
 	private JLabel livesLabel;
 	private JLabel livesValueLabel;
-	
+
 	private int fontSize;
-	
+
 	public MainFrame() {
 		super();
 		initialize();
@@ -77,21 +77,21 @@ public class MainFrame extends JFrame {
 	public void setLivesValueLabel(JLabel livesValueLabel) {
 		this.livesValueLabel = livesValueLabel;
 	}
-	
+
 	public LevelState getLevelState() {
 		return levelState;
 	}
-	
+
 	public void setLevelState(LevelState levelState) {
 		this.levelState = levelState;
 		this.jContentPane = null;
 		this.setContentPane(getJContentPane());
 	}
-	
+
 	public int getFontSize(){
 		return fontSize;
 	}
-	
+
 	public void setFontSize(int fontSize){
 		this.fontSize = fontSize;
 	}
@@ -103,8 +103,8 @@ public class MainFrame extends JFrame {
 		this.setFontSize((int)((dim.width/2)*(0.905)*0.0225));
 		Rectangle bounds = this.getBounds();
 		this.setLocation(
-			(dim.width - bounds.width) / 2,
-			(dim.height - bounds.height) / 2);
+				(dim.width - bounds.width) / 2,
+				(dim.height - bounds.height) / 2);
 	}
 
 	/**
@@ -120,42 +120,42 @@ public class MainFrame extends JFrame {
 			gridBagConstraints6.anchor = GridBagConstraints.WEST;
 			gridBagConstraints6.weightx = 1.0D;
 			gridBagConstraints6.gridx = 5;
-			
+
 			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
 			gridBagConstraints5.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints5.gridy = 1;
 			gridBagConstraints5.anchor = GridBagConstraints.EAST;
 			gridBagConstraints5.weightx = 1.0D;
 			gridBagConstraints5.gridx = 4;
-			
+
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints4.gridy = 1;
 			gridBagConstraints4.anchor = GridBagConstraints.WEST;
 			gridBagConstraints4.weightx = 1.0D;
 			gridBagConstraints4.gridx = 3;
-			
+
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints3.gridy = 1;
 			gridBagConstraints3.anchor = GridBagConstraints.EAST;
 			gridBagConstraints3.weightx = 1.0D;
 			gridBagConstraints3.gridx = 2;
-			
+
 			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 			gridBagConstraints2.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints2.gridy = 1;
 			gridBagConstraints2.anchor = GridBagConstraints.WEST;
 			gridBagConstraints2.weightx = 1.0D;
 			gridBagConstraints2.gridx = 1;
-			
+
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints1.gridy = 1;
 			gridBagConstraints1.anchor = GridBagConstraints.EAST;
 			gridBagConstraints1.weightx = 1.0D;
 			gridBagConstraints1.gridx = 0;
-			
+
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints.gridx = 0;

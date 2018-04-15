@@ -21,7 +21,7 @@ import rbadia.voidspace.model.PowerUp;
 import rbadia.voidspace.sounds.SoundManager;
 
 public class Level5State extends Level1State {
-	
+
 	public Boss boss = new Boss(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2);
 	public PowerUp powerUp = new PowerUp(SCREEN_WIDTH-335,1/SCREEN_HEIGHT+236);//positioned left & right
 	private long lastBossBulletTime;
@@ -29,7 +29,7 @@ public class Level5State extends Level1State {
 	private int directionY = 1;
 	private int directionX = 1;
 	private int BOSS_HEALTH = 20;
-	
+
 	public Boss getBoss(){
 		return boss;
 	}
@@ -43,7 +43,7 @@ public class Level5State extends Level1State {
 	 * 
 	 */
 	private static final long serialVersionUID = 6258208923988886788L;
-	
+
 	@Override
 	public void doStart() {	
 		super.doStart();
@@ -74,7 +74,7 @@ public class Level5State extends Level1State {
 			e1.printStackTrace();
 		}
 	};
-	
+
 	@Override
 	public void updateScreen() {
 		Graphics2D g2d = getGraphics2D();
@@ -85,7 +85,7 @@ public class Level5State extends Level1State {
 			this.originalFont = g2d.getFont();
 			this.bigFont = originalFont;
 		}
-		
+
 		clearScreen();
 		((GraphicsManager) getGraphicsManager()).drawDeathStar(g2d);
 		//TODO new backround
@@ -106,15 +106,15 @@ public class Level5State extends Level1State {
 		drawTheBoss();
 		drawBossBullet();
 		moveBossY();
-//		moveBossX();
+		//		moveBossX();
 		checkBulletToBossCollision();
 		checkBigBulletToBossCollition();
 		checkBossBulletToPlayerCollision();
 		checkPlayerBossCollision();
 		checkVaderPowerUpCollision();
 		drawBox();
-			
-		
+
+
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
 		// update lives left label
@@ -156,7 +156,7 @@ public class Level5State extends Level1State {
 	}
 	public void checkBulletToBossCollision(){
 		for (int i = 0; i < bullets.size(); i++) {
-			
+
 			Bullet bullet = bullets.get(i);
 			if(boss.intersects(bullet)) {
 				getGameStatus().setXWingsDestroyed(getGameStatus().getXWingDestroyed() + 500);
@@ -176,7 +176,7 @@ public class Level5State extends Level1State {
 				BOSS_HEALTH = BOSS_HEALTH - 2;
 			}
 		}
-		
+
 	}
 	public void checkBossBulletToPlayerCollision() {
 		for (int i = 0; i < bossBullets.size(); i++) {
@@ -185,7 +185,7 @@ public class Level5State extends Level1State {
 				getGameStatus().setLivesLeft(getGameStatus().getLivesLeft() - 1);
 				bossBullets.remove(i);
 			}
-			
+
 		}
 	}
 	public void checkPlayerBossCollision() {
@@ -194,8 +194,8 @@ public class Level5State extends Level1State {
 		}
 	}
 
-	
-	
+
+
 	//checks right big bullet asteroid collision
 	@Override
 	protected void checkBigBulletXWingCollisions() {
@@ -209,7 +209,7 @@ public class Level5State extends Level1State {
 			}
 		}
 	}
-	
+
 	//checks left big bullet asteroid collision
 	@Override
 	protected void checkLeftBigBulletXWingCollisions() {
@@ -220,11 +220,11 @@ public class Level5State extends Level1State {
 				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
 				removeXWing(xWing);
 				damage=0;
-				
+
 			}
 		}
 	}
-	
+
 	@Override
 	protected void checkBullletXWingCollisions() {
 		GameStatus status = getGameStatus();
@@ -240,7 +240,7 @@ public class Level5State extends Level1State {
 			}
 		}
 	}
-	
+
 	//checks left bullet asteroid collision
 	@Override
 	protected void checkLeftBullletXWingCollisions() {
@@ -257,12 +257,12 @@ public class Level5State extends Level1State {
 			}
 		}
 	}
-	
+
 	//draw boss
 	protected void drawTheBoss(){
 		Graphics2D g2d = getGraphics2D();
 		((GraphicsManager) getGraphicsManager()).drawBoss(boss, g2d, this);
-		
+
 		//bullet frequancy
 		long currentTime = System.currentTimeMillis();
 		if((currentTime - lastBossBulletTime) > 1000/2){
@@ -270,8 +270,8 @@ public class Level5State extends Level1State {
 			fireBossBullet();
 		}
 	}
-	
-	
+
+
 	//move boss
 	public void moveBossY(){
 		if (boss.getY() + boss.height >= SCREEN_HEIGHT) {
@@ -281,29 +281,29 @@ public class Level5State extends Level1State {
 			directionY = 1;
 		}
 		boss.translate(0, 3*directionY);
-			
+
 	}
-	
+
 	//hacer que dispare a amos lados para usar este metodo
-//	public void moveBossX() {
-//		if(boss.getX() + boss.width >= SCREEN_WIDTH) {
-//			directionX = -1;
-//		}
-//		else if(boss.getX() <=0) {
-//			directionX = 1;
-//		}
-//		boss.translate(2*directionX, 0);
-//	}
-//	
+	//	public void moveBossX() {
+	//		if(boss.getX() + boss.width >= SCREEN_WIDTH) {
+	//			directionX = -1;
+	//		}
+	//		else if(boss.getX() <=0) {
+	//			directionX = 1;
+	//		}
+	//		boss.translate(2*directionX, 0);
+	//	}
+	//	
 	public void fireBossBullet() {
-		
+
 		Bullet bullet = new Bullet(boss.x + boss.width - Bullet.WIDTH/2, boss.y + boss.width/2 - Bullet.HEIGHT + 2);
 		bullet.setSpeed(-bullet.getSpeed());
 		this.bossBullets.add(bullet);
 		//TODO change sound
 		this.getSoundManager().playBulletSound();
 	}
-	
+
 	public boolean moveBossBullet(Bullet bullet) {
 		if(bullet.getX() - bullet.getSpeed() <= SCREEN_WIDTH && bullet.getX() > 0) {
 			bullet.translate(bullet.getSpeed(), 0);
@@ -312,29 +312,29 @@ public class Level5State extends Level1State {
 		//remove bullet if out of frame
 		return true;
 	}
-	
+
 	public void drawBossBullet() {
 		Graphics2D g2d = getGraphics2D();
 		for(int i = 0; i<bossBullets.size(); i++) {
 			Bullet bullet = bossBullets.get(i);
 			//TODO change image
 			getGraphicsManager().drawBullet(bullet, g2d, this);
-			
+
 			boolean remove = this.moveBossBullet(bullet);
 			if(remove) {
 				bossBullets.remove(i);
-			i--;
+				i--;
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isLevelWon() {
 		if(getInputHandler().isNPressed()) return true; 
 		return BOSS_HEALTH == 0;
-		
+
 	}
-	
+
 	@Override
 	public Platform[] newPlatforms(int n){
 		platforms = new Platform[n];

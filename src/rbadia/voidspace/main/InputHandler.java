@@ -22,7 +22,7 @@ public class InputHandler implements KeyListener{
 	private boolean sIsPressed;
 	private boolean iIsPressed;
 	private boolean nIsPressed;
-	
+
 
 	private LevelState levelState;
 	//private GameScreen gScreen;
@@ -119,11 +119,11 @@ public class InputHandler implements KeyListener{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP:
 			this.upIsPressed = true;
-//			this.still = false;
+			//			this.still = false;
 			break;
 		case KeyEvent.VK_DOWN:
 			this.downIsPressed = true;
-//			this.still = false;
+			//			this.still = false;
 			break;
 		case KeyEvent.VK_LEFT:
 			this.leftIsPressed = true;
@@ -175,11 +175,11 @@ public class InputHandler implements KeyListener{
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_UP:
 			this.upIsPressed = false;
-//			this.still = true;
+			//			this.still = true;
 			break;
 		case KeyEvent.VK_DOWN:
 			this.downIsPressed = false;
-//			this.still = true;
+			//			this.still = true;
 			break;
 		case KeyEvent.VK_LEFT:
 			this.reset();
@@ -206,9 +206,9 @@ public class InputHandler implements KeyListener{
 		case KeyEvent.VK_Q:
 			this.qIsPressed = false;
 			break;
-//		case KeyEvent.VK_M:
-//			this.mIsPressed = false;
-//			break;
+			//		case KeyEvent.VK_M:
+			//			this.mIsPressed = false;
+			//			break;
 		case KeyEvent.VK_S:
 			this.sIsPressed = false;
 			break;

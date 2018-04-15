@@ -115,7 +115,7 @@ public class Level1State extends LevelState {
 		leftBullets = new ArrayList<Bullet>();
 		bigBullets = new ArrayList<BigBullet>();
 		leftBigBullets = new ArrayList<BigBullet>();
-		//numPlatforms = new Platform[5];
+
 
 		GameStatus status = this.getGameStatus();
 
@@ -127,7 +127,6 @@ public class Level1State extends LevelState {
 		newFloor(this, 9);
 		newPlatforms(getNumPlatforms());
 		newXWing(this);
-
 		lastXWingTime = -NEW_XWING_DELAY;
 		lastLifeTime = -NEW_MEGAMAN_DELAY;
 

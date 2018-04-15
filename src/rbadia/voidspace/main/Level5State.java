@@ -28,7 +28,7 @@ public class Level5State extends Level1State {
 	private ArrayList<Bullet> bossBullets = new ArrayList<Bullet>();
 	private int directionY = 1;
 	private int directionX = 1;
-	private int BOSS_HEALTH = 20;
+	private int BOSS_HEALTH = 15;
 
 	public Boss getBoss(){
 		return boss;
@@ -58,11 +58,11 @@ public class Level5State extends Level1State {
 		((LevelLogic)getGameLogic()).drawLevel5Intro();
 		repaint();
 		LevelLogic.delay(15000);
-		//Changes music from "menu music" to "ingame music"
+		//Changes music from "menu music" to "maingame music"
 		MegaManMain.audioClip.close();
-		MegaManMain.playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
+		MegaManMain.bossAudio = new File("audio/bossBattleAudio.wav");
 		try {
-			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.playingAudio);
+			MegaManMain.audioStream = AudioSystem.getAudioInputStream(MegaManMain.bossAudio);
 			MegaManMain.audioClip.open(MegaManMain.audioStream);
 			MegaManMain.audioClip.start();
 			MegaManMain.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -106,7 +106,6 @@ public class Level5State extends Level1State {
 		drawTheBoss();
 		drawBossBullet();
 		moveBossY();
-		//		moveBossX();
 		checkBulletToBossCollision();
 		checkBigBulletToBossCollition();
 		checkBossBulletToPlayerCollision();
@@ -284,17 +283,7 @@ public class Level5State extends Level1State {
 
 	}
 
-	//hacer que dispare a amos lados para usar este metodo
-	//	public void moveBossX() {
-	//		if(boss.getX() + boss.width >= SCREEN_WIDTH) {
-	//			directionX = -1;
-	//		}
-	//		else if(boss.getX() <=0) {
-	//			directionX = 1;
-	//		}
-	//		boss.translate(2*directionX, 0);
-	//	}
-	//	
+
 	public void fireBossBullet() {
 
 		Bullet bullet = new Bullet(boss.x + boss.width - Bullet.WIDTH/2, boss.y + boss.width/2 - Bullet.HEIGHT + 2);
@@ -318,7 +307,7 @@ public class Level5State extends Level1State {
 		for(int i = 0; i<bossBullets.size(); i++) {
 			Bullet bullet = bossBullets.get(i);
 			//TODO change image
-			getGraphicsManager().drawBullet(bullet, g2d, this);
+			getGraphicsManager().drawBossBullet(bullet, g2d, this);
 
 			boolean remove = this.moveBossBullet(bullet);
 			if(remove) {
@@ -349,7 +338,7 @@ public class Level5State extends Level1State {
 		if(powerUp.intersects(megaMan)&& PowerUp.isVisibility()){
 			status.setLivesLeft(status.getLivesLeft() + 3);
 			PowerUp.setVisibility(false);
-			//			removePowerUp(powerUp);
+
 
 		}
 	}

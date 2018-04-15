@@ -27,6 +27,7 @@ public class MegaManMain {
 	public static Clip audioClip;
 	public static File playingAudio;	
 	public static File menuAudio;	
+	public static File bossAudio;	
 
 
 	/**
@@ -44,6 +45,7 @@ public class MegaManMain {
 
 		menuAudio = new File("audio/star_wars.wav");
 		playingAudio = new File("audio/Star-Wars-The-Imperial-March-_Darth-Vader_s-Theme_.wav");
+		bossAudio = new File("audio/bossBattleAudio.wav");
 		try {
 			audioStream = AudioSystem.getAudioInputStream(menuAudio);
 		} catch (UnsupportedAudioFileException e) {

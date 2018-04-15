@@ -35,6 +35,7 @@ public class GraphicsManager {
 	private BufferedImage platformImg;
 	private BufferedImage bulletImg;
 	private BufferedImage RebelsbulletImg;
+	private BufferedImage BossBulletImg;
 	private BufferedImage bigBulletImg;
 	private BufferedImage xWingLeftImg;
 	private BufferedImage xWingRightImg;
@@ -72,6 +73,7 @@ public class GraphicsManager {
 			this.xWingExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/asteroidExplosion.png"));
 			this.bulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/lightBlue.png"));
 			this.RebelsbulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
+			this.BossBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BlueBullet.png"));
 			this.rebelTrooperLookingRight = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelRight.png"));
 			this.rebelTrooperLookingLeft = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/RebelLeft.png"));
@@ -143,7 +145,9 @@ public class GraphicsManager {
 	public void drawRebelsbulletImg(Bullet bullet, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(RebelsbulletImg, bullet.x, bullet.y, observer);
 	}
-
+	public void drawBossBullet(Bullet bullet, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(BossBulletImg, bullet.x, bullet.y, observer);
+	}
 	/**
 	 * Draws a bullet image to the specified graphics canvas.
 	 * @param bigBullet the bullet to draw

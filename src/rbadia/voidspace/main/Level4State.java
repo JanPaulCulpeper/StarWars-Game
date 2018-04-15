@@ -16,6 +16,7 @@ import rbadia.voidspace.model.BigBullet;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Floor;
 import rbadia.voidspace.model.Platform;
+import rbadia.voidspace.model.PowerUp;
 import rbadia.voidspace.model.RebelTrooper;
 import rbadia.voidspace.sounds.SoundManager;
 
@@ -29,6 +30,7 @@ public class Level4State extends Level1State {
 	private long lastTrooper2BulletTime;
 	private ArrayList<Bullet> trooper1Bullets = new ArrayList<Bullet>();
 	private ArrayList<Bullet> trooper2Bullets = new ArrayList<Bullet>();
+	
 
 	//Getters
 	public RebelTrooper getRebelTrooper1(){
@@ -53,6 +55,7 @@ public class Level4State extends Level1State {
 		super.doStart();
 		setStartState(GETTING_READY);
 		setCurrentState(getStartState());
+		
 	}
 
 	@Override
@@ -113,7 +116,12 @@ public class Level4State extends Level1State {
 		checkBigBulletTrooper2Collision();
 		checkLeftBigBulletTrooper1Collision();
 		checkLeftBigBulletTrooper2Collision();
-
+		checkBullletXWingCollisions();
+		checkLeftBullletXWingCollisions();
+		checkBigBulletXWingCollisions();
+		checkLeftBigBulletXWingCollisions();
+		checkMegaManXWingCollisions();
+		drawXWingLeft();
 
 		// update asteroids destroyed (score) label  
 		getMainFrame().getDestroyedValueLabel().setText(Long.toString(status.getXWingDestroyed()));
@@ -127,21 +135,20 @@ public class Level4State extends Level1State {
 		platforms = new Platform[n];
 		for(int i=0; i<n; i++){
 			this.platforms[i] = new Platform(0,0);
-			if(i<4)	{
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 160 + i*40);
+			if(i<3)	{
+				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 140 + i*40);
 			}
-			if(i==4) {
-				platforms[i].setLocation(50 + i*50 , SCREEN_HEIGHT - 160 + 3*40);}
+			if(i>2 && i<5) {
+				platforms[i].setLocation(SCREEN_WIDTH/2 + 150 - i*50 , SCREEN_HEIGHT/2 + 100 );}
 			if(i>4){	
 				int k=4;
-				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 40 - (i-k)*40 );
+				platforms[i].setLocation(50 + i*50, SCREEN_HEIGHT - 20 - (i-k)*40 );
 				k=k+2;
 			}
 
 		}
 		return platforms;
 	}
-
 	//Codigo de enemigos
 
 	// fall right trooper looking left
@@ -254,7 +261,7 @@ public class Level4State extends Level1State {
 			}
 
 			long currentTime = System.currentTimeMillis();
-			if((currentTime - lastTrooper1BulletTime) > 1000/2){
+			if((currentTime - lastTrooper1BulletTime) > 4000/2){
 				lastTrooper1BulletTime = currentTime;
 				fireTrooper1Bullet();
 			}
@@ -315,7 +322,7 @@ public class Level4State extends Level1State {
 			}
 
 			long currentTime = System.currentTimeMillis();
-			if((currentTime - lastTrooper2BulletTime) > 1000/2){
+			if((currentTime - lastTrooper2BulletTime) > 3000/2){
 				lastTrooper2BulletTime = currentTime;
 				fireRebel2Bullet();
 			}
@@ -631,7 +638,99 @@ public class Level4State extends Level1State {
 		return levelXWingDestroyed >= 4;
 
 	}
+	
+	
+//	protected void drawXWingLeft() {
+//		Graphics2D g2d = getGraphics2D();
+//		GameStatus status = getGameStatus();
+//		if((xWing.getX() + xWing.getWidth() >  0)){
+//			xWing.translate(-xWing.getSpeed(), 0);
+//			getGraphicsManager().drawXWingLeft(xWing, g2d, this);	
+//		}
+//		else {
+//			long currentTime = System.currentTimeMillis();
+//			if((currentTime - lastXWingTime) > NEW_XWING_DELAY){
+//				// draw a new xWing
+//				lastXWingTime = currentTime;
+//				status.setNewXWing(false);
+//				xWing.setLocation((int) (SCREEN_WIDTH - xWing.getPixelsWide()),
+//						(rand.nextInt((int) (SCREEN_HEIGHT - xWing.getPixelsTall() - 32))));
+//			}
+//
+//			else{
+//				// draw explosion
+//				getGraphicsManager().drawXWingExplosion(xWingExplosion, g2d, this);
+//			}
+//		}
+//	}
+	protected void checkBigBulletXWingCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<bigBullets.size(); i++){
+			BigBullet bigBullet = bigBullets.get(i);
+			if(xWing.intersects(bigBullet)){
+				// increase xWings destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
+				damage=0;
+			}
+		}
+	}
 
+	//checks left big bullet xWing collision
+	protected void checkLeftBigBulletXWingCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBigBullets.size(); i++){
+			BigBullet bigBullet = leftBigBullets.get(i);
+			if(xWing.intersects(bigBullet)){
+				// increase xWings destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
+				damage=0;
+
+			}
+		}
+	}
+
+	//checks right bullet xWing collision
+	protected void checkBullletXWingCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<bullets.size(); i++){
+			Bullet bullet = bullets.get(i);
+			if(xWing.intersects(bullet)){
+				// increase xWings destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
+				damage=0;
+				// remove bullet
+				bullets.remove(i);
+				break;
+			}
+		}
+	}
+	
+	//checks left bullet xWing collision
+	protected void checkLeftBullletXWingCollisions() {
+		GameStatus status = getGameStatus();
+		for(int i=0; i<leftBullets.size(); i++){
+			Bullet bullet = leftBullets.get(i);
+			if(xWing.intersects(bullet)){
+				// increase xWings destroyed count
+				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
+				removeXWing(xWing);
+				damage=0;
+				// remove bullet
+				leftBullets.remove(i);
+				break;
+			}
+		}
+	}
+//	protected void checkMegaManXWingCollisions() {
+//		GameStatus status = getGameStatus();
+//		if(xWing.intersects(megaMan)){
+//			status.setLivesLeft(status.getLivesLeft() - 1);
+//			removeXWing(xWing);
+//		}
+//	}
 }
 
 

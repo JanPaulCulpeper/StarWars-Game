@@ -65,7 +65,7 @@ public class MegaManMain {
 			LevelState level4State = new Level4State(4, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 			LevelState level5State = new Level5State(5, frame, gameStatus, gameLogic, inputHandler, graphicsMan, soundMan);
 
-			LevelState levels[] = {level3State, level2State,level4State, level1State,  level5State };
+			LevelState levels[] = {level1State, level2State,level3State, level4State,  level5State };
 
 
 

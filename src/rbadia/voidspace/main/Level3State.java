@@ -112,6 +112,7 @@ public class Level3State extends Level1State {
 		for(int i=0; i<9; i++){
 			if(xWing2.intersects(floor[i])){
 				removeXWing(xWing2);
+				damage=0;
 
 			}
 		}
@@ -127,9 +128,9 @@ public class Level3State extends Level1State {
 
 	protected void checkVaderXWingCollisions2() {
 		GameStatus status = getGameStatus();
-		if(xWing.intersects(megaMan)){
+		if(xWing2.intersects(megaMan)){
 			status.setLivesLeft(status.getLivesLeft() - 1);
-			removeXWing(xWing);
+			removeXWing(xWing2);
 		}
 	}
 	protected void checkVaderXWingCollisions() {
@@ -144,10 +145,10 @@ public class Level3State extends Level1State {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bigBullets.size(); i++){
 			BigBullet bigBullet = bigBullets.get(i);
-			if(xWing.intersects(bigBullet)){
+			if(xWing2.intersects(bigBullet)){
 				// increase asteroids destroyed count
 				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
-				removeXWing(xWing);
+				removeXWing(xWing2);
 				levelXWingDestroyed++;
 				damage=0;
 			}
@@ -159,10 +160,10 @@ public class Level3State extends Level1State {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBigBullets.size(); i++){
 			BigBullet bigBullet = leftBigBullets.get(i);
-			if(xWing.intersects(bigBullet)){
+			if(xWing2.intersects(bigBullet)){
 				// increase asteroids destroyed count
 				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
-				removeXWing(xWing);
+				removeXWing(xWing2);
 				levelXWingDestroyed++;
 				damage=0;
 			}
@@ -173,10 +174,10 @@ public class Level3State extends Level1State {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
-			if(xWing.intersects(bullet)){
+			if(xWing2.intersects(bullet)){
 				// increase asteroids destroyed count
 				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
-				removeXWing(xWing);
+				removeXWing(xWing2);
 				levelXWingDestroyed++;
 				damage=0;
 				// remove bullet
@@ -190,10 +191,10 @@ public class Level3State extends Level1State {
 		GameStatus status = getGameStatus();
 		for(int i=0; i<leftBullets.size(); i++){
 			Bullet bullet = leftBullets.get(i);
-			if(xWing.intersects(bullet)){
+			if(xWing2.intersects(bullet)){
 				// increase asteroids destroyed count
 				status.setXWingsDestroyed(status.getXWingDestroyed() + 100);
-				removeXWing(xWing);
+				removeXWing(xWing2);
 				levelXWingDestroyed++;
 				damage=0;
 				// remove bullet

@@ -12,7 +12,7 @@ si-si-ja-va
 ## Team Members: 
 
 	1. <Andres Perez Frontera> (<ampf12>) - <andres.perez14@upr.edu>
-	2. <Jan Culpeper Bermudez> (<GitHubUsername>) - <jan.culpeper1@upr.edu>
+	2. <Jan Culpeper Bermudez> (<JanPaulCulpeper>) - <jan.culpeper1@upr.edu>
 
 ## The following **required** functionality is implemented:
 

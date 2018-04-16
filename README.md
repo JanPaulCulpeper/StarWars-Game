@@ -1,16 +1,18 @@
 # Project 1 - Definitely Not Megaman
 	Small project description	
+	The project consist of a modified base code that was given to us. We have chenaged it to have a Star Wars theme. We wanted to be creative and made up a story on the early years of the Darth Vader character in the saga.
 
-	Estimated Time spent: Spent total in hours
+	Estimated Time spent: 2 weeks
 
 
 
 ## Team Name: 
+si-si-ja-va
 
 ## Team Members: 
 
-	1. <Full Name> (<GitHubUsername>) - <UPRMEmail>
-	2. <Full Name> (<GitHubUsername>) - <UPRMEmail>
+	1. <Andres Perez Frontera> (<ampf12>) - <andres.perez14@upr.edu>
+	2. <Jan Culpeper Bermudez> (<GitHubUsername>) - <jan.culpeper1@upr.edu>
 
 ## The following **required** functionality is implemented:
 
@@ -32,8 +34,10 @@
 
 
 	What was your project's biggest challenge?
+	The most challenging thing in making this code was making the main character shoot both sides. Also, implementing many new images was very challenging since you have to resize and crop them. It was a very time conzuming process.
 	
     What was your favorite part of the project
+    The project overall was very fun. To have te ability to customize it to your preference and just personalize it to a more unique way, as well as adding new fetures that make the game more interesting, longer and visually apealing.
 
 
 
